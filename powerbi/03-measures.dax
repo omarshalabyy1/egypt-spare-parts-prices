@@ -1,0 +1,168 @@
+// 3. Measures
+//
+// First create the measures table: Home > Enter data, name the table _Measures, keep the
+// one empty column, Load. Then for each measure below: select _Measures, Home > New measure,
+// paste the measure (from its name to the end of its expression), press Enter, and set
+// the format string and display folder in the Measure tools ribbon and the Properties pane.
+// When all measures exist, hide the empty column; _Measures moves to the top of the field list.
+//
+// Each measure's comment says what it returns, its format string and its display folder.
+// Visuals use these measures only: no implicit sums dragged from columns. 19 measures.
+//
+// The Match slicer (Match Grade[Grade]) filters both facts. The offer counts remove its filter;
+// every measure about our parts follows it. A gap or spread counts only measured parts
+// (Part[Measured]: 3 usable offers from 2 sellers or more) and only comparable prices not shown out
+// of stock (Price Gap holds no others).
+//
+// MEDIAN and MEDIANX average the two middle values when the count is even, as pandas and
+// percentile_cont(0.5) do; check C10 (spark plug: a median of 70 parts, 48.15%) proves it on your build.
+
+
+// ---------- Page 1: Overview (display folder: Overview) ----------
+
+// Sellers with at least one offer in the run week, matched or not; ignores the Match slicer. Format: #,0  Folder: Overview
+Sellers =
+CALCULATE ( DISTINCTCOUNT ( Offer[seller_key] ), REMOVEFILTERS ( 'Match Grade' ) )
+
+// Offers read in the run week, matched or not; ignores the Match slicer. Format: #,0  Folder: Overview
+Offers =
+CALCULATE ( COUNTROWS ( Offer ), REMOVEFILTERS ( 'Match Grade' ) )
+
+// Our parts with at least one offer matched by the grade in the Match slicer. Format: #,0  Folder: Overview
+Parts Matched =
+CALCULATE ( DISTINCTCOUNT ( Offer[part_key] ), Offer[part_key] <> 0 )
+
+// Our parts with a seller at least 5% below our price (the market's middle price), comparable and
+// not shown out of stock: gold.undercut. Format: #,0  Folder: Overview
+Parts Undercut =
+CALCULATE ( DISTINCTCOUNT ( 'Price Gap'[part_no] ), 'Price Gap'[Undercut] = TRUE () )
+
+// Share of the matched parts that have such a seller. Format: 0.0%  Folder: Overview
+Share Undercut =
+VAR _Undercut = [Parts Undercut]
+VAR _Matched = [Parts Matched]
+RETURN
+    DIVIDE ( _Undercut, _Matched )
+
+
+// ---------- Every page: the label (display folder: Labels) ----------
+
+// The run week and the match shown, for the label at the top of each page. Format: Text  Folder: Labels
+Page Label =
+VAR _Week = FORMAT ( MAX ( 'Date'[run_week] ), "yyyy-mm-dd" )
+VAR _Grade =
+    IF ( HASONEVALUE ( 'Match Grade'[Grade] ), VALUES ( 'Match Grade'[Grade] ), "Both match grades" )
+RETURN
+    "Run week " & _Week & " · Match: " & _Grade
+
+
+// ---------- Page 2: Price gaps (display folder: Gaps) ----------
+
+// Measured parts with at least one seller's comparable price. Format: #,0  Folder: Gaps
+Parts Measured =
+CALCULATE ( DISTINCTCOUNT ( 'Price Gap'[part_no] ), Part[Measured] = TRUE () )
+
+// The cheapest comparable price of the parts in the filter, EGP. Format: #,0.00  Folder: Gaps
+Cheapest Price =
+CALCULATE ( MIN ( 'Price Gap'[their_price] ), Part[Measured] = TRUE () )
+
+// The dearest comparable price of the parts in the filter, EGP. Format: #,0.00  Folder: Gaps
+Dearest Price =
+CALCULATE ( MAX ( 'Price Gap'[their_price] ), Part[Measured] = TRUE () )
+
+// Our price for one measured part, EGP; blank for a part with no market, so the parts table
+// lists measured parts only. Format: #,0.00  Folder: Gaps
+Our Price =
+VAR _Cheapest = [Cheapest Price]
+RETURN
+    IF ( NOT ISBLANK ( _Cheapest ), SELECTEDVALUE ( Part[our_price] ) )
+
+// The seller (or sellers, when tied) with the cheapest comparable price of one part. Format: Text  Folder: Gaps
+Cheapest Seller =
+VAR _Cheapest = [Cheapest Price]
+RETURN
+    IF (
+        HASONEVALUE ( Part[part_no] ) && NOT ISBLANK ( _Cheapest ),
+        CONCATENATEX (
+            FILTER ( VALUES ( Seller[name] ), [Cheapest Price] = _Cheapest ),
+            Seller[name], ", ", Seller[name], ASC
+        )
+    )
+
+// For one part, our price above the cheapest seller's, as a share of ours; above 0, a seller is
+// cheaper than us. gap_pct is stored in percent (26.4), so it is divided by 100 for the % format.
+// Format: 0.0%  Folder: Gaps
+Gap To Cheapest =
+VAR _GapInPercent = CALCULATE ( MAX ( 'Price Gap'[gap_pct] ), Part[Measured] = TRUE () )
+RETURN
+    DIVIDE ( _GapInPercent, 100 )
+
+// For one part, the dearest seller's price over the cheapest seller's, minus one. Format: 0.0%  Folder: Gaps
+Spread =
+VAR _Cheapest = [Cheapest Price]
+VAR _Dearest = [Dearest Price]
+RETURN
+    IF ( NOT ISBLANK ( _Cheapest ), DIVIDE ( _Dearest, _Cheapest ) - 1 )
+
+// The median part's gap to the cheapest seller, over the measured parts in the filter. Format: 0.00%  Folder: Gaps
+Median Gap =
+VAR _Parts =
+    FILTER (
+        CALCULATETABLE ( VALUES ( Part[part_no] ), Part[Measured] = TRUE () ),
+        NOT ISBLANK ( [Cheapest Price] )
+    )
+RETURN
+    MEDIANX ( _Parts, [Gap To Cheapest] )
+
+// The median part's spread between its dearest and cheapest seller. Format: 0.00%  Folder: Gaps
+Median Spread =
+VAR _Parts =
+    FILTER (
+        CALCULATETABLE ( VALUES ( Part[part_no] ), Part[Measured] = TRUE () ),
+        NOT ISBLANK ( [Cheapest Price] )
+    )
+RETURN
+    MEDIANX ( _Parts, [Spread] )
+
+
+// ---------- Page 3: Sellers (display folder: Sellers) ----------
+
+// For one part, the market's middle price: the median of its usable offers at every seller
+// (all listings, not one per seller), the base of the price index. Format: #,0.00  Folder: Sellers
+Market Middle Price =
+CALCULATE ( MEDIAN ( Offer[price] ), Offer[Usable] = TRUE (), REMOVEFILTERS ( Seller ) )
+
+// Measured parts where the seller in the filter has the cheapest comparable price; a tie counts
+// for each seller tied. Format: #,0  Folder: Sellers
+Cheapest In =
+VAR _Parts =
+    FILTER (
+        CALCULATETABLE ( VALUES ( Part[part_no] ), Part[Measured] = TRUE () ),
+        NOT ISBLANK ( [Cheapest Price] )
+    )
+RETURN
+    SUMX (
+        _Parts,
+        VAR _Mine = [Cheapest Price]
+        VAR _Lowest = CALCULATE ( [Cheapest Price], REMOVEFILTERS ( Seller ) )
+        RETURN
+            IF ( _Mine = _Lowest, 1 )
+    )
+
+// Share of the seller's measured parts where it is the cheapest. Format: 0.0%  Folder: Sellers
+Cheapest Share =
+VAR _Cheapest = [Cheapest In]
+VAR _Parts = [Parts Measured]
+RETURN
+    DIVIDE ( _Cheapest, _Parts )
+
+// The seller's median price index: its comparable price over the market's middle price, the
+// median over its measured parts; below 1, below the middle. Format: 0.00  Folder: Sellers
+Price Index =
+VAR _Parts =
+    FILTER (
+        CALCULATETABLE ( VALUES ( Part[part_no] ), Part[Measured] = TRUE () ),
+        NOT ISBLANK ( [Cheapest Price] )
+    )
+RETURN
+    MEDIANX ( _Parts, DIVIDE ( [Cheapest Price], [Market Middle Price] ) )
