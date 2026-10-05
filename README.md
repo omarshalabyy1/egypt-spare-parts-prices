@@ -63,7 +63,7 @@ Every number below comes from [the notebook](analysis/analysis.ipynb).
   **<!--n:spread_median_pct_part_number-->38.3<!--/n-->% above the cheapest**
   (<!--n:spread_groups_part_number-->61<!--/n--> parts with 3 prices or more at 2 sellers or more).
 - **Which cars:** <!--n:offers_with_car_pct-->58.3<!--/n-->% of the prices name the car,
-  <!--n:car_models-->89<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
+  <!--n:car_models-->90<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
   <!--n:top_model-->Hyundai Elantra<!--/n--> (<!--n:top_model_offers-->776<!--/n--> prices).
 
 Comparisons of the same part type for the same car are being tightened and are not shown yet.
