@@ -4,7 +4,7 @@
 import csv
 import gzip
 import json
-from datetime import date
+from datetime import date, datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from types import SimpleNamespace
@@ -39,6 +39,13 @@ def test_every_seller_has_a_scraper_and_known_families():
 def test_week_of_is_the_monday():
     assert tracker.week_of(date(2026, 10, 5)) == date(2026, 10, 5)
     assert tracker.week_of(date(2026, 10, 11)) == date(2026, 10, 5)
+
+
+def test_run_week_without_a_data_interval_is_the_monday_of_run_after():
+    # A manual trigger with no logical date gets no data interval: data_interval_end is None.
+    assert tracker.run_week(None, datetime(2026, 10, 7, 9, 41, tzinfo=timezone.utc)) == date(2026, 10, 5)
+    assert tracker.run_week(datetime(2026, 10, 12, tzinfo=timezone.utc),
+                            datetime(2026, 10, 14, tzinfo=timezone.utc)) == date(2026, 10, 12)
 
 
 def test_nautoexpress():

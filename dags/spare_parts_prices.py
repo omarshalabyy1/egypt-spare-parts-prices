@@ -2,7 +2,8 @@
 parsed offers into silver, match them to our parts, rebuild the gold star, and email an alert where
 a competitor is cheaper.
 
-Each run covers one week (its data interval); run_week is the Monday the interval ends on. Web pages
+Each run covers one week (its data interval); run_week is the Monday the interval ends on (a manual
+run with no logical date has no interval: the Monday of the day it was triggered). Web pages
 only show today's price, so the past cannot be scraped: start_date is one week back, so catchup
 starts exactly one run (run_week 2026-10-05) and from then on one run a week.
 """
@@ -29,12 +30,12 @@ def spare_parts_prices():
         tracker.load_reference()
 
     @task
-    def fetch_pages(seller_id, data_interval_end=None):
-        tracker.fetch_pages(seller_id, tracker.week_of(data_interval_end.date()))
+    def fetch_pages(seller_id, data_interval_end=None, dag_run=None):
+        tracker.fetch_pages(seller_id, tracker.run_week(data_interval_end, dag_run.run_after))
 
     @task
-    def load_silver(data_interval_end=None):
-        tracker.load_silver(tracker.week_of(data_interval_end.date()))
+    def load_silver(data_interval_end=None, dag_run=None):
+        tracker.load_silver(tracker.run_week(data_interval_end, dag_run.run_after))
 
     @task
     def match():
@@ -45,8 +46,8 @@ def spare_parts_prices():
         tracker.build_gold()
 
     @task
-    def send_alert(data_interval_end=None):
-        tracker.send_alert(tracker.week_of(data_interval_end.date()))
+    def send_alert(data_interval_end=None, dag_run=None):
+        tracker.send_alert(tracker.run_week(data_interval_end, dag_run.run_after))
 
     # One fetch task per site, run side by side; each keeps its own one-request-per-3-seconds pace.
     fetched = fetch_pages.expand(seller_id=list(tracker.SCRAPERS))

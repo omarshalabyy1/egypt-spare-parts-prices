@@ -96,26 +96,33 @@ fields, the theme, and the numbers each card must show.
 
 ## ▶️ Run it
 
-You need Docker Desktop.
+You need Docker Desktop. Two checkouts of this repo cannot run side by side: the Compose project
+name, its volumes and the ports 5450 and 8100 are fixed.
 
 ```bash
 git clone https://github.com/omarshalabyy1/egypt-spare-parts-prices
 cd egypt-spare-parts-prices
 cp .env.example .env          # set WAREHOUSE_PASSWORD; the Gmail lines are optional
 docker compose up -d --build  # Airflow http://127.0.0.1:8100, warehouse localhost:5450
+curl http://127.0.0.1:8100/api/v2/monitor/health  # wait until the scheduler shows healthy, about a minute
+docker compose exec airflow airflow dags unpause spare_parts_prices  # or unpause it in Airflow's page
 ```
 
-Open Airflow at http://127.0.0.1:8100 and unpause `spare_parts_prices`. It runs once a week from
-then on. A full week's run takes about <!--n:run_minutes-->185<!--/n--> minutes; Zait and Filters is the long one
-(about <!--n:fetch_longest_minutes-->180<!--/n--> minutes of it).
+Once unpaused, the first run starts at once, for the week ending 2026-10-05, then once a week. A
+fresh clone replays the committed pages under `data/raw/`, makes no request, and rebuilds in a few
+minutes. A live week is bound by its slowest seller, as the sellers are fetched side by side: Zait
+and Filters, about <!--n:fetch_longest_minutes-->180<!--/n--> minutes.
 
-Then the numbers and the tests:
+Then the tests and the numbers:
 
 ```bash
-pip install -r analysis/requirements.txt
-jupyter lab analysis/analysis.ipynb
+pip install -r requirements.txt -r analysis/requirements.txt pytest
+export $(grep ^WAREHOUSE_PASSWORD= .env)  # without it the 3 warehouse tests skip
 python -m pytest
+jupyter lab analysis/analysis.ipynb
 ```
+
+The notebook needs the warehouse up, and it rewrites README.md, analysis/numbers.json and docs/*.
 
 For a seller that only opens in a visible browser, run `python scripts/fetch_with_browser.py <seller_id>`:
 you clear any challenge, login or cookie banner yourself in the window, and the session is kept in

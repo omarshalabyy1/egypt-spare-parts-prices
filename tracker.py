@@ -39,6 +39,12 @@ def week_of(day):
     return day - timedelta(days=day.weekday())
 
 
+def run_week(data_interval_end, run_after):
+    """The run_week of a DAG run: the Monday of its data interval's end. A manual run triggered with
+    no logical date has no data interval, so it takes the Monday of when it was triggered (run_after)."""
+    return week_of((data_interval_end or run_after).date())
+
+
 def connect():
     return psycopg.connect(
         host=os.environ.get("WAREHOUSE_HOST", "localhost"),
