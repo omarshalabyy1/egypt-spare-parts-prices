@@ -11,7 +11,7 @@ Counts: offers with a `car_key` out of the seller's offers in silver, run week 2
 | Seller | How it states fitment | car_key |
 |---|---|---|
 | Zait and Filters | Arabic make, model and every model year in the title (`كيا بيكانتو 2012 2013 ... 2018`) | 3,458 of 3,488 |
-| Auto Spare | Arabic make and model in the title, often a chassis code (`النترا MD`, `صني N17`), rarely years | 7,668 of 9,981 |
+| Auto Spare | Arabic make and model in the title, often a chassis code (`النترا MD`, `صني N17`), rarely years | 7,666 of 9,981 |
 | Pringi | The site's own car field (its "brand" is the car make) and `model موديل (from – to)` in the title | 1,267 of 1,308 |
 | Tawfiqia | Arabic make and model in the title, sometimes years (`2004 / 2013`) | 1,782 of 3,628 |
 | Your Parts | The site's car field `make model (from - to)`, appended to the title | 139 of 283 |
@@ -23,4 +23,4 @@ Counts: offers with a `car_key` out of the seller's offers in silver, run week 2
 | Spare Zone | A model without its make (`انسيجنيا`, `IBIZA 2008`); wipers, plugs and oils | 17 of 124 |
 | Fit and Fix | Batteries and oils name no car; brake pads name `Hyundai Elantra (2007-2011)` | 10 of 167 |
 | Garage ILLA | Oils and batteries name no car; a few filters name the car in Arabic | 4 of 65 |
-| All sellers | | 16,797 of 28,825 |
+| All sellers | | 16,795 of 28,825 |
