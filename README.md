@@ -52,31 +52,21 @@ competitor below you is an undercut.
 
 ## 📈 The result
 
-**<!--n:parts_below_pct-->86.9<!--/n-->% of our <!--n:parts-->781<!--/n--> parts have an Egyptian seller at least 5%
-below the market's middle price:** <!--n:parts_below_part_number-->96<!--/n--> of the
-<!--n:parts_part_number-->154<!--/n--> parts matched by part number, and <!--n:parts_below_type_model-->583<!--/n--> of
-the <!--n:parts_type_model-->627<!--/n--> matched by part type and car. Our price is made up: the median of the sellers'
-comparable prices. Every number below comes from [the notebook](analysis/analysis.ipynb).
+**<!--n:parts_below_part_number-->96<!--/n--> of the <!--n:parts_part_number-->154<!--/n--> parts sold under the same part number by
+two sellers or more have one at least 5% below the market's middle price**
+(<!--n:parts_below_part_number_pct-->62.3<!--/n-->%). Our price is made up: the median of the sellers' comparable prices.
+Every number below comes from [the notebook](analysis/analysis.ipynb).
 
-- **<!--n:key_parts_below-->157<!--/n--> of the <!--n:key_parts-->157<!--/n--> key parts** have such a seller. At the
-  cheapest one, a part costs a median **<!--n:undercut_gap_median_pct-->40.0<!--/n-->% less** than our price
-  (<!--n:undercut_gap_median_pct_part_number-->27.2<!--/n-->% by part number,
-  <!--n:undercut_gap_median_pct_type_model-->42.9<!--/n-->% by part type and car).
-- **Shopping around pays:** in the median part the dearest seller is
-  **<!--n:spread_median_pct-->92.8<!--/n-->% above the cheapest** (<!--n:spread_groups-->624<!--/n--> parts with 3
-  prices or more at 2 sellers or more): <!--n:spread_median_pct_part_number-->42.1<!--/n-->% for the same part number,
-  <!--n:spread_median_pct_type_model-->106.2<!--/n-->% for the same part type and car, where brands mix. The most for
-  <!--n:spread_top_family-->wiper<!--/n-->s (<!--n:spread_top_family_pct-->128.9<!--/n-->%).
-- **<!--n:leader-->Pringi<!--/n--> is the cheapest** in **<!--n:leader_share_pct-->78.0<!--/n-->%** of the
-  <!--n:leader_parts-->59<!--/n--> parts it sells, at a median <!--n:leader_below_median_pct-->32.6<!--/n-->% below
-  the market's middle price. Auto Spare, which sells <!--n:compete_parts_autospare-->572<!--/n--> of them, is the
-  cheapest in <!--n:lead_share_autospare_pct-->50.7<!--/n-->%.
-- **Genuine brands cost more:** a median **<!--n:brand_premium_median_pct-->44.8<!--/n-->%** above aftermarket
-  brands for the same part type and car (<!--n:brand_groups-->224<!--/n--> parts with both); brake pads
-  <!--n:brand_premium_median_pct_brake_pad-->158.4<!--/n-->%.
+- **At the cheapest seller,** a part sold under the same part number costs a median
+  **<!--n:undercut_gap_median_pct_part_number-->27.2<!--/n-->% less** than our price.
+- **Shopping around pays:** for the same part number, the dearest seller is a median
+  **<!--n:spread_median_pct_part_number-->42.1<!--/n-->% above the cheapest**
+  (<!--n:spread_groups_part_number-->64<!--/n--> parts with 3 prices or more at 2 sellers or more).
 - **Which cars:** <!--n:offers_with_car_pct-->58.3<!--/n-->% of the prices name the car,
   <!--n:car_models-->88<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
   <!--n:top_model-->Hyundai Elantra<!--/n--> (<!--n:top_model_offers-->776<!--/n--> prices).
+
+Comparisons of the same part type for the same car are being tightened and are not shown yet.
 
 **What one weekly run reads:** <!--n:offers-->28,825<!--/n--> prices from <!--n:sellers-->13<!--/n--> Egyptian
 sellers on <!--n:pages-->4,754<!--/n--> pages, each page kept. <!--n:quarantined-->1,094<!--/n--> rows were set aside
@@ -88,12 +78,7 @@ more: <!--n:shared_belt_codes-->113<!--/n--> belts, <!--n:shared_filter_codes-->
 cheapest (the picture above). Price changes week over week start with the second run week.
 
 <p align="center">
-  <img width="100%" src="docs/price-leadership.png" alt="Share of the parts each seller sells where it is the cheapest, with its median price index against the market's middle price">
-</p>
-
-<p align="center">
-  <img width="49%" src="docs/spread-by-family.png" alt="The dearest seller's price over the cheapest in the median part, by part family">
-  <img width="49%" src="docs/brand-premium.png" alt="Genuine brands over aftermarket brands for the same part type and car, median part, by family">
+  <img width="100%" src="docs/offers-by-car.png" alt="Prices by car model, the 15 most listed of 88, Hyundai Elantra first">
 </p>
 
 ## 🧰 The product
