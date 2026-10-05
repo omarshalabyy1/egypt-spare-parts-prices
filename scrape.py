@@ -117,6 +117,20 @@ def maker_code(sku):
                 and not re.fullmatch(r"\d+EG\d+", sku))
 
 
+def part_code(text):
+    """A seller's part number cleaned to the code alone, or None if it is not one: '29934 (FEBI)' ->
+    '29934', '0 242 129 522--BOSCH' -> '0 242 129 522', '04E109119C  S' -> '04E109119C'; a text with a
+    word in it ('HX320W50 SHELL', 'DIN 105 AGM SILVER') is a description, not a code."""
+    text = re.sub(r"\([^)]*\)|--.*$", " ", (text or "").split(",")[0])
+    words = text.split()
+    if len(words) > 1 and re.fullmatch(r"[A-Za-z]", words[-1]):
+        words = words[:-1]  # a trailing one-letter marker
+    code = " ".join(words)
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9 .\-/]{2,24}", code) or not re.search(r"\d", code):
+        return None
+    return None if any(re.fullmatch(r"[A-Za-z]{3,}", w) for w in words) else code
+
+
 def check(row):
     """The schema check for a parsed offer: None if it is good, else the reason it is not."""
     if not isinstance(row.get("title"), str) or not row["title"].strip():

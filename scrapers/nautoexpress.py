@@ -32,6 +32,7 @@ def parse(body, url):
             "is_discounted": bool(price and was and was > price),
             "url": f"{base}/products/{quote(p['handle'])}",
             "brand": (p.get("vendor") or "").strip() or None,
-            "part_no": (variant.get("sku") or "").strip() or None,
+            "part_no": scrape.part_code(variant.get("sku")),
+            "in_stock": variant.get("available"),
         })
     return offers, scrape.next_page(url) if products else None

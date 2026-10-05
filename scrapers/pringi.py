@@ -33,5 +33,7 @@ def parse(body, url):
             "url": p["permalink"],
             "brand": None,
             "part_no": None,
+            "in_stock": p.get("is_in_stock"),
+            "car_make": (p.get("brands") or [{}])[0].get("name"),  # the shop's "brand" is the car's make
         })
     return offers, scrape.next_page(url) if products else None

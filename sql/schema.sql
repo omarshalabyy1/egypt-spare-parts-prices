@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS offer (            -- one row per listing as one sell
 -- the match step refines. Added after the first create, so a warehouse made earlier gets it too.
 ALTER TABLE offer ADD COLUMN IF NOT EXISTS family text NOT NULL CHECK (family IN
     ('filter', 'brake pad', 'spark plug', 'battery', 'belt', 'bulb', 'wiper', 'oil'));
+-- The car the listing is for, as the site states it (a make, or a model with years); NULL = not stated.
+ALTER TABLE offer ADD COLUMN IF NOT EXISTS car_make text;
 
 CREATE TABLE IF NOT EXISTS price_observation ( -- one row per offer per day seen; never updated or deleted
     seller_id     text NOT NULL,
@@ -52,6 +54,9 @@ CREATE TABLE IF NOT EXISTS price_observation ( -- one row per offer per day seen
     PRIMARY KEY (seller_id, listing_key, observed_on),
     FOREIGN KEY (seller_id, listing_key) REFERENCES offer
 );
+
+-- Whether the site showed the offer in stock that day; NULL = the site does not say.
+ALTER TABLE price_observation ADD COLUMN IF NOT EXISTS in_stock boolean;
 
 -- Append-only is enforced, not hoped for: an UPDATE or DELETE on the price history fails loudly.
 CREATE OR REPLACE FUNCTION price_history_is_append_only() RETURNS trigger LANGUAGE plpgsql AS $$

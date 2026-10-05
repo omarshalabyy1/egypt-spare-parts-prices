@@ -9,6 +9,8 @@ from urllib.parse import unquote, urlsplit
 
 from bs4 import BeautifulSoup
 
+import scrape
+
 BASE = "https://zaitandfilters.com"
 PAGES = [(None, f"{BASE}/sitemap.xml")]
 MAX_PAGES = 5000  # the sitemap fans out to about 3,500 product pages
@@ -48,6 +50,7 @@ def parse(body, url):
         "is_discounted": False,  # JSON-LD carries no previous price
         "url": url,
         "brand": (product.get("brand") or {}).get("name"),
-        "part_no": mpn if mpn and mpn != sku else None,  # mpn equal to the shop's own sku is not a maker code
+        "part_no": scrape.part_code(mpn) if mpn and mpn != sku else None,  # mpn equal to the shop's sku is not a maker code
+        "in_stock": {"InStock": True, "OutOfStock": False}.get(str(offer.get("availability", "")).rsplit("/", 1)[-1]),
         "family": family(url),
     }], None

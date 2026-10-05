@@ -78,7 +78,7 @@ def walk(scraper, first, read):
         elif following:
             queue.append((following, False))
     if queue:
-        print(f"stopped at the {cap}-page cap of {first}, {len(queue)} pages left")
+        print(f"PAGE CAP: stopped at {cap} pages of {first}, {len(queue)} more were linked")
 
 
 def fetch_pages(seller_id, run_week):
@@ -171,10 +171,10 @@ def save(conn, rows, run_week):
     (never overwritten). Returns (saved, quarantined).
 
     Each row: seller_id, listing_key, family, title, brand, part_no, url, price (Decimal), currency,
-    is_discounted, observed_on, fetched_at. observed_on and fetched_at must come from the page's
+    is_discounted, observed_on, fetched_at, and optionally in_stock and car_make (None = not stated). observed_on and fetched_at must come from the page's
     index.jsonl line, not the clock, so a rerun on the cached pages adds nothing."""
     good = []
-    for row in rows:
+    for row in ({"in_stock": None, "car_make": None, **r} for r in rows):
         reason = scrape.check(row)
         if reason:
             quarantine(conn, row["seller_id"], run_week, row.get("url"), reason, row)
@@ -184,19 +184,19 @@ def save(conn, rows, run_week):
         raise ValueError(f"{len(rows)} rows parsed, none passed the check: a parser is broken")
     cur = conn.cursor()
     cur.executemany(
-        "INSERT INTO offer (seller_id, listing_key, family, title, brand, part_no, url, first_seen, last_seen)"
-        " VALUES (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s, %(url)s,"
-        " %(observed_on)s, %(observed_on)s)"
-        " ON CONFLICT (seller_id, listing_key) DO UPDATE SET family = EXCLUDED.family,"
+        "INSERT INTO offer (seller_id, listing_key, family, title, brand, part_no, car_make, url, first_seen,"
+        " last_seen) VALUES (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s,"
+        " %(car_make)s, %(url)s, %(observed_on)s, %(observed_on)s)"
+        " ON CONFLICT (seller_id, listing_key) DO UPDATE SET family = EXCLUDED.family, car_make = EXCLUDED.car_make,"
         " title = EXCLUDED.title, brand = EXCLUDED.brand,"
         " part_no = EXCLUDED.part_no, url = EXCLUDED.url, first_seen = least(offer.first_seen, EXCLUDED.first_seen),"
         " last_seen = greatest(offer.last_seen, EXCLUDED.last_seen)",
         good,
     )
     cur.executemany(
-        "INSERT INTO price_observation (seller_id, listing_key, observed_on, price, is_discounted, run_week,"
-        " fetched_at) VALUES (%(seller_id)s, %(listing_key)s, %(observed_on)s, %(price)s, %(is_discounted)s,"
-        " %(run_week)s, %(fetched_at)s) ON CONFLICT DO NOTHING",
+        "INSERT INTO price_observation (seller_id, listing_key, observed_on, price, is_discounted, in_stock,"
+        " run_week, fetched_at) VALUES (%(seller_id)s, %(listing_key)s, %(observed_on)s, %(price)s,"
+        " %(is_discounted)s, %(in_stock)s, %(run_week)s, %(fetched_at)s) ON CONFLICT DO NOTHING",
         [{**r, "run_week": run_week} for r in good],
     )
     return len(good), len(rows) - len(good)

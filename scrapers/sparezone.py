@@ -1,6 +1,7 @@
 """Spare Zone (sparezone-eg.com): server-rendered HTML, 24 cards a page, prices like '5,175 EGP'."""
 
-from urllib.parse import urljoin, urlsplit
+import re
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
@@ -19,8 +20,9 @@ def parse(body, url):
         price = card.select_one("div.fs-14 .fw-700")
         price_text = price.get_text(" ", strip=True) if price else ""
         href = urljoin(url, link["href"]) if link and link.get("href") else None
+        product_id = re.search(r"showAddToCartModal\((\d+)\)", str(card))  # the site's product id
         offers.append({
-            "listing_key": urlsplit(href).path if href else None,
+            "listing_key": product_id.group(1) if product_id else None,
             "title": (link.get_text(" ", strip=True) or link.get("title")) if link else None,
             "price": scrape.money(price_text),
             "currency": "EGP" if "EGP" in price_text else None,

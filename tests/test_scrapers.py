@@ -49,6 +49,10 @@ def test_nautoexpress():
     assert (first["title"], first["price"], first["brand"], first["part_no"], first["is_discounted"]) == (
         "Automatic Transmission Oil 1 Liter For Peugeot - Citroen", Decimal("1338.36"), "PSA GROUP", "P9730AE", False)
     assert by_key(offers)["9238897164451"]["is_discounted"]  # 3111.06, was 3274.08
+    assert by_key(offers)["8505182159011"]["part_no"] == "HX515W50"
+    assert by_key(offers)["8505191956643"]["part_no"] is None  # 'HX320W50 SHELL' is a description, not a code
+    assert by_key(offers)["8042723115171"]["part_no"] == "29934"  # '29934 (FEBI)'
+    assert all(o["in_stock"] is not None for o in offers)
     assert next_url == url.replace("page=1", "page=2")
     assert nautoexpress.parse(b'{"products": []}', next_url) == ([], None)
 
@@ -59,7 +63,13 @@ def test_garageilla_keeps_only_maker_codes():
     assert len(offers) == 25 and all(scrape.check(o) is None for o in offers)
     first = by_key(offers)["9831703249191"]
     assert (first["price"], first["brand"], first["part_no"]) == (Decimal("810.00"), "التعاون", None)
+    assert garageilla.parse(json.dumps({"products": [{**json.loads(page("garageilla.json"))["products"][0],
+                                                      "title": "بطارية كلوريد جولد TD70R (يمين)"}]}).encode(), url)[0][0][
+        "part_no"] == "TD70R"  # internal SKU, so the code in the title
     assert next_url.endswith("page=2") and garageilla.parse(b'{"products": []}', next_url) == ([], None)
+    assert [scrape.part_code(s) for s in ("29934 (FEBI)", "0 242 129 522--BOSCH", "04E109119C  S", "HX320W50 SHELL",
+                                         "DIN 105 AGM SILVER", "JC-218, JC-560", "Default")] == [
+        "29934", "0 242 129 522", "04E109119C", None, None, "JC-218", None]
     assert [scrape.maker_code(s) for s in ("OC90", "HX515W50", "29934", "1020EG07", "102003012EG007", None)] == [
         True, True, False, False, False, False]
 
@@ -79,8 +89,8 @@ def test_sparezone():
     url = sparezone.PAGES[0][1]
     offers, next_url = sparezone.parse(page("sparezone.html"), url)
     assert len(offers) == 24 and all(scrape.check(o) is None for o in offers)
-    assert by_key(offers)["/product/bogyhat-mg-sayk"]["price"] == Decimal("990")
-    assert by_key(offers)["/product/mbrd-ftys-bmw-f25-fyby"]["price"] == Decimal("5175")
+    assert by_key(offers)["3575"]["price"] == Decimal("990")  # the site's product id, not the page path
+    assert by_key(offers)["3471"]["price"] == Decimal("5175")
     assert next_url == "https://sparezone-eg.com/brand/spark-plugs?page=2"
     # A last page: the same page without its next link (a modified copy, not a real last page).
     assert sparezone.parse(page("sparezone.html").replace(b'rel="next"', b""), url)[1] is None
@@ -93,6 +103,8 @@ def test_autospare():
     assert by_key(offers)["11855"]["title"] == "طقم بوجيهات دابل اريديوم سكودا اوكتافيا A7"
     assert by_key(offers)["11855"]["price"] == Decimal("2000")
     assert [o["listing_key"] for o in offers if o["is_discounted"]] == ["11623"]  # 2950, struck-out price shown
+    assert by_key(offers)["11855"]["brand"] == "BOSCH" and by_key(offers)["11571"]["brand"] is None  # chip with no brand
+    assert all(o["in_stock"] is True for o in offers)  # no "out of stock" overlay on this page
     assert next_url == autospare.PAGES[1][1] + "?page=60"
     # A last page: the same page without its next link (a modified copy, not a real last page).
     assert autospare.parse(page("autospare.html").replace(b'rel="next"', b""), url)[1] is None
@@ -230,7 +242,7 @@ def test_fetch_stops_at_the_page_cap(seller, monkeypatch, capsys):
     calls = []
     monkeypatch.setattr(scrape, "fetch", lambda url, s, w: calls.append(url) or b"[]")
     tracker.fetch_pages("test-seller", "2026-10-05")
-    assert len(calls) == tracker.MAX_PAGES and "page cap" in capsys.readouterr().out
+    assert len(calls) == tracker.MAX_PAGES and "PAGE CAP" in capsys.readouterr().out
 
 
 def test_sitemap_fans_out_and_a_gone_product_is_only_counted(seller, monkeypatch):

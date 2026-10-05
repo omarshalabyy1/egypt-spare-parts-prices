@@ -24,7 +24,7 @@ A pipeline that runs once a week on its own, reads every competitor's prices, an
 price it ever sees.
 
 <p align="center">
-  <img width="100%" src="docs/how-it-works.svg" alt="How it works: 01 Scrape, each seller site read politely and every page kept; 02 Check, every row schema-checked, bad rows to quarantine; 03 Store, every price kept with its date, append-only; 04 Match, each offer to our part by part number; 05 Alert, an email when a competitor undercuts us; 06 Report, Power BI gaps and undercuts by part.">
+  <img width="100%" src="docs/how-it-works.svg" alt="How it works: 01 Scrape, each seller site read page by page and every page kept; 02 Check, every row schema-checked, bad rows to quarantine; 03 Store, every price kept with its date, append-only; 04 Match, each offer to our part by part number; 05 Alert, an email when a competitor undercuts us; 06 Report, Power BI gaps and undercuts by part.">
 </p>
 
 1. **Scrape.** One request every 3 seconds per site, with a named User-Agent and retries after
@@ -42,7 +42,7 @@ price it ever sees.
 ### 🔁 The mental model: a funnel, every week
 
 <p align="center">
-  <img width="100%" src="docs/scrape-funnel.svg" alt="The scraping funnel: seller sites, polite fetch, pages cached gzipped (bronze), parse, offers, schema check with a quarantine branch, match by part number, price gap and undercut, weekly alert and Power BI; a dashed loop goes back to the fetch next Monday.">
+  <img width="100%" src="docs/scrape-funnel.svg" alt="The scraping funnel: seller sites, fetch (named User-Agent, one request every 3 s), pages cached gzipped (bronze), parse, offers, schema check with a quarantine branch, match by part number, price gap and undercut, weekly alert and Power BI; a dashed loop goes back to the fetch next Monday.">
 </p>
 
 Each seller is one small module with the same two parts: a `PAGES` list of where its parts are
@@ -148,7 +148,7 @@ pip install -r requirements.txt pytest && python -m pytest
 | Where | What |
 |---|---|
 | [tracker.py](tracker.py) | The weekly steps: load reference data, fetch, parse, match, alert; one function each |
-| [scrape.py](scrape.py) | The shared polite fetcher, the page cache and the schema check |
+| [scrape.py](scrape.py) | The shared fetcher, the page cache and the schema check |
 | [scrapers/](scrapers/) | One module per seller: its `PAGES` and its `parse` |
 | [dags/spare_parts_prices.py](dags/spare_parts_prices.py) | The weekly Airflow DAG, one fetch task per seller side by side |
 | [sql/schema.sql](sql/schema.sql) | Tables, the append-only price history, and the gap, undercut and change views |

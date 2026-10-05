@@ -22,7 +22,7 @@ PAGES = [(family, f"{BASE}/shop/category/{slug}") for family, slug in (
 def part_no(title):
     """The code in the title's last brackets, e.g. 'Spark Plug ... (SP1047)' -> 'SP1047'."""
     found = re.search(r"\(([^()]+)\)\s*$", title or "")
-    return found.group(1).strip() if found and not found.group(1).lower().startswith("made in") else None
+    return scrape.part_code(found.group(1)) if found and not found.group(1).lower().startswith("made in") else None
 
 
 def parse(body, url):
@@ -34,6 +34,7 @@ def parse(body, url):
         price = card.select_one(".product_price .oe_currency_value")
         href = urljoin(url, link["href"]) if link and link.get("href") else None
         name = title.get_text(" ", strip=True) if title else None
+        ribbon = card.select_one(".o_ribbons")
         offers.append({
             "listing_key": urlsplit(href).path if href else None,
             "title": name,
@@ -43,6 +44,7 @@ def parse(body, url):
             "url": href,
             "brand": None,
             "part_no": part_no(name),
+            "in_stock": False if ribbon and "out of stock" in ribbon.get_text().lower() else None,
         })
     pages = soup.select_one("ul.pagination")
     last = pages.select("li")[-1] if pages else None  # the "next" arrow, disabled on the last page

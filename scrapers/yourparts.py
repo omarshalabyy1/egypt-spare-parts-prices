@@ -29,5 +29,6 @@ def parse(body, url):
             "url": f"https://www.yourparts.com/products/{p['id']}",
             "brand": (brand.get("name") if isinstance(brand, dict) else brand) or None,
             "part_no": None,
+            "car_make": p.get("car_str") or None,  # the car the part fits, as the site names it
         })
     return offers, page.get("next")

@@ -36,6 +36,7 @@ def parse(body, url):
             "url": f"https://www.fitandfix.com/products/{p['url_key']}",
             "brand": None,
             "part_no": None,
+            "in_stock": p.get("stock_status") == "IN_STOCK",
         })
     info = products["page_info"]
     uid = re.search(r'category_uid:\{eq:"([^"]+)"\}', parse_qs(urlsplit(url).query)["query"][0]).group(1)
