@@ -21,6 +21,9 @@ One slicer, **Match**, sits on every page and decides which matches the gap and 
   mix.
 - Cleared: both together, the way the notebook's headline numbers count them.
 
+Same part type, same car is shown for exploration only: a hand audit of 30 random groups found 13
+fully clean (seed 20261005); the exact part-number grade was 15 of 15 clean.
+
 A label at the top of every page says which match is shown. The offer counts and the offer charts
 always count every offer, matched or not.
 
