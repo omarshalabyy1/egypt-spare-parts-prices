@@ -26,7 +26,7 @@
 
   <text x="50" y="66" class="tag">PROJECT · SPARE PARTS PRICES</text>
   <text x="50" y="118" class="name">Egypt spare parts price tracker</text>
-  <text x="50" y="160" class="result"><tspan class="hot"><!--n:offers-->28,825<!--/n--> prices</tspan> from <tspan class="hot"><!--n:sellers-->13<!--/n--> Egyptian sellers</tspan> in one weekly run</text>
+  <text x="50" y="160" class="result"><tspan class="hot"><!--n:offers-->405<!--/n--> prices</tspan> from <tspan class="hot"><!--n:sellers-->9<!--/n--> Egyptian sellers</tspan> in one weekly run</text>
   <text x="50" y="216" class="tag">PYTHON · AIRFLOW · POSTGRESQL · POWER BI</text>
 
   <!-- the same 6PK2360 belt (single piece) at three sellers on one EGP line, run week 2026-10-05: Pringi 427.00,
