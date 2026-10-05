@@ -77,7 +77,7 @@ Every number below comes from [the notebook](analysis/analysis.ipynb).
   (<!--n:quarantined_getradingeg-->1,052<!--/n--> of <!--n:quarantined-->1,094<!--/n-->) GE Trading
   listings with no price or a placeholder price.
 
-Comparisons of the same part type for the same car are being tightened and are not shown yet.
+Comparisons of the same part type for the same car are not shown: they did not pass a hand audit of match precision (see the notebook).
 
 **What one weekly run reads:** <!--n:offers-->28,825<!--/n--> prices from <!--n:sellers-->13<!--/n--> Egyptian
 sellers on <!--n:pages-->4,754<!--/n--> pages, each page kept. <!--n:quarantined-->1,094<!--/n--> rows were set aside
