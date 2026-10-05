@@ -16,10 +16,11 @@ from scrapers import (amazon, autospare, egycarparts, fitandfix, garageilla, get
                       pringi, sparezone, tawfiqia, yourparts, zaitandfilters)
 
 ROOT = Path(__file__).parent
-# One scraper per competitor site, keyed by its seller_id in data/sellers.csv.
+# One scraper per competitor site, keyed by its seller_id in data/sellers.csv. The longest fetch comes
+# first, so it starts in the first wave of fetch tasks.
 SCRAPERS = {m.__name__.split(".")[-1]: m for m in (
-    amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress, pringi, sparezone,
-    tawfiqia, yourparts, zaitandfilters)}
+    zaitandfilters, amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress,
+    pringi, sparezone, tawfiqia, yourparts)}
 MAX_PAGES = 250  # per PAGES entry; a listing longer than this is cut off, with a log line
 
 

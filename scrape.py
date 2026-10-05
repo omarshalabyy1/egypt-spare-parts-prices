@@ -1,4 +1,4 @@
-"""The shared polite fetcher every site's scraper uses, and the schema check for a parsed offer.
+"""The shared fetcher every site's scraper uses, and the schema check for a parsed offer.
 
 Every page fetched is kept gzipped under data/raw/<seller_id>/<run_week>/, with one index.jsonl line
 per request. A page already kept for that week is read from disk, never fetched again, so a fresh
