@@ -24,12 +24,17 @@ def has(text, words):
 # Checked in this order; the first type whose word is in the title wins, unless one of its "not" words is.
 PART_TYPES = (
     ("filter", ("فلتر", "فلاتر", "filter", "filters"), ("سيل", "seal", "مفتاح", "wrench", "غطاء", "cap")),
+    # Drum-brake shoes are their own type: "تيل خلفي قباقيب" names pads (تيل) but sells shoes.
+    ("brake shoe", ("قباقيب", "قبقاب", "brake shoe", "brake shoes", "shoe", "shoes"), ()),
     ("brake pad", ("تيل", "فحمات", "وسادات الفرامل", "وسادات فرامل", "brake pad", "brake pads", "pads"),
-     ("حساس", "sensor")),
-    ("spark plug", ("بوجي", "بوجيه", "بوجيهات", "بواجي", "شمعه الاشعال", "شمعات الاشعال", "spark plug", "spark plugs"), ()),
+     ("حساس", "sensor", "cover", "غطاء", "pedal", "دواسه", "wrench", "مفتاح")),  # accessories and tools
+    ("spark plug", ("بوجي", "بوجيه", "بوجيهات", "بواجي", "شمعه الاشعال", "شمعات الاشعال", "spark plug", "spark plugs"),
+     ("سلك", "سلوك", "lead", "leads", "cable", "cables", "wire", "wires")),  # ignition leads
     ("battery", ("بطاريه", "بطارية", "بطاريات", "battery"),
      ("كابل", "شاحن", "cable", "charger", "inverter", "tester", "clamp", "terminal", "jump", "starter")),
-    ("belt", ("سير", "سيور", "belt", "belts", r"\d{1,2} ?pk ?\d{3,4}"), ("clamp", "gt2")),
+    ("belt", ("سير", "سيور", "belt", "belts", r"\d{1,2} ?pk ?\d{3,4}"),
+     ("clamp", "gt2", "بكره", "بكرات", "شداد", "بليه", "بالبليه", "رولمان", "جنزير", "pulley", "tensioner",
+      "bearing", "chain", "idler")),  # the belt's pulley, tensioner or bearing, or a timing chain
     ("wiper", ("مساحه", "مساحات", "ريش", "ريشه", "wiper", "wipers"), ("موتور", "motor", "ذراع", "arm", "cap")),
     ("bulb", ("لمبه", "لمبات", "bulb", "bulbs", "lamp"), ()),
     ("oil", ("زيت", "زيوت", "oil", "oils"),
@@ -37,7 +42,7 @@ PART_TYPES = (
 )
 # A filter's kind, checked in this order (an air-conditioning filter names air too).
 FILTER_KINDS = (
-    ("cabin filter", ("تكييف", "مكيف", "التكييف", "cabin", "a/c", "ac", "air condition", "air conditioning", "pollen")),
+    ("cabin filter", ("تكييف", "تكيف", "مكيف", "التكييف", "cabin", "a/c", "ac", "air condition", "air conditioning", "pollen")),
     ("fuel filter", ("بنزين", "جاز", "سولار", "ديزل", "وقود", "الوقود", "fuel", "diesel", "petrol", "gasoline")),
     ("oil filter", ("زيت", "الزيت", "oil")),
     ("air filter", ("هواء", "الهواء", "air")),
@@ -45,7 +50,7 @@ FILTER_KINDS = (
 GEARBOX = ("فتيس", "الفتيس", "ناقل الحركه", "transmission", "gearbox", "atf")
 # Words that make a listing a set of several pieces (a set of 4 plugs), not one piece. Not مجموعه:
 # "سير مجموعه" is a kind of belt.
-SET_WORDS = ("طقم", "اطقم", "set", "sets", "kit", "pair", "زوج", r"عدد ?[2-9]", r"[2-9]\d? ?(pcs|pieces|قطع)",
+SET_WORDS = ("طقم", "الطقم", "اطقم", "set", "sets", "kit", "pair", "زوج", r"عدد ?[2-9]", r"[2-9]\d? ?(pcs|pieces|قطع)",
              r"x ?[2-9]", r"[2-9] ?x")
 
 
@@ -62,7 +67,8 @@ def part_type(title):
                     return "filter", None, pack
                 return next((kind for kind, w in FILTER_KINDS if has(text, w)), "filter"), None, pack
             if name == "brake pad":  # an axle set is the normal unit: a pad is never a 'set'
-                front, rear = has(text, ("امامي", "اماميه", "front")), has(text, ("خلفي", "خلفيه", "rear"))
+                front = has(text, ("امامي", "اماميه", "الامامي", "الاماميه", "front"))
+                rear = has(text, ("خلفي", "خلفيه", "الخلفي", "الخلفيه", "rear"))
                 return name, "front" if front and not rear else "rear" if rear and not front else None, "single"
             return name, None, pack
     return None, None, pack
@@ -151,6 +157,7 @@ MODELS = {
     # Added from the titles of run week 2026-10-05: the models named 40 times or more.
     ("hyundai", "getz"): ("جيتز", "getz"),
     ("hyundai", "i10"): ("i10",),
+    ("hyundai", "grand i10"): ("grand i10", "جراند i10"),  # its own model, not the i10
     ("hyundai", "i30"): ("i30",),
     ("hyundai", "ix35"): ("ix35",),
     ("hyundai", "creta"): ("كريتا", "creta"),
@@ -194,7 +201,8 @@ MODELS = {
 # ("Spark Plug", "Matrix LED") or an oil's brand (Cruze oil).
 NEEDS_MAKE = ({m for (_, m) in MODELS if m.isdigit() or sum(1 for (_, n) in MODELS if n == m) > 1}
               | {"spark", "rapid", "matrix", "cruze"})
-YEAR = r"(?<![\d.])(19[89]\d|20[0-3]\d)(?![\d.])(?!\s*(?:cc|سي ?سي))"
+# A year stands alone: never inside a part code (28113-F2000) and never an engine size (2000 CC).
+YEAR = r"(?<![\w.])(19[89]\d|20[0-3]\d)(?![\w.])(?!\s*(?:cc|سي ?سي))"
 
 
 def car(title, site_car=None):
@@ -202,10 +210,12 @@ def car(title, site_car=None):
     of them None when not said. A model whose make is not the make named is dropped. Two different
     models named: no model (and a make only if one make is named). Years are kept only with a
     model: the lowest and highest year written."""
-    text = norm(f"{title} {site_car or ''}")
+    text = re.sub(r"spark ?plugs?", " ", norm(f"{title} {site_car or ''}"))  # "Spark Plug" is no Chevrolet Spark
     makes = {m for m, words in MAKES.items() if has(text, words)}
     models = {(make, model) for (make, model), words in MODELS.items() if has(text, words)
               and (make in makes or (not makes and model not in NEEDS_MAKE))}
+    if ("hyundai", "grand i10") in models:
+        models.discard(("hyundai", "i10"))
     if len(models) != 1:
         named = makes | {make for make, _ in models}
         return (named.pop() if len(named) == 1 else None), None, None, None, None
@@ -214,6 +224,23 @@ def car(title, site_car=None):
     year_from, year_to = (years[0], years[-1]) if years else (None, None)
     key = f"{make}-{model}" + (f"-{year_from}-{year_to}" if years else "")
     return make, model, year_from, year_to, key
+
+
+# The generations a title names, for the models whose generations differ in their parts. A title
+# naming no generation, or two, gets none.
+GENERATIONS = {
+    "sunny": {"N16": ("n16",), "N17": ("n17",), "N18": ("n18",)},
+    "elantra": {"XD": ("xd",), "HD": ("hd",), "MD": ("md", "ام دي"), "AD": ("ad",), "CN7": ("cn7",)},
+    "accent": {"RB": ("rb",), "HC": ("hc", "hci")},
+    "cerato": {"LD": ("ld",), "TD": ("td",), "K3": ("k3",)},
+}
+
+
+def generation(title, site_car, model):
+    """The generation code the title names for its model ('N17', 'MD'), or None."""
+    text = norm(f"{title} {site_car or ''}")
+    named = [code for code, words in GENERATIONS.get(model, {}).items() if has(text, words)]
+    return named[0] if len(named) == 1 else None
 
 
 # --- Part code ----------------------------------------------------------------------------------

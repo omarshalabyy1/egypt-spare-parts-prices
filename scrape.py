@@ -141,7 +141,7 @@ def check(row):
         return "listing_key missing"
     price = row.get("price")
     if price is None:
-        return "no price shown"
+        return "price range" if row.get("price_range") else "no price shown"
     if not isinstance(price, Decimal) or not 0 < price < 1_000_000:
         return "price not a Decimal between 0 and 1,000,000"
     if price < 2:

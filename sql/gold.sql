@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS gold.dim_date (    -- one row per day from the first 
 );
 
 CREATE TABLE IF NOT EXISTS gold.fact_price_observation ( -- grain: one offer per run week
-    date_key      integer NOT NULL REFERENCES gold.dim_date,    -- the day of the week's last observation
+    date_key      integer NOT NULL REFERENCES gold.dim_date,    -- the run week (its Monday), from silver's run_week
+    observed_on   date NOT NULL,                                -- the day of the week's last observation
     seller_key    integer NOT NULL REFERENCES gold.dim_seller,
     part_key      integer NOT NULL REFERENCES gold.dim_part,    -- 0 = not one of our parts
     listing_key   text NOT NULL,                                -- degenerate dimension: the seller's product id
@@ -52,7 +53,7 @@ CREATE TABLE IF NOT EXISTS gold.fact_price_observation ( -- grain: one offer per
 -- is left out. gap_egp > 0 means we are dearer.
 CREATE OR REPLACE VIEW gold.price_gap AS
 SELECT DISTINCT ON (p.part_no, s.seller_id)
-       p.part_no, p.name, p.family, p.is_key, s.seller_id, f.listing_key, d.run_week, d.date AS observed_on,
+       p.part_no, p.name, p.family, p.is_key, s.seller_id, f.listing_key, d.run_week, f.observed_on,
        p.our_price, f.price AS their_price, p.our_price - f.price AS gap_egp,
        round((p.our_price - f.price) / p.our_price * 100, 1) AS gap_pct, f.match_grade, f.in_stock
 FROM gold.fact_price_observation f
@@ -79,7 +80,7 @@ SELECT run_week, part_no, name, seller_id, listing_key, observed_on,
        old_price, their_price, our_price, our_price - their_price AS gap_egp,
        round((our_price - their_price) / our_price * 100, 1) AS gap_pct, match_grade
 FROM (
-    SELECT d.run_week, d.date AS observed_on, p.part_no, p.name, p.is_key, p.our_price, s.seller_id, f.listing_key,
+    SELECT d.run_week, f.observed_on, p.part_no, p.name, p.is_key, p.our_price, s.seller_id, f.listing_key,
            f.price AS their_price, f.comparable, f.in_stock, f.match_grade,
            lag(f.price) OVER (PARTITION BY f.seller_key, f.listing_key ORDER BY d.run_week) AS old_price,
            min(d.run_week) OVER (PARTITION BY f.seller_key) AS seller_first_week

@@ -84,3 +84,42 @@ def test_car(title, site_car, expected):
 ])
 def test_part_code(part_no, title, code):
     assert enrich.part_code(part_no, title) == code
+
+
+@pytest.mark.parametrize("title, expected", [
+    ("تيل خلفي قباقيب هيونداي اكسنت 2006 LUXSY", ("brake shoe", None, "single")),  # drum shoes, not pads
+    ("Brake Shoes Set Rear Chevrolet Aveo [Hi Tec] (Made in Korea) (LD07)", ("brake shoe", None, "set")),
+    ("شداد سير دينامو هيونداي النترا", (None, None, "single")),  # a belt's tensioner
+    ("بلية سير كاتينه ثابته اوبل استرا 2004 SCHAEFFLER INA", (None, None, "single")),  # its bearing
+    ("كاتينة جنزير هيونداي فيرنا", (None, None, "single")),  # a timing chain
+    ("Timing Belt Pulley Toyota Corolla", (None, None, "single")),
+    ("طقم سلوك بوجيهات كيا سيراتو LD A-PART", (None, None, "set")),  # ignition leads
+    ("مفتاح تيل فرامل", (None, None, "single")),  # a tool
+    ("فلتر تكيف كربون رينو فلوانس WIX", ("cabin filter", None, "single")),  # تكيف: تكييف misspelt
+    ("وسادات الفرامل الأمامية (هيونداي فيرنا)", ("brake pad", "front", "single")),
+    ("وسادات الفرامل الخلفية (سيات ليون 1)", ("brake pad", "rear", "single")),
+    ("بوجيه الطقم كامل كيا ريو", ("spark plug", None, "set")),
+])
+def test_part_type_audit_rules(title, expected):
+    assert enrich.part_type(title) == expected
+
+
+def test_car_audit_rules():
+    assert enrich.car("NGK Spark Plug Chevrolet Aveo")[:2] == ("chevrolet", "aveo")  # Spark Plug is no Spark
+    assert enrich.car("بوجيه شيفروليه سبارك")[:2] == ("chevrolet", "spark")
+    assert enrich.car("Air Filter Hyundai Elantra AD (28113-F2000)")[2:4] == (None, None)  # no year inside a code
+    assert enrich.car("طقم تيل امامي هيونداي جراند i10")[:2] == ("hyundai", "grand i10")
+    assert enrich.car("طقم تيل امامي هيونداي i10")[:2] == ("hyundai", "i10")
+
+
+@pytest.mark.parametrize("title, model, gen", [
+    ("فلتر هواء كوري نيسان صني N17", "sunny", "N17"),
+    ("ماركة بديلة - فلتر هواء كوري | هيونداي النتراAD (2016 - 2020)", "elantra", "AD"),
+    ("ماستر فرامل عمومى هيونداي النترا ام دي", "elantra", "MD"),
+    ("Brake Pads Set Front Hyundai Accent RB [Hi Q]", "accent", "RB"),
+    ("طقم بوجيهات كيا سيراتو K3 2014 MOBIS", "cerato", "K3"),
+    ("Air Filter Kia Carens / Hyundai Elantra HD MD", "elantra", None),  # two generations: none
+    ("فلتر زيت نيسان صني", "sunny", None),
+])
+def test_generation(title, model, gen):
+    assert enrich.generation(title, None, model) == gen

@@ -9,7 +9,6 @@ priced at the market's median. A real retailer brings its own catalogue instead.
 import csv
 import hashlib
 import math
-import statistics
 from collections import Counter, defaultdict
 from decimal import ROUND_HALF_UP, Decimal
 
@@ -28,10 +27,9 @@ def most_common(values, default=None):
 
 def our_price(found, median):
     """The median price of the group's comparable offers not shown out of stock (all comparable
-    offers if every one is out of stock), rounded to 0.50 EGP."""
+    offers if every one is out of stock), each (seller, title, price) once, rounded to 0.50 EGP."""
     usable = [o for o in found if tracker.comparable(o["price"], median)]
-    prices = [o["price"] for o in usable if o["in_stock"] is not False] or [o["price"] for o in usable]
-    price = statistics.median(prices)
+    price = tracker.median_price([o for o in usable if o["in_stock"] is not False] or usable)
     return max(Decimal("0.50"), (price * 2).quantize(Decimal("1"), ROUND_HALF_UP) / 2).quantize(Decimal("0.01"))
 
 
@@ -52,8 +50,9 @@ def name(grade, key, part_type, family, make, model):
 
 
 def catalogue(offers):
-    """One part per match group. offers: seller_id, listing_key, price (the offer's latest), in_stock,
-    brand, family, part_type, position, pack, car_make, car_model, car_key, part_code. The top 20% of
+    """One part per match group. offers: seller_id, listing_key, title, price (the offer's latest),
+    in_stock, brand, family, part_type, position, pack, car_make, car_model, generation, car_key,
+    part_code. The top 20% of
     groups by number of sellers (ties by number of offers) are key parts."""
     groups = tracker.match_groups(offers)
     medians = tracker.group_medians(offers, groups)
@@ -73,7 +72,7 @@ def catalogue(offers):
             "name": name(grade, key, most_common(o["part_type"] for o in found), most_common(o["family"] for o in found),
                          made[0]["car_make"], made[0]["car_model"]),
             "car_key": car,
-            "our_price": our_price(found, medians[(grade, key)]),
+            "our_price": our_price(found, medians.get((grade, key))),
             "match_grade": grade,
             "match_key": key,
             "sellers": len({o["seller_id"] for o in found}),

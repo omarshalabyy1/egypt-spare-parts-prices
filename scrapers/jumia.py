@@ -30,6 +30,7 @@ def parse(body, url):
             "listing_key": (link.get("data-gtm-id") if link else None) or (urlsplit(href).path if href else None),
             "title": title.get_text(" ", strip=True) if title else None,
             "price": scrape.money(price_text),
+            "price_range": " - " in price_text,  # 'EGP 1,305.00 - EGP 1,485.00': one card, several variants
             "currency": "EGP" if "EGP" in price_text else None,
             "is_discounted": card.select_one("div.old") is not None,
             "url": href,

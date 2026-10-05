@@ -120,6 +120,10 @@ def test_jumia():
     assert next_url == url + "?page=2"
     belts, last = jumia.parse(page("jumia_last.html.gz"), jumia.PAGES[3][1])  # a real one-page listing
     assert len(belts) == 2 and last is None
+    card = ('<article class="prd"><a class="core" href="/p.html" data-gtm-id="X1"></a><h3 class="name">TOTAL Car Oil'
+            ' Quartz 7000 10W-40</h3><div class="prc">EGP 329.00 - EGP 2,299.00</div></article>')  # as seen 2026-10-05
+    [ranged], _ = jumia.parse(card.encode(), url)
+    assert ranged["price"] is None and scrape.check(ranged) == "price range"
 
 
 def test_amazon():
@@ -150,9 +154,12 @@ def test_yourparts():
 def test_tawfiqia_page_then_load_more():
     offers, more = tawfiqia.parse(page("tawfiqia.html.gz"), tawfiqia.PAGES[0][1])
     assert len(offers) == 15 and by_key(offers)["10909"]["price"] == Decimal("495")
+    # 'غير متوفر الان' (not available now) on the card's button is out of stock; 'أضف الي السلة' (add to cart) is in.
+    assert by_key(offers)["10822"]["in_stock"] is False and [o["in_stock"] for o in offers].count(True) == 14
     assert more == "https://tawfiqia.com/ar/filterProducts?page_number=1&category=filters+&load_products=1"
     offers, next_url = tawfiqia.parse(page("tawfiqia_more.html"), more)
     assert len(offers) == 15 and all(scrape.check(o) is None for o in offers)
+    assert [o["in_stock"] for o in offers].count(False) == 8 and by_key(offers)["9638"]["in_stock"] is False
     assert by_key(offers)["10685"]["price"] == Decimal("2535")
     assert next_url == more.replace("page_number=1", "page_number=2")
     assert tawfiqia.parse(b"0", next_url) == ([], None)  # the site's answer past the end

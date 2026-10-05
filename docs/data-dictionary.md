@@ -28,7 +28,7 @@ Grain: one row per catalogue part of the retailer, plus one unmatched member. Ke
 | family | text | One of filter, brake pad, spark plug, battery, belt, bulb, wiper, oil; `n/a` for 0 |
 | brand | text | The brand most offers of the part name, else `Generic`; `n/a` for 0 |
 | car_key | text | The car the part fits, `make-model[-from-to]`; NULL when not one car |
-| our_price | numeric(10,2) | The retailer's price, EGP: the median of the part's comparable offers not shown out of stock, to 0.50 EGP (the retailer is made up); NULL for 0 |
+| our_price | numeric(10,2) | The retailer's price, EGP: the median of the part's comparable offers not shown out of stock, each seller, title and price once, to 0.50 EGP (the retailer is made up); NULL for 0 |
 | is_key | boolean | A key part, the undercut alert covers it: the top 20% of parts by number of sellers (ties by offers) |
 
 ## gold.dim_date
@@ -46,21 +46,23 @@ Grain: one row per day from the first to the last day a price was observed. Key:
 
 ## gold.fact_price_observation
 
-Grain: one offer (one seller's listing) per run week; when an offer was seen on two days of one
-week, the later day's price is the one kept. Key: (`seller_key`, `listing_key`, `date_key`).
+Grain: one offer (one seller's listing) per run week; the run week is silver's `run_week` (the run
+folder the page was fetched into), and when an offer was seen on two days of one run, the later
+day's price is the one kept. Key: (`seller_key`, `listing_key`, `date_key`).
 
 | Column | Type | Meaning |
 |---|---|---|
-| date_key | integer | The day of the week's kept observation (dim_date) |
+| date_key | integer | The run week, as its Monday (dim_date) |
+| observed_on | date | The day the kept price was seen |
 | seller_key | integer | The seller (dim_seller) |
 | part_key | integer | Our part this offer is (dim_part); 0 when it is none of ours |
 | listing_key | text | Degenerate dimension: the seller's own product id |
-| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers), both split into sets and single pieces (a brake pad is never a set: an axle set is the unit); NULL when unmatched |
-| comparable | boolean | False when the offer's price is above 3 times or below a third of its match group's median: kept here, left out of the views; NULL when unmatched |
+| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers), both split into sets and single pieces (a brake pad is never a set: an axle set is the unit); a type_model match also carries the car's generation when the title names one the dictionary knows (Sunny N16/N17/N18, Elantra XD/HD/MD/AD/CN7, Accent RB/HC, Cerato LD/TD/K3); NULL when unmatched |
+| comparable | boolean | False when the offer's price is above 3 times or below a third of its match group's median (each seller, title and price counted once; groups of fewer than 3 such prices are all comparable): kept here, left out of the views; NULL when unmatched |
 | price | numeric(10,2) | The seller's price, EGP |
 | in_stock | boolean | Whether the seller showed it in stock; NULL when the site does not say |
 | is_discounted | boolean | Whether the seller showed a struck-out previous price |
-| part_type | text | The part type the title names (`oil filter`, `brake pad`, ...); NULL when it names none |
+| part_type | text | The part type the title names (`oil filter`, `brake pad`, `brake shoe`, ...); NULL when it names none, or names a belt's pulley, tensioner or bearing, a timing chain, ignition leads, or a brake accessory or tool |
 | car_key | text | The car the title names, `make-model[-from-to]`; NULL when it names none |
 
 ## gold.price_gap (view)

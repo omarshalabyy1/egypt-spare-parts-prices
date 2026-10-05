@@ -52,9 +52,10 @@ def test_undercut_alert_needs_a_price_cut_or_a_new_offer_after_the_baseline(conn
         (9002, "first", 20300114, 50),  # the seller's first week is its baseline: none
     ]
     conn.cursor().executemany(
-        "INSERT INTO gold.fact_price_observation (date_key, seller_key, part_key, listing_key, match_grade, comparable,"
-        " price, in_stock, is_discounted) VALUES (%s, %s, 9001, %s, 'part_number', true, %s, NULL, false)",
-        [(day, seller, listing, price) for seller, listing, day, price in facts])
+        "INSERT INTO gold.fact_price_observation (date_key, observed_on, seller_key, part_key, listing_key, match_grade,"
+        " comparable, price, in_stock, is_discounted) VALUES (%s, to_date(%s::text, 'YYYYMMDD'), %s, 9001, %s,"
+        " 'part_number', true, %s, NULL, false)",
+        [(day, day, seller, listing, price) for seller, listing, day, price in facts])
     alerts = conn.execute("SELECT run_week::text, seller_id, listing_key, reason, old_price FROM gold.undercut_alert"
                           " WHERE seller_id LIKE 'test-%' ORDER BY listing_key").fetchall()
     assert alerts == [("2030-01-14", "test-old", "cut", "price cut", 90), ("2030-01-14", "test-old", "new", "new offer", None)]

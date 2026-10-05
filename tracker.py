@@ -204,8 +204,10 @@ def match_groups(rows):
     left, by part type and car model (and position, for brake pads) sold by two sellers or more
     ('type_model'). Both are split by pack: a set and a single piece are never one part. A plain
     'filter' and a brake pad of unknown position are never grouped by type: either could be one of
-    several parts. Each row: seller_id, listing_key, part_code, part_type, position, pack, car_make,
-    car_model."""
+    several parts. The car model carries its generation when the title names one (nissan-sunny-n17):
+    such an offer compares only with the same generation, an offer naming none only with others
+    naming none. Each row: seller_id, listing_key, part_code, part_type, position, pack, car_make,
+    car_model, generation."""
     def shared(keys):
         sellers = defaultdict(set)
         for (seller_id, _), key in keys.items():
@@ -221,32 +223,41 @@ def match_groups(rows):
             continue
         if r["part_type"] == "brake pad" and not r["position"]:
             continue
-        types[offer] = "|".join(
-            x for x in (r["part_type"], f"{r['car_make']}-{r['car_model']}", r["position"], r["pack"]) if x)
+        car = f"{r['car_make']}-{r['car_model']}" + (f"-{r['generation'].lower()}" if r["generation"] else "")
+        types[offer] = "|".join(x for x in (r["part_type"], car, r["position"], r["pack"]) if x)
     groups.update({offer: ("type_model", key) for offer, key in shared(types).items()})
     return groups
 
 
+def median_price(offers_):
+    """The median price of offers, each (seller, title, price) counted once: a seller listing the same
+    thing under several cars or pages is one price, not several."""
+    return statistics.median(p for _, _, p in {(o["seller_id"], o["title"], o["price"]) for o in offers_})
+
+
 def group_medians(offers_, groups):
-    """{group: median price} over the offers in each group, each offer at its latest price."""
-    prices = defaultdict(list)
+    """{group: median price} for the groups with at least 3 distinct (seller, title, price) offers,
+    each offer at its latest price. A smaller group has no median to be far from."""
+    members = defaultdict(list)
     for o in offers_:
         group = groups.get((o["seller_id"], o["listing_key"]))
         if group:
-            prices[group].append(o["price"])
-    return {group: statistics.median(p) for group, p in prices.items()}
+            members[group].append(o)
+    return {group: median_price(found) for group, found in members.items()
+            if len({(o["seller_id"], o["title"], o["price"]) for o in found}) >= 3}
 
 
 def comparable(price, median):
-    """Whether an offer's price is within COMPARABLE_RATIO of its group's median. A price above 3
-    times the median, or below a third of it, is another thing sold under the same words (a bundle,
-    a single clip) and is left out of our price, the gaps and the undercuts."""
-    return median / COMPARABLE_RATIO <= price <= median * COMPARABLE_RATIO
+    """Whether an offer's price is within COMPARABLE_RATIO of its group's median (None: the group is
+    too small to tell, so every offer is comparable). A price above 3 times the median, or below a
+    third of it, is another thing sold under the same words (a bundle, a single clip) and is left
+    out of our price, the gaps and the undercuts."""
+    return median is None or median / COMPARABLE_RATIO <= price <= median * COMPARABLE_RATIO
 
 
 LATEST_OFFERS = """
-SELECT DISTINCT ON (o.seller_id, o.listing_key) o.seller_id, o.listing_key, p.price, p.in_stock, o.brand,
-       o.family, o.part_type, o.position, o.pack, o.car_make, o.car_model, o.car_key, o.part_code
+SELECT DISTINCT ON (o.seller_id, o.listing_key) o.seller_id, o.listing_key, o.title, p.price, p.in_stock, o.brand,
+       o.family, o.part_type, o.position, o.pack, o.car_make, o.car_model, o.generation, o.car_key, o.part_code
 FROM silver.offer o JOIN silver.price_observation p USING (seller_id, listing_key)
 ORDER BY o.seller_id, o.listing_key, p.observed_on DESC
 """
@@ -266,7 +277,7 @@ def match():
             group = groups.get((o["seller_id"], o["listing_key"]))
             if group in parts:
                 rows.append((o["seller_id"], o["listing_key"], parts[group], *group,
-                             comparable(o["price"], medians[group])))
+                             comparable(o["price"], medians.get(group))))
         if not rows:
             raise ValueError(f"{len(groups)} offers in match groups, none maps to a catalogue part:"
                              " is data/catalogue.csv loaded?")
@@ -294,14 +305,15 @@ FROM silver.part;
 INSERT INTO gold.dim_date (date_key, date, run_week, iso_year, iso_week, month)
 SELECT to_char(d, 'YYYYMMDD')::int, d, date_trunc('week', d)::date, extract(isoyear FROM d)::int,
        extract(week FROM d)::int, date_trunc('month', d)::date
-FROM generate_series((SELECT min(observed_on) FROM silver.price_observation),
-                     (SELECT max(observed_on) FROM silver.price_observation), interval '1 day') AS d;
+FROM generate_series((SELECT least(min(observed_on), min(run_week)) FROM silver.price_observation),
+                     (SELECT greatest(max(observed_on), max(run_week)) FROM silver.price_observation),
+                     interval '1 day') AS d;
 
--- One row per offer per run week: the week's last observation.
-INSERT INTO gold.fact_price_observation (date_key, seller_key, part_key, listing_key, match_grade, comparable,
-                                         price, in_stock, is_discounted, part_type, car_key)
+-- One row per offer per run week (silver's run_week, the run folder): the week's last observation.
+INSERT INTO gold.fact_price_observation (date_key, observed_on, seller_key, part_key, listing_key, match_grade,
+                                         comparable, price, in_stock, is_discounted, part_type, car_key)
 SELECT DISTINCT ON (o.seller_id, o.listing_key, o.run_week)
-       to_char(o.observed_on, 'YYYYMMDD')::int, s.seller_key, coalesce(p.part_key, 0), o.listing_key,
+       to_char(o.run_week, 'YYYYMMDD')::int, o.observed_on, s.seller_key, coalesce(p.part_key, 0), o.listing_key,
        m.match_grade, m.comparable, o.price, o.in_stock, o.is_discounted, x.part_type, x.car_key
 FROM silver.price_observation o
 JOIN silver.offer x USING (seller_id, listing_key)
@@ -396,16 +408,18 @@ def save(conn, rows, run_week):
         part_type, position, pack = enrich.part_type(row["title"])
         car_make, car_model, year_from, year_to, car_key = enrich.car(row["title"], row["car_make"])
         good.append({**row, "part_type": part_type, "position": position, "pack": pack, "car_make": car_make,
-                     "car_model": car_model, "year_from": year_from, "year_to": year_to, "car_key": car_key,
+                     "car_model": car_model, "generation": enrich.generation(row["title"], row["car_make"], car_model),
+                     "year_from": year_from, "year_to": year_to, "car_key": car_key,
                      "part_code": enrich.part_code(row["part_no"], row["title"])})
     if not good:
         raise ValueError(f"{len(rows)} rows parsed, none passed the check: a parser is broken")
     cur = conn.cursor()
     cur.executemany(
         "INSERT INTO silver.offer (seller_id, listing_key, family, title, brand, part_no, url, first_seen, last_seen,"
-        " part_type, position, pack, car_make, car_model, year_from, year_to, car_key, part_code) VALUES"
+        " part_type, position, pack, car_make, car_model, generation, year_from, year_to, car_key, part_code) VALUES"
         " (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s, %(url)s, %(observed_on)s,"
-        " %(observed_on)s, %(part_type)s, %(position)s, %(pack)s, %(car_make)s, %(car_model)s, %(year_from)s,"
+        " %(observed_on)s, %(part_type)s, %(position)s, %(pack)s, %(car_make)s, %(car_model)s, %(generation)s,"
+        " %(year_from)s,"
         " %(year_to)s,"
         " %(car_key)s, %(part_code)s)"
         " ON CONFLICT (seller_id, listing_key) DO UPDATE SET family = EXCLUDED.family, title = EXCLUDED.title,"
@@ -413,7 +427,7 @@ def save(conn, rows, run_week):
         " first_seen = least(offer.first_seen, EXCLUDED.first_seen),"
         " last_seen = greatest(offer.last_seen, EXCLUDED.last_seen), part_type = EXCLUDED.part_type,"
         " position = EXCLUDED.position, pack = EXCLUDED.pack, car_make = EXCLUDED.car_make,"
-        " car_model = EXCLUDED.car_model,"
+        " car_model = EXCLUDED.car_model, generation = EXCLUDED.generation,"
         " year_from = EXCLUDED.year_from, year_to = EXCLUDED.year_to, car_key = EXCLUDED.car_key,"
         " part_code = EXCLUDED.part_code",
         good,

@@ -8,11 +8,12 @@ import tracker
 
 
 def offer(seller_id, listing_key, price, part_code=None, part_type=None, position=None, car=None, brand=None,
-          family="filter", pack="single", in_stock=None):
+          family="filter", pack="single", in_stock=None, title=None, generation=None):
     make, model = car.split("-") if car else (None, None)
-    return {"seller_id": seller_id, "listing_key": listing_key, "price": Decimal(price), "in_stock": in_stock,
-            "brand": brand, "family": family, "part_type": part_type, "position": position, "pack": pack,
-            "car_make": make, "car_model": model, "car_key": car, "part_code": part_code}
+    return {"seller_id": seller_id, "listing_key": listing_key, "title": title or f"{seller_id}/{listing_key}",
+            "price": Decimal(price), "in_stock": in_stock, "brand": brand, "family": family, "part_type": part_type,
+            "position": position, "pack": pack, "car_make": make, "car_model": model, "generation": generation,
+            "car_key": car, "part_code": part_code}
 
 
 PADS = {"part_type": "brake pad", "position": "front", "car": "kia-cerato", "family": "brake pad"}
@@ -94,3 +95,26 @@ def test_catalogue_parts():
 def test_undercut_view_uses_the_same_percent_as_the_alert():
     sql = (tracker.ROOT / "sql" / "gold.sql").read_text(encoding="utf-8")
     assert f"their_price <= our_price * {(100 - tracker.UNDERCUT_PCT) / 100}" in sql
+
+
+def test_generation_splits_type_groups():
+    rows = [offer(s, f"{s}{g}", "100", part_type="oil filter", car="nissan-sunny", generation=g)
+            for s in ("a", "b") for g in ("N17", "N16", None)]
+    assert set(tracker.match_groups(rows).values()) == {
+        ("type_model", "oil filter|nissan-sunny-n17|single"), ("type_model", "oil filter|nissan-sunny-n16|single"),
+        ("type_model", "oil filter|nissan-sunny|single")}  # naming no generation: compared only with each other
+
+
+def test_a_repeated_listing_counts_once_in_the_median():
+    filters = {"part_type": "oil filter", "car": "kia-rio"}
+    rows = [offer("a", str(n), "100", title="Same filter", **filters) for n in range(5)]  # one listing under 5 pages
+    rows += [offer("b", "1", "300", **filters), offer("c", "1", "320", **filters)]
+    groups = tracker.match_groups(rows)
+    assert tracker.group_medians(rows, groups) == {("type_model", "oil filter|kia-rio|single"): Decimal("300")}
+
+
+def test_a_group_of_fewer_than_three_prices_is_all_comparable():
+    rows = [offer("a", "1", "100", part_type="oil filter", car="kia-rio"),
+            offer("b", "1", "1000", part_type="oil filter", car="kia-rio")]
+    assert tracker.group_medians(rows, tracker.match_groups(rows)) == {}
+    assert tracker.comparable(Decimal("1000"), None)

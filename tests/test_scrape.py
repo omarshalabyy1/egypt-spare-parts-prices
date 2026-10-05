@@ -52,6 +52,8 @@ def test_good_row_passes():
     ({"price": Decimal("1.00")}, "placeholder price"),
     ({"price": Decimal("1.99")}, "placeholder price"),
     ({"currency": "USD"}, "currency not EGP"),
+    ({"price": None}, "no price shown"),
+    ({"price": None, "price_range": True}, "price range"),
     ({"listing_key": ""}, "listing_key missing"),
 ])
 def test_bad_rows_have_reasons(change, reason):

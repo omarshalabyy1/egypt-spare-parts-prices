@@ -40,6 +40,7 @@ def parse(body, url):
         link = card.select_one("h2.title a")
         price = card.select_one("div.price")
         price_text = (price.find(string=True, recursive=False) or "").strip() if price else ""
+        card_text = card.get_text(" ", strip=True)  # its button: 'غير متوفر الان' (not available now) or 'أضف الي السلة' (add to cart)
         offers.append({
             "listing_key": link["href"].rstrip("/").rsplit("/", 1)[-1] if link else None,
             "title": link.get_text(" ", strip=True) if link else None,
@@ -49,6 +50,7 @@ def parse(body, url):
             "url": link["href"] if link else None,
             "brand": None,
             "part_no": None,
+            "in_stock": False if "غير متوفر" in card_text else True if "أضف" in card_text else None,
         })
     if url.startswith(MORE):  # a load-more answer: another page follows while this one is full
         fields = dict(parse_qsl(urlsplit(url).query, keep_blank_values=True))
