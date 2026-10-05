@@ -1,0 +1,6 @@
+seller_id,name,base_url,robots_verdict,crawl_delay_s
+autospare,AutoSpare,https://autospare.com.eg,allowed; only cart/auth/public paths blocked,3
+garageilla,Garageilla,https://garageilla.com,allowed; Shopify default rules,3
+nautoexpress,N Auto Express,https://nautoexpress.com,allowed; Shopify default rules,3
+pringi,Pringi,https://pringi.com,allowed; no rule on /wp-json,3
+sparezone,Spare Zone,https://sparezone-eg.com,allowed; Allow: /,3

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" role="img" aria-label="The scrape loop. Six sellers: Jumia, N Auto Express, Garage ILLA, Pringi, Spare Zone, Auto Spare. Each site's robots.txt is asked first: disallowed stops, allowed continues to a polite fetcher (named User-Agent, 1 request every 3 seconds, retry 2s, 4s, 8s) that writes gzipped pages to the raw cache, data/raw/site/week. Pages are parsed into offer rows; a schema check sends good rows, such as an oil filter at EGP 257, to price_observation (append-only) and bad rows, such as price 0, to quarantine, kept not dropped. Then match, price gap, undercut. Next Monday the loop starts again at the fetcher.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#F59E0B"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; fill: #0F172A; }
+    .title { font-size: 21px; font-weight: 700; }
+    .sub { font-size: 13.5px; fill: #475569; }
+    .b { font-size: 14px; font-weight: 700; }
+    .d { font-size: 12px; fill: #475569; }
+    .t { font-size: 12px; }
+    .s { font-size: 13px; }
+    .k { font-size: 11px; fill: #64748B; }
+    .m { font-family: Consolas, Menlo, monospace; font-size: 11px; fill: #475569; }
+    .box { fill: #FFFFFF; stroke: #CBD5E1; }
+    .ln { fill: none; stroke: #475569; stroke-width: 1.5; marker-end: url(#a); }
+    .loop { fill: none; stroke: #F59E0B; stroke-width: 2; stroke-dasharray: 4 6; marker-end: url(#b); animation: flow 1.6s linear infinite; }
+    @keyframes flow { to { stroke-dashoffset: -20; } }
+  </style>
+
+  <rect x="1" y="1" width="898" height="558" rx="22" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="20" y="44" class="title">The scrape loop</text>
+  <text x="20" y="68" class="sub">Every Monday each seller is asked first, fetched politely, cached raw, then parsed and checked row by row.</text>
+
+  <!-- Six sellers -->
+  <g class="box">
+    <rect x="20" y="100" width="130" height="30" rx="7"/><rect x="20" y="140" width="130" height="30" rx="7"/>
+    <rect x="20" y="180" width="130" height="30" rx="7"/><rect x="20" y="220" width="130" height="30" rx="7"/>
+    <rect x="20" y="260" width="130" height="30" rx="7"/><rect x="20" y="300" width="130" height="30" rx="7"/>
+  </g>
+  <g class="s">
+    <text x="32" y="120">Jumia</text><text x="32" y="160">N Auto Express</text>
+    <text x="32" y="200">Garage ILLA</text><text x="32" y="240">Pringi</text>
+    <text x="32" y="280">Spare Zone</text><text x="32" y="320">Auto Spare</text>
+  </g>
+  <path d="M150 115L172 215M150 155L172 215M150 195L172 215M150 235L172 215M150 275L172 215M150 315L172 215" stroke="#CBD5E1" stroke-width="1.5" fill="none"/>
+
+  <!-- robots.txt gate -->
+  <path d="M172 215L220 181L268 215L220 249Z" class="box"/>
+  <text x="220" y="219" class="t" text-anchor="middle">robots.txt?</text>
+  <path d="M220 249V288" class="ln"/>
+  <text x="228" y="272" class="k">disallowed</text>
+  <rect x="172" y="290" width="96" height="30" rx="7" class="box" stroke-dasharray="4 3"/>
+  <text x="220" y="310" class="d" text-anchor="middle">stop: skip site</text>
+  <path d="M268 215H308" class="ln"/>
+  <text x="288" y="207" class="k" text-anchor="middle">allowed</text>
+
+  <!-- Fetcher, cache, parse -->
+  <rect x="310" y="170" width="180" height="90" rx="10" class="box"/>
+  <text x="322" y="194" class="b">polite fetcher</text>
+  <text x="322" y="214" class="d">named User-Agent</text>
+  <text x="322" y="231" class="d">1 request / 3 s</text>
+  <text x="322" y="248" class="d">retry 2s → 4s → 8s</text>
+  <path d="M490 215H518" class="ln"/>
+
+  <rect x="520" y="170" width="200" height="90" rx="10" class="box"/>
+  <text x="532" y="194" class="b">raw cache (bronze)</text>
+  <text x="532" y="216" class="m">data/raw/&lt;site&gt;/&lt;week&gt;/*.gz</text>
+  <text x="532" y="238" class="d">page + fetch timestamp</text>
+  <path d="M720 215H748" class="ln"/>
+
+  <rect x="750" y="170" width="130" height="90" rx="10" class="box"/>
+  <text x="762" y="194" class="b">parse</text>
+  <text x="762" y="214" class="d">page → offer rows</text>
+  <path d="M800 260V298" class="ln"/>
+
+  <!-- Schema check -->
+  <path d="M740 340L800 300L860 340L800 380Z" class="box"/>
+  <text x="800" y="337" class="t" text-anchor="middle">schema</text>
+  <text x="800" y="352" class="t" text-anchor="middle">check</text>
+
+  <path d="M740 340H692" class="ln"/>
+  <text x="716" y="332" class="k" text-anchor="middle">good</text>
+  <rect x="470" y="276" width="250" height="26" rx="13" fill="#FFFFFF" stroke="#F59E0B" stroke-dasharray="4 3"/>
+  <text x="484" y="293" class="k">row:</text>
+  <text x="515" y="294" class="s">فلتر زيت …</text>
+  <text x="600" y="293" class="s" font-weight="600">EGP 257</text>
+  <text x="664" y="293" class="k">ok</text>
+  <rect x="470" y="315" width="220" height="50" rx="10" class="box"/>
+  <text x="482" y="336" class="b">price_observation</text>
+  <text x="482" y="354" class="d">append-only, every price dated</text>
+
+  <path d="M800 380V428" class="ln"/>
+  <text x="808" y="400" class="k">bad row:</text>
+  <text x="808" y="414" class="t" font-weight="600">price 0</text>
+  <rect x="735" y="430" width="145" height="50" rx="10" class="box"/>
+  <text x="747" y="451" class="b">quarantine</text>
+  <text x="747" y="469" class="d">kept, not dropped</text>
+
+  <!-- Match, gap, undercut -->
+  <path d="M480 365V395H355V428" class="ln"/>
+  <rect x="290" y="430" width="130" height="50" rx="10" class="box"/>
+  <text x="302" y="451" class="b">match</text>
+  <text x="302" y="469" class="d">part number or name</text>
+  <path d="M420 455H443" class="ln"/>
+  <rect x="445" y="430" width="130" height="50" rx="10" class="box"/>
+  <text x="457" y="451" class="b">price gap</text>
+  <text x="457" y="469" class="d">competitor vs ours</text>
+  <path d="M575 455H598" class="ln"/>
+  <rect x="600" y="430" width="120" height="50" rx="10" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
+  <text x="612" y="451" class="b">undercut</text>
+  <text x="612" y="469" class="d">email + Power BI</text>
+
+  <!-- The week loop -->
+  <path d="M660 480V520H280V275H340V263" class="loop"/>
+  <text x="470" y="512" class="t" text-anchor="middle" font-weight="600">next Monday: back to the fetcher</text>
+</svg>
