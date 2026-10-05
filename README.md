@@ -52,18 +52,18 @@ competitor below you is an undercut.
 
 ## 📈 The result
 
-**<!--n:parts_below_part_number-->96<!--/n--> of the <!--n:parts_part_number-->154<!--/n--> parts sold under the same part number by
+**<!--n:parts_below_part_number-->88<!--/n--> of the <!--n:parts_part_number-->154<!--/n--> parts sold under the same part number by
 two sellers or more have one at least 5% below the market's middle price**
-(<!--n:parts_below_part_number_pct-->62.3<!--/n-->%). Our price is made up: the median of the sellers' comparable prices.
+(<!--n:parts_below_part_number_pct-->57.1<!--/n-->%). Our price is made up: the median of the sellers' comparable prices.
 Every number below comes from [the notebook](analysis/analysis.ipynb).
 
 - **At the cheapest seller,** a part sold under the same part number costs a median
-  **<!--n:undercut_gap_median_pct_part_number-->27.2<!--/n-->% less** than our price.
+  **<!--n:undercut_gap_median_pct_part_number-->26.3<!--/n-->% less** than our price.
 - **Shopping around pays:** for the same part number, the dearest seller is a median
-  **<!--n:spread_median_pct_part_number-->42.1<!--/n-->% above the cheapest**
-  (<!--n:spread_groups_part_number-->64<!--/n--> parts with 3 prices or more at 2 sellers or more).
+  **<!--n:spread_median_pct_part_number-->38.3<!--/n-->% above the cheapest**
+  (<!--n:spread_groups_part_number-->61<!--/n--> parts with 3 prices or more at 2 sellers or more).
 - **Which cars:** <!--n:offers_with_car_pct-->58.3<!--/n-->% of the prices name the car,
-  <!--n:car_models-->88<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
+  <!--n:car_models-->89<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
   <!--n:top_model-->Hyundai Elantra<!--/n--> (<!--n:top_model_offers-->776<!--/n--> prices).
 
 Comparisons of the same part type for the same car are being tightened and are not shown yet.
@@ -78,7 +78,7 @@ more: <!--n:shared_belt_codes-->113<!--/n--> belts, <!--n:shared_filter_codes-->
 cheapest (the picture above). Price changes week over week start with the second run week.
 
 <p align="center">
-  <img width="100%" src="docs/offers-by-car.png" alt="Prices by car model, the 15 most listed of 88, Hyundai Elantra first">
+  <img width="100%" src="docs/offers-by-car.png" alt="Prices by car model, the 15 most listed, Hyundai Elantra first">
 </p>
 
 ## 🧰 The product
