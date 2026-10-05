@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS bronze.page (      -- one row per fetched page (one i
     path       text,                          -- the kept file under data/raw; NULL when not kept (a 4xx)
     status     integer NOT NULL,              -- the HTTP status
     fetched_at timestamptz NOT NULL,
-    via        text,                          -- 'browser' for scripts/fetch_with_browser.py; NULL = the weekly run
+    via        text NOT NULL,                 -- 'browser' (scripts/fetch_with_browser.py) or 'requests' (the weekly run)
     PRIMARY KEY (seller_id, run_week, url, fetched_at)
 );

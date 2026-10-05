@@ -144,8 +144,8 @@ def check(row):
         return "no price shown"
     if not isinstance(price, Decimal) or not 0 < price < 1_000_000:
         return "price not a Decimal between 0 and 1,000,000"
-    if price < 5:
-        return "placeholder price"  # no part sells under 5 EGP: 1.00 stands for "ask us"
+    if price < 2:
+        return "placeholder price"  # no part sells under 2 EGP: 1.00 stands for "ask us"
     if row.get("currency") != "EGP":
         return "currency not EGP"
     return None

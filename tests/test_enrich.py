@@ -7,28 +7,32 @@ import enrich
 
 
 @pytest.mark.parametrize("title, expected", [
-    ("فلتر هواء كيا جراند سيراتو 2018 2019 2020 2021 2022 MOBIS", ("air filter", None)),
-    ("فلتر تكييف كربون رينو ميجان 2003 2004 2005 2006 2007 2008 2009 ASG", ("cabin filter", None)),
-    ("فلتر مكيف الهواء (أوبل جراندلاند 1)", ("cabin filter", None)),  # names air too: cabin wins
-    ("فلتر بنزين بالخرطوم نيسان صني N16", ("fuel filter", None)),
-    ("Bosch P3079 Car Oil Filter", ("oil filter", None)),
-    ("حشو فلتر زيت فتيس نيسان سنترا FEBI", ("filter", None)),  # a gearbox filter is not an engine oil filter
-    ("تيل خلفي كيا سبورتاج 2005 2006 2007 2008 2009 2010 FERBE", ("brake pad", "rear")),
-    ("تيل امامى اوبل استرا 2010 AUTO TOP", ("brake pad", "front")),
-    ("Brake Pads Set Front Skoda Octavia A8 [Rbrake] (Made in Spain) (RB2369)", ("brake pad", "front")),
-    ("وسادات الفرامل (مرسيدس بنز B180 (W246))_158200", ("brake pad", None)),
-    ("طقم بوجيهات بلاتينيوم كيا كارينز 2014 MOBIS", ("spark plug", None)),
-    ("شمعة الإشعال (SEAT Altea)", ("spark plug", None)),
-    ("Chloride Gold Car Battery, 12 Volt, 55 Ampere  - DIN55L", ("battery", None)),
-    ("Andrew 1000A Copper Car Battery Charging Cable 2.5m", (None, None)),  # a cable, not a battery
-    ("سير تكييف BYD F3 5PK1065", ("belt", None)),
-    ("بوجيه عاده - لانسر شارك - بوش", ("spark plug", None)),
-    ("Lamp Halogen H7 [Zemo] (Made in India) //", ("bulb", None)),
-    ("مساحه خلفى - AUDI Q3-Q8 - بوش", ("wiper", None)),
-    ("CPC XPL Motor Oil, 20W-50, 1L", ("oil", None)),
-    ("اويل سيل فلتر زيت – شيرى نيو تيجو موديل (2014 – 2018)", (None, None)),  # an oil seal
-    ("موبينة هيونداي النترا AD", (None, None)),  # an ignition coil: none of our families
-    ("طقم تيل فرامل امامي سيراتو", ("brake pad", "front")),  # سير inside سيراتو is not a belt
+    ("فلتر هواء كيا جراند سيراتو 2018 2019 2020 2021 2022 MOBIS", ("air filter", None, "single")),
+    ("فلتر تكييف كربون رينو ميجان 2003 2004 2005 2006 2007 2008 2009 ASG", ("cabin filter", None, "single")),
+    ("فلتر مكيف الهواء (أوبل جراندلاند 1)", ("cabin filter", None, "single")),  # names air too: cabin wins
+    ("فلتر بنزين بالخرطوم نيسان صني N16", ("fuel filter", None, "single")),
+    ("Bosch P3079 Car Oil Filter", ("oil filter", None, "single")),
+    ("حشو فلتر زيت فتيس نيسان سنترا FEBI", ("filter", None, "single")),  # a gearbox filter is not an engine oil filter
+    ("تيل خلفي كيا سبورتاج 2005 2006 2007 2008 2009 2010 FERBE", ("brake pad", "rear", "single")),
+    ("تيل امامى اوبل استرا 2010 AUTO TOP", ("brake pad", "front", "single")),
+    ("Brake Pads Set Front Skoda Octavia A8 [Rbrake] (Made in Spain) (RB2369)", ("brake pad", "front", "set")),
+    ("وسادات الفرامل (مرسيدس بنز B180 (W246))_158200", ("brake pad", None, "single")),
+    ("طقم بوجيهات بلاتينيوم كيا كارينز 2014 MOBIS", ("spark plug", None, "set")),
+    ("شمعة الإشعال (SEAT Altea)", ("spark plug", None, "single")),
+    ("Chloride Gold Car Battery, 12 Volt, 55 Ampere  - DIN55L", ("battery", None, "single")),
+    ("Andrew 1000A Copper Car Battery Charging Cable 2.5m", (None, None, "single")),  # a cable, not a battery
+    ("سير تكييف BYD F3 5PK1065", ("belt", None, "single")),
+    ("بوجيه عاده - لانسر شارك - بوش", ("spark plug", None, "single")),
+    ("Lamp Halogen H7 [Zemo] (Made in India) //", ("bulb", None, "single")),
+    ("مساحه خلفى - AUDI Q3-Q8 - بوش", ("wiper", None, "single")),
+    ("CPC XPL Motor Oil, 20W-50, 1L", ("oil", None, "single")),
+    ("اويل سيل فلتر زيت – شيرى نيو تيجو موديل (2014 – 2018)", (None, None, "single")),  # an oil seal
+    ("موبينة هيونداي النترا AD", (None, None, "single")),  # an ignition coil: none of our families
+    ("طقم تيل فرامل امامي سيراتو", ("brake pad", "front", "set")),  # سير inside سيراتو is not a belt
+    ("KaberMisr Xenon Headlight Bulbs Kit for Cars (2 Piece Set, 500W)", ("bulb", None, "set")),
+    ("NGK Spark Plug BKR6E x4", ("spark plug", None, "set")),
+    ("بوجيه عدد 4 كيا ريو", ("spark plug", None, "set")),
+    ("سير مجموعه 6PK1045 سكودا اوكتافيا A5 DAYCO", ("belt", None, "single")),  # مجموعه names a belt, not a set
 ])
 def test_part_type(title, expected):
     assert enrich.part_type(title) == expected

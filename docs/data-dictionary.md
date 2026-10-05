@@ -24,12 +24,12 @@ Grain: one row per catalogue part of the retailer, plus one unmatched member. Ke
 |---|---|---|
 | part_key | integer | Surrogate key, 1 to n in `part_no` order; 0 is the unmatched member |
 | part_no | text | The retailer's part number (`EG-` and 8 hex characters; `unmatched` for 0) |
-| name | text | The part's English name (`Belt 6PK1460`, `Brake pad front for Hyundai Elantra`) |
+| name | text | The part's English name (`Belt 6PK1460`, `Brake pad front for Hyundai Elantra`, `Spark plug set for Kia Rio`) |
 | family | text | One of filter, brake pad, spark plug, battery, belt, bulb, wiper, oil; `n/a` for 0 |
 | brand | text | The brand most offers of the part name, else `Generic`; `n/a` for 0 |
 | car_key | text | The car the part fits, `make-model[-from-to]`; NULL when not one car |
-| our_price | numeric(10,2) | The retailer's price, EGP; NULL for 0 |
-| is_key | boolean | A key part: the undercut alert covers it |
+| our_price | numeric(10,2) | The retailer's price, EGP: the median of the part's comparable offers not shown out of stock, to 0.50 EGP (the retailer is made up); NULL for 0 |
+| is_key | boolean | A key part, the undercut alert covers it: the top 20% of parts by number of sellers (ties by offers) |
 
 ## gold.dim_date
 
@@ -55,7 +55,8 @@ week, the later day's price is the one kept. Key: (`seller_key`, `listing_key`, 
 | seller_key | integer | The seller (dim_seller) |
 | part_key | integer | Our part this offer is (dim_part); 0 when it is none of ours |
 | listing_key | text | Degenerate dimension: the seller's own product id |
-| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers); NULL when unmatched |
+| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers), both split into sets and single pieces; NULL when unmatched |
+| comparable | boolean | False when the offer's price is above 3 times or below a third of its match group's median: kept here, left out of the views; NULL when unmatched |
 | price | numeric(10,2) | The seller's price, EGP |
 | in_stock | boolean | Whether the seller showed it in stock; NULL when the site does not say |
 | is_discounted | boolean | Whether the seller showed a struck-out previous price |
@@ -65,7 +66,8 @@ week, the later day's price is the one kept. Key: (`seller_key`, `listing_key`, 
 ## gold.price_gap (view)
 
 Grain: one row per matched part per seller, in the seller's latest run week. Where a seller has the
-part in several listings, the cheapest one not shown out of stock is kept.
+part in several listings, the cheapest one not shown out of stock is kept. Offers not comparable
+are left out.
 
 | Column | Meaning |
 |---|---|
@@ -82,8 +84,9 @@ part in several listings, the cheapest one not shown out of stock is kept.
 
 ## gold.undercut (view)
 
-Grain and columns as `gold.price_gap`, only the rows where `their_price < our_price` and the
-seller does not show the part out of stock. `send_alert` emails the key parts in this view for
+Grain and columns as `gold.price_gap`, only the rows where the seller is at least 5% cheaper
+(`their_price <= our_price * 0.95`; `UNDERCUT_PCT` in tracker.py) and does not show the part out
+of stock. `send_alert` emails the key parts in this view for
 the run week.
 
 ## gold.price_change (view)

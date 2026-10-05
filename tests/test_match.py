@@ -8,46 +8,59 @@ import tracker
 
 
 def offer(seller_id, listing_key, price, part_code=None, part_type=None, position=None, car=None, brand=None,
-          family="filter"):
+          family="filter", pack="single", in_stock=None):
     make, model = car.split("-") if car else (None, None)
-    return {"seller_id": seller_id, "listing_key": listing_key, "price": Decimal(price), "brand": brand,
-            "family": family, "part_type": part_type, "position": position, "car_make": make, "car_model": model,
-            "car_key": car, "part_code": part_code}
+    return {"seller_id": seller_id, "listing_key": listing_key, "price": Decimal(price), "in_stock": in_stock,
+            "brand": brand, "family": family, "part_type": part_type, "position": position, "pack": pack,
+            "car_make": make, "car_model": model, "car_key": car, "part_code": part_code}
 
 
+PADS = {"part_type": "brake pad", "position": "front", "car": "kia-cerato", "family": "brake pad"}
+PLUGS = {"part_type": "spark plug", "car": "kia-rio", "family": "spark plug"}
 OFFERS = [
     offer("a", "1", "300", part_code="6PK1460", part_type="belt", family="belt", brand="GATES"),
     offer("b", "1", "320", part_code="6PK1460", part_type="belt", family="belt", brand="GATES"),
     offer("b", "2", "330", part_code="6PK1460", part_type="belt", family="belt", brand="DAYCO"),
     offer("c", "4", "310", part_code="6PK1460", part_type="belt", family="belt"),
-    offer("c", "1", "999", part_code="ONLYHERE1", part_type="oil filter", car="hyundai-elantra"),  # one seller
+    offer("d", "9", "900", part_code="6PK1460", part_type="belt", family="belt", pack="set"),  # a set: not with the singles
+    offer("c", "1", "999", part_code="ONLYHERE1", part_type="oil filter", car="hyundai-elantra"),  # one seller's code
     offer("a", "2", "120", part_type="oil filter", car="hyundai-elantra"),
     offer("b", "3", "140", part_type="oil filter", car="hyundai-elantra"),
-    offer("a", "3", "800", part_type="brake pad", position="front", car="kia-cerato", family="brake pad"),
-    offer("c", "2", "900", part_type="brake pad", position="front", car="kia-cerato", family="brake pad"),
-    offer("b", "4", "700", part_type="brake pad", position="rear", car="kia-cerato", family="brake pad"),
-    offer("c", "3", "750", part_type="brake pad", car="kia-cerato", family="brake pad"),  # position unknown
+    offer("a", "3", "800", **PADS),
+    offer("c", "2", "900", **PADS),
+    offer("b", "8", "700", **PADS, in_stock=False),
+    offer("b", "4", "700", **{**PADS, "position": "rear"}),  # the only rear pad
+    offer("c", "3", "750", **{**PADS, "position": None}),  # position unknown
     offer("a", "4", "60", part_type="filter", car="kia-rio"),  # a plain filter: never grouped by type
     offer("b", "5", "65", part_type="filter", car="kia-rio"),
     offer("a", "5", "50", part_type="air filter"),  # no car
     offer("b", "6", "55", part_type="air filter"),
+    offer("a", "6", "1250", **PLUGS, pack="set"),
+    *[offer("d", str(n), "1200", **PLUGS, pack="set") for n in range(1, 6)],  # many offers, two sellers
+    offer("b", "7", "300", **PLUGS),  # a single plug: no other seller sells one
 ]
 
 
+def members(groups, group):
+    return {offer for offer, g in groups.items() if g == group}
+
+
 def test_match_grades():
-    assert tracker.match_groups(OFFERS) == {
-        ("a", "1"): ("part_number", "6PK1460"),
-        ("b", "1"): ("part_number", "6PK1460"),
-        ("b", "2"): ("part_number", "6PK1460"),
-        ("c", "4"): ("part_number", "6PK1460"),
-        # c/1's code is sold by c alone, so it falls back to its type and car, with a/2 and b/3.
-        ("c", "1"): ("type_model", "oil filter|hyundai-elantra"),
-        ("a", "2"): ("type_model", "oil filter|hyundai-elantra"),
-        ("b", "3"): ("type_model", "oil filter|hyundai-elantra"),
-        ("a", "3"): ("type_model", "brake pad|kia-cerato|front"),
-        ("c", "2"): ("type_model", "brake pad|kia-cerato|front"),
-        # b/4 is the only rear pad, c/3 has no position, a/4 and b/5 are plain filters, a/5 and b/6 name no car.
-    }
+    groups = tracker.match_groups(OFFERS)
+    assert members(groups, ("part_number", "6PK1460|single")) == {("a", "1"), ("b", "1"), ("b", "2"), ("c", "4")}
+    # c/1's code is sold by c alone, so it falls back to its type and car, with a/2 and b/3.
+    assert members(groups, ("type_model", "oil filter|hyundai-elantra|single")) == {("c", "1"), ("a", "2"), ("b", "3")}
+    assert members(groups, ("type_model", "brake pad|kia-cerato|front|single")) == {("a", "3"), ("c", "2"), ("b", "8")}
+    assert members(groups, ("type_model", "spark plug|kia-rio|set")) == {("a", "6"), *(("d", str(n)) for n in range(1, 6))}
+    # Not grouped: the belt set (d/9, its seller alone), the rear pad, the pad of unknown position,
+    # the plain filters, the air filters naming no car, the single plug.
+    assert len(groups) == 4 + 3 + 3 + 6
+
+
+def test_comparable_is_within_three_times_the_median():
+    median = Decimal("140")
+    assert tracker.comparable(Decimal("420"), median) and tracker.comparable(Decimal("46.67"), median)
+    assert not tracker.comparable(Decimal("420.01"), median) and not tracker.comparable(Decimal("46.66"), median)
 
 
 def test_catalogue_is_the_same_every_time(tmp_path):
@@ -60,16 +73,24 @@ def test_catalogue_is_the_same_every_time(tmp_path):
 
 def test_catalogue_parts():
     parts = {p["match_key"]: p for p in make_catalogue.catalogue(OFFERS)}
-    assert set(parts) == {"6PK1460", "oil filter|hyundai-elantra", "brake pad|kia-cerato|front"}
-    belt = parts["6PK1460"]
+    assert set(parts) == {"6PK1460|single", "oil filter|hyundai-elantra|single", "brake pad|kia-cerato|front|single",
+                          "spark plug|kia-rio|set"}
+    belt = parts["6PK1460|single"]
     assert (belt["brand"], belt["family"], belt["name"], belt["match_grade"]) == ("GATES", "belt", "Belt 6PK1460", "part_number")
-    assert parts["brake pad|kia-cerato|front"]["name"] == "Brake pad front for Kia Cerato"
-    assert parts["oil filter|hyundai-elantra"]["brand"] == "Generic"  # no offer in the group names a brand
-    for p in parts.values():
-        assert p["part_no"].startswith("EG-") and len(p["part_no"]) == 11
-        assert p["our_price"] % Decimal("0.50") == 0
-    # The median times a factor from 0.90 to 1.15: belt median 315, oil filter median 140 (of 120, 140, 999).
-    assert Decimal("283.50") <= belt["our_price"] <= Decimal("362.50")
-    assert Decimal("126") <= parts["oil filter|hyundai-elantra"]["our_price"] <= Decimal("161")
-    # The top 20% of 3 groups by offer count, rounded up: the belt, with 4 offers.
-    assert [k for k, p in parts.items() if p["is_key"]] == ["6PK1460"]
+    assert parts["brake pad|kia-cerato|front|single"]["name"] == "Brake pad front for Kia Cerato"
+    assert parts["spark plug|kia-rio|set"]["name"] == "Spark plug set for Kia Rio"
+    assert parts["oil filter|hyundai-elantra|single"]["brand"] == "Generic"  # no offer in the group names a brand
+    assert all(p["part_no"].startswith("EG-") and len(p["part_no"]) == 11 for p in parts.values())
+    # Our price is the median of the comparable offers not shown out of stock, to 0.50 EGP:
+    assert belt["our_price"] == Decimal("315.00")  # 300, 310, 320, 330
+    assert parts["oil filter|hyundai-elantra|single"]["our_price"] == Decimal("130.00")  # 999 is above 3 x 140: left out
+    assert parts["brake pad|kia-cerato|front|single"]["our_price"] == Decimal("850.00")  # 700 is out of stock: left out
+    assert parts["spark plug|kia-rio|set"]["our_price"] == Decimal("1200.00")
+    # The top 20% of 4 groups, rounded up, by sellers: the belt (3 sellers, 4 offers) wins the tie with
+    # the oil filter and the pads (3 sellers, 3 offers); the plug set has the most offers but 2 sellers.
+    assert [k for k, p in parts.items() if p["is_key"]] == ["6PK1460|single"]
+
+
+def test_undercut_view_uses_the_same_percent_as_the_alert():
+    sql = (tracker.ROOT / "sql" / "gold.sql").read_text(encoding="utf-8")
+    assert f"their_price <= our_price * {(100 - tracker.UNDERCUT_PCT) / 100}" in sql

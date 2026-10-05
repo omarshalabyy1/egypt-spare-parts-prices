@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS silver.part (      -- one row per catalogue part of t
     our_price   numeric(10, 2) NOT NULL CHECK (our_price > 0),  -- EGP
     is_key      boolean NOT NULL,             -- key parts get the undercut alert
     match_grade text NOT NULL CHECK (match_grade IN ('part_number', 'type_model')),
-    match_key   text NOT NULL,                -- the part code, or part type|car model[|position]
+    match_key   text NOT NULL,                -- part code|pack, or part type|car model[|position]|pack
     UNIQUE (match_grade, match_key)
 );
 
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS silver.offer (     -- one row per listing as one sell
     part_type   text CHECK (part_type IN ('oil filter', 'air filter', 'fuel filter', 'cabin filter', 'filter',
                 'brake pad', 'spark plug', 'battery', 'belt', 'bulb', 'wiper', 'oil')),
     position    text CHECK (position IN ('front', 'rear')),  -- brake pads only
+    pack        text NOT NULL CHECK (pack IN ('set', 'single')),  -- 'set' when the title says several pieces
     car_make    text,
     car_model   text,
     year_from   integer,
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS silver.offer_match ( -- one row per offer that is one
     part_no     text NOT NULL REFERENCES silver.part,
     match_grade text NOT NULL CHECK (match_grade IN ('part_number', 'type_model')),
     match_key   text NOT NULL,
+    comparable  boolean NOT NULL,             -- false: priced above 3x or below 1/3 of its group's median
     PRIMARY KEY (seller_id, listing_key),
     FOREIGN KEY (seller_id, listing_key) REFERENCES silver.offer
 );

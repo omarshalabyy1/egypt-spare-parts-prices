@@ -50,7 +50,7 @@ def test_good_row_passes():
     ({"price": 350.25}, "price not a Decimal between 0 and 1,000,000"),
     ({"price": Decimal("0")}, "price not a Decimal between 0 and 1,000,000"),
     ({"price": Decimal("1.00")}, "placeholder price"),
-    ({"price": Decimal("4.99")}, "placeholder price"),
+    ({"price": Decimal("1.99")}, "placeholder price"),
     ({"currency": "USD"}, "currency not EGP"),
     ({"listing_key": ""}, "listing_key missing"),
 ])
@@ -58,8 +58,8 @@ def test_bad_rows_have_reasons(change, reason):
     assert scrape.check({**GOOD, **change}) == reason
 
 
-def test_five_pounds_is_a_price():
-    assert scrape.check({**GOOD, "price": Decimal("5.00")}) is None
+def test_two_pounds_is_a_price():
+    assert scrape.check({**GOOD, "price": Decimal("2.00")}) is None  # a W5W bulb sells at 4.00
 
 
 def test_cached_page_is_read_not_fetched_and_not_slept_on(offline):

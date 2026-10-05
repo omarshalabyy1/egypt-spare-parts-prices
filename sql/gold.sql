@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS gold.fact_price_observation ( -- grain: one offer per
     part_key      integer NOT NULL REFERENCES gold.dim_part,    -- 0 = not one of our parts
     listing_key   text NOT NULL,                                -- degenerate dimension: the seller's product id
     match_grade   text CHECK (match_grade IN ('part_number', 'type_model')),  -- NULL when unmatched
+    comparable    boolean,                                      -- false: priced far off its group (silver.offer_match); NULL when unmatched
     price         numeric(10, 2) NOT NULL,                      -- EGP
     in_stock      boolean,
     is_discounted boolean NOT NULL,
@@ -47,7 +48,8 @@ CREATE TABLE IF NOT EXISTS gold.fact_price_observation ( -- grain: one offer per
 
 -- One row per matched part per seller: our price against the seller's price in the seller's latest
 -- run week. When a seller has the part in several listings, the cheapest one not shown out of stock
--- wins: it is the price a customer could pay. gap_egp > 0 means we are dearer.
+-- wins: it is the price a customer could pay. An offer priced far off its group (comparable = false)
+-- is left out. gap_egp > 0 means we are dearer.
 CREATE OR REPLACE VIEW gold.price_gap AS
 SELECT DISTINCT ON (p.part_no, s.seller_id)
        p.part_no, p.name, p.family, p.is_key, s.seller_id, f.listing_key, d.run_week, d.date AS observed_on,
@@ -57,14 +59,15 @@ FROM gold.fact_price_observation f
 JOIN gold.dim_part p USING (part_key)
 JOIN gold.dim_seller s USING (seller_key)
 JOIN gold.dim_date d USING (date_key)
-WHERE f.part_key <> 0
+WHERE f.part_key <> 0 AND f.comparable
   AND d.run_week = (SELECT max(d2.run_week) FROM gold.fact_price_observation f2
                     JOIN gold.dim_date d2 USING (date_key) WHERE f2.seller_key = f.seller_key)
 ORDER BY p.part_no, s.seller_id, f.in_stock IS FALSE, f.price, f.listing_key;
 
--- Where a seller is cheaper than us and does not show the part out of stock.
+-- Where a seller is at least 5% cheaper than us (UNDERCUT_PCT in tracker.py: change both together)
+-- and does not show the part out of stock.
 CREATE OR REPLACE VIEW gold.undercut AS
-SELECT * FROM gold.price_gap WHERE their_price < our_price AND in_stock IS NOT FALSE;
+SELECT * FROM gold.price_gap WHERE their_price <= our_price * 0.95 AND in_stock IS NOT FALSE;
 
 -- Every price change of an offer from one run week to the next. Empty until a second week is loaded.
 CREATE OR REPLACE VIEW gold.price_change AS

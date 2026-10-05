@@ -1,7 +1,7 @@
 """Run once, for the demo only: generate the made-up retailer's catalogue (data/catalogue.csv) from
 the offers in silver. Each match group (tracker.match_groups: a part code two sellers or more sell,
-or a part type and car model they do) becomes one of our parts, priced near what the sellers ask.
-A real retailer brings its own catalogue instead.
+or a part type and car model they do, split into sets and single pieces) becomes one of our parts,
+priced at the market's median. A real retailer brings its own catalogue instead.
 
     python make_catalogue.py      # after load_silver; then load_reference loads the file
 """
@@ -9,7 +9,6 @@ A real retailer brings its own catalogue instead.
 import csv
 import hashlib
 import math
-import random
 import statistics
 from collections import Counter, defaultdict
 from decimal import ROUND_HALF_UP, Decimal
@@ -18,7 +17,6 @@ from psycopg.rows import dict_row
 
 import tracker
 
-SEED = 7  # the same catalogue on every run
 FIELDS = ["part_no", "brand", "family", "name", "car_key", "our_price", "is_key", "match_grade", "match_key"]
 
 
@@ -28,21 +26,25 @@ def most_common(values, default=None):
     return min(counts, key=lambda v: (-counts[v], v)) if counts else default
 
 
-def our_price(prices, grade, key):
-    """The group's median price moved by a factor from 0.90 to 1.15, rounded to 0.50 EGP. The factor
-    comes from a generator seeded with the group, so a part keeps its price when other groups change."""
-    factor = Decimal(str(random.Random(f"{SEED}|{grade}|{key}").uniform(0.90, 1.15)))
-    price = statistics.median(prices) * factor
+def our_price(found, median):
+    """The median price of the group's comparable offers not shown out of stock (all comparable
+    offers if every one is out of stock), rounded to 0.50 EGP."""
+    usable = [o for o in found if tracker.comparable(o["price"], median)]
+    prices = [o["price"] for o in usable if o["in_stock"] is not False] or [o["price"] for o in usable]
+    price = statistics.median(prices)
     return max(Decimal("0.50"), (price * 2).quantize(Decimal("1"), ROUND_HALF_UP) / 2).quantize(Decimal("0.01"))
 
 
 def name(grade, key, part_type, family, make, model):
-    """An English name: 'Belt 6PK1460', 'Brake pad front for Hyundai Elantra'."""
+    """An English name: 'Belt 6PK1460', 'Brake pad front set for Hyundai Elantra'."""
+    fields = key.split("|")
     words = [(part_type or family).capitalize()]
     if grade == "part_number":
-        words.append(key)
-    elif key.endswith(("|front", "|rear")):
-        words.append(key.rsplit("|", 1)[1])
+        words.append(fields[0])
+    elif fields[-2] in ("front", "rear"):
+        words.append(fields[-2])
+    if fields[-1] == "set":
+        words.append("set")
     if make and model:
         words += ["for", make.upper() if make in ("mg", "byd") else make.title(),
                   model.upper() if any(c.isdigit() for c in model) else model.title()]
@@ -50,16 +52,18 @@ def name(grade, key, part_type, family, make, model):
 
 
 def catalogue(offers):
-    """One part per match group. offers: seller_id, listing_key, price (the offer's latest), brand,
-    family, part_type, position, car_make, car_model, car_key, part_code. The top 20% of groups by
-    offer count are key parts."""
+    """One part per match group. offers: seller_id, listing_key, price (the offer's latest), in_stock,
+    brand, family, part_type, position, pack, car_make, car_model, car_key, part_code. The top 20% of
+    groups by number of sellers (ties by number of offers) are key parts."""
+    groups = tracker.match_groups(offers)
+    medians = tracker.group_medians(offers, groups)
     members = defaultdict(list)
-    for (seller_id, listing_key), group in tracker.match_groups(offers).items():
-        members[group].append((seller_id, listing_key))
-    by_offer = {(o["seller_id"], o["listing_key"]): o for o in offers}
+    for o in offers:
+        group = groups.get((o["seller_id"], o["listing_key"]))
+        if group:
+            members[group].append(o)
     rows = []
-    for (grade, key), group in members.items():
-        found = [by_offer[o] for o in group]
+    for (grade, key), found in members.items():
         car = most_common(o["car_key"] for o in found)
         made = [o for o in found if o["car_key"] == car] or found
         rows.append({
@@ -69,14 +73,16 @@ def catalogue(offers):
             "name": name(grade, key, most_common(o["part_type"] for o in found), most_common(o["family"] for o in found),
                          made[0]["car_make"], made[0]["car_model"]),
             "car_key": car,
-            "our_price": our_price([o["price"] for o in found], grade, key),
+            "our_price": our_price(found, medians[(grade, key)]),
             "match_grade": grade,
             "match_key": key,
+            "sellers": len({o["seller_id"] for o in found}),
             "offers": len(found),
         })
     if len({r["part_no"] for r in rows}) != len(rows):
         raise ValueError("two match groups hash to the same part_no")
-    key_parts = {r["part_no"] for r in sorted(rows, key=lambda r: (-r["offers"], r["part_no"]))[:math.ceil(len(rows) * 0.2)]}
+    ranked = sorted(rows, key=lambda r: (-r["sellers"], -r["offers"], r["part_no"]))
+    key_parts = {r["part_no"] for r in ranked[:math.ceil(len(rows) * 0.2)]}
     return sorted(({**{k: r[k] for k in FIELDS if k != "is_key"}, "is_key": r["part_no"] in key_parts} for r in rows),
                   key=lambda r: r["part_no"])
 
@@ -90,11 +96,7 @@ def write(rows, path):
 
 if __name__ == "__main__":
     with tracker.connect() as conn:
-        offers = conn.cursor(row_factory=dict_row).execute(
-            "SELECT DISTINCT ON (o.seller_id, o.listing_key) o.seller_id, o.listing_key, p.price, o.brand, o.family,"
-            " o.part_type, o.position, o.car_make, o.car_model, o.car_key, o.part_code"
-            " FROM silver.offer o JOIN silver.price_observation p USING (seller_id, listing_key)"
-            " ORDER BY o.seller_id, o.listing_key, p.observed_on DESC").fetchall()
+        offers = conn.cursor(row_factory=dict_row).execute(tracker.LATEST_OFFERS).fetchall()
     rows = catalogue(offers)
     write(rows, tracker.ROOT / "data" / "catalogue.csv")
     print(f"data/catalogue.csv: {len(rows)} parts from {len(offers)} offers,"

@@ -43,23 +43,29 @@ FILTER_KINDS = (
     ("air filter", ("هواء", "الهواء", "air")),
 )
 GEARBOX = ("فتيس", "الفتيس", "ناقل الحركه", "transmission", "gearbox", "atf")
+# Words that make a listing a set of several pieces (a set of 4 plugs), not one piece. Not مجموعه:
+# "سير مجموعه" is a kind of belt.
+SET_WORDS = ("طقم", "اطقم", "set", "sets", "kit", "pair", "زوج", r"عدد ?[2-9]", r"[2-9]\d? ?(pcs|pieces|قطع)",
+             r"x ?[2-9]", r"[2-9] ?x")
 
 
 def part_type(title):
-    """('brake pad', 'front'), ('oil filter', None), ... or (None, None) when no word matches.
-    A filter that does not say its kind (or is a gearbox filter) is plain 'filter'."""
+    """(part type, position, pack): ('brake pad', 'front', 'set'), ('oil filter', None, 'single'),
+    or (None, None, pack) when no type word matches. A filter that does not say its kind (or is a
+    gearbox filter) is plain 'filter'. pack is 'set' when the title says it is several pieces."""
     text = norm(title)
+    pack = "set" if has(text, SET_WORDS) else "single"
     for name, words, nots in PART_TYPES:
         if has(text, words) and not has(text, nots):
             if name == "filter":
                 if has(text, GEARBOX):
-                    return "filter", None
-                return next((kind for kind, w in FILTER_KINDS if has(text, w)), "filter"), None
+                    return "filter", None, pack
+                return next((kind for kind, w in FILTER_KINDS if has(text, w)), "filter"), None, pack
             if name == "brake pad":
                 front, rear = has(text, ("امامي", "اماميه", "front")), has(text, ("خلفي", "خلفيه", "rear"))
-                return name, "front" if front and not rear else "rear" if rear and not front else None
-            return name, None
-    return None, None
+                return name, "front" if front and not rear else "rear" if rear and not front else None, pack
+            return name, None, pack
+    return None, None, pack
 
 
 # --- Car ----------------------------------------------------------------------------------------
