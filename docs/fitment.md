@@ -15,7 +15,7 @@ Counts: offers with a `car_key` out of the seller's offers in silver, run week 2
 | Pringi | The site's own car field (its "brand" is the car make) and `model موديل (from – to)` in the title | 1,267 of 1,308 |
 | Tawfiqia | Arabic make and model in the title, sometimes years (`2004 / 2013`) | 1,782 of 3,628 |
 | Your Parts | The site's car field `make model (from - to)`, appended to the title | 139 of 283 |
-| GE Trading | English make, model and chassis code after the part name; several cars joined by `/` | 535 of 1,527 |
+| GE Trading | English make, model and chassis code after the part name; several cars joined by `/` | 535 of 1,530 |
 | Egy Car Parts | Arabic make and model in brackets at the end of the title, no years; mostly European models outside the dictionary | 1,382 of 3,832 |
 | N Auto Express | English `Compatible With Make - Make - Make`: usually several makes, a model only sometimes | 201 of 1,135 |
 | Amazon Egypt | English free text (`for Hyundai Verna`), often several cars or none | 290 of 1,718 |
@@ -23,4 +23,4 @@ Counts: offers with a `car_key` out of the seller's offers in silver, run week 2
 | Spare Zone | A model without its make (`انسيجنيا`, `IBIZA 2008`); wipers, plugs and oils | 17 of 124 |
 | Fit and Fix | Batteries and oils name no car; brake pads name `Hyundai Elantra (2007-2011)` | 10 of 167 |
 | Garage ILLA | Oils and batteries name no car; a few filters name the car in Arabic | 4 of 65 |
-| All sellers | | 16,795 of 28,822 |
+| All sellers | | 16,795 of 28,825 |
