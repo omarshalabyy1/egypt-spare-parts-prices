@@ -138,7 +138,9 @@ def test_save_twice_adds_nothing():
         rows = [GOOD,
                 {**GOOD, "listing_key": URL + "-b", "url": URL + "-b", "price": Decimal("1350.25")},
                 {**GOOD, "listing_key": URL + "-c", "url": URL + "-c", "price": Decimal("0")},
-                {**GOOD, "price": Decimal("999")}]  # the same listing again, later on the site: the first row wins
+                {**GOOD, "price": Decimal("999")},  # the same listing again, later on the site: the first row wins
+                {**GOOD, "listing_key": None, "title": "Keyless one"},  # rows with no key are never merged:
+                {**GOOD, "listing_key": None, "title": "Keyless two"}]  # each goes to quarantine
 
         def totals():
             return conn.execute(
@@ -148,11 +150,11 @@ def test_save_twice_adds_nothing():
                 " FROM silver.price_observation WHERE seller_id = 'test-seller'"
             ).fetchone()
 
-        assert tracker.save(conn, rows, WEEK) == (2, 1)
+        assert tracker.save(conn, rows, WEEK) == (2, 3)
         first = totals()
-        assert tracker.save(conn, rows, WEEK) == (2, 1)
+        assert tracker.save(conn, rows, WEEK) == (2, 3)
         assert totals() == first
-        assert first[:3] == (2, 2, Decimal("1700.50")) and first[4] == 1
+        assert first[:3] == (2, 2, Decimal("1700.50")) and first[4] == 3
         with pytest.raises(psycopg.errors.RaiseException, match="append-only"):
             conn.execute("UPDATE silver.price_observation SET price = 1 WHERE seller_id = 'test-seller'")
     finally:

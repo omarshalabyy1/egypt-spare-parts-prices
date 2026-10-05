@@ -4,7 +4,7 @@
 Pringi and Your Parts), in Arabic and English, against the dictionary in [enrich.py](../enrich.py).
 A title that names no car, or names two different models, gets no `car_key`: never guessed. Years
 come only from the title (`(2014 - 2024)`, `2021-2024`, `2012 2013 2014`); a chassis code such as
-N17 or AD is read as the model's code, never turned into years.
+N17 or AD is ignored (the model name beside it is what matches) and never turned into years.
 
 Counts: offers with a `car_key` out of the seller's offers in silver, run week 2026-10-05.
 

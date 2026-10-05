@@ -325,11 +325,15 @@ def save(conn, rows, run_week):
     is_discounted, observed_on, fetched_at, and optionally in_stock and car_make (the car the site
     states; None = not stated). observed_on and fetched_at must come from the page's index.jsonl
     line, not the clock, so a rerun on the cached pages adds nothing."""
-    first = {}
+    first, keyless = {}, []  # a row with no listing_key is never merged: each one goes to quarantine
     for row in rows:
-        first.setdefault(row.get("listing_key"), row)
+        if row.get("listing_key"):
+            first.setdefault(row["listing_key"], row)
+        else:
+            keyless.append(row)
+    kept = [*first.values(), *keyless]
     good = []
-    for row in ({"in_stock": None, "car_make": None, **r} for r in first.values()):
+    for row in ({"in_stock": None, "car_make": None, **r} for r in kept):
         reason = scrape.check(row)
         if reason:
             quarantine(conn, row["seller_id"], run_week, row.get("url"), reason, row)
@@ -363,7 +367,7 @@ def save(conn, rows, run_week):
         " %(is_discounted)s, %(in_stock)s, %(run_week)s, %(fetched_at)s) ON CONFLICT DO NOTHING",
         [{**r, "run_week": run_week} for r in good],
     )
-    return len(good), len(first) - len(good)
+    return len(good), len(kept) - len(good)
 
 
 def quarantine(conn, seller_id, run_week, url, reason, raw):
