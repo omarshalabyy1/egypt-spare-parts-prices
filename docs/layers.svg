@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" role="img" aria-label="Bronze, silver, gold. Bronze: raw pages gzipped under data/raw by seller and week with an index.jsonl, bronze.page one row per fetched page. Silver: silver.seller, silver.part, silver.offer, silver.price_observation append-only, silver.quarantine. Gold: a star with gold.fact_price_observation at the centre, one offer per run week, and gold.dim_seller, gold.dim_part with family, brand and part number, gold.dim_date by week; views gold.price_gap, gold.undercut and gold.price_change. Then Power BI.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; fill: #0E1630; }
+    .title { font-size: 21px; font-weight: 700; }
+    .sub { font-size: 13.5px; fill: #475569; }
+    .layer { font-size: 17px; font-weight: 700; }
+    .d { font-size: 12.5px; fill: #475569; }
+    .s { font-size: 11px; fill: #475569; }
+    .m { font-family: Consolas, Menlo, monospace; font-size: 11.5px; fill: #0E1630; }
+    .mon { font-family: Consolas, Menlo, monospace; font-size: 12px; font-weight: 700; fill: #FFFFFF; }
+    .on { font-size: 12px; fill: #FFFFFF; }
+    .onb { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
+    .panel { fill: #FFFFFF; stroke: #C3CCDC; stroke-width: 1.5; }
+    .chip { fill: #F4F6FB; stroke: #C3CCDC; }
+    .ln { fill: none; stroke: #475569; stroke-width: 2; marker-end: url(#a); }
+  </style>
+
+  <rect x="1" y="1" width="898" height="658" rx="22" fill="#F4F6FB" stroke="#DCE2EE"/>
+  <text x="30" y="44" class="title">Bronze, silver, gold</text>
+  <text x="30" y="68" class="sub">Each layer only reads the one above it. The run week is the watermark: a rerun of a week adds nothing twice.</text>
+
+  <!-- Bronze -->
+  <rect x="30" y="88" width="840" height="84" rx="12" class="panel"/>
+  <text x="50" y="120" class="layer">Bronze</text>
+  <text x="50" y="142" class="d">raw pages, as fetched</text>
+  <rect x="240" y="104" width="330" height="52" rx="8" class="chip"/>
+  <text x="254" y="126" class="m">data/raw/&lt;seller&gt;/&lt;week&gt;/*.gz</text>
+  <text x="254" y="145" class="m">+ index.jsonl (url, status, time)</text>
+  <rect x="590" y="104" width="260" height="52" rx="8" class="chip"/>
+  <text x="604" y="126" class="m">bronze.page</text>
+  <text x="604" y="145" class="s">one row per fetched page</text>
+  <path d="M460 172V202" class="ln"/>
+  <text x="472" y="192" class="d">parse + schema check</text>
+
+  <!-- Silver -->
+  <rect x="30" y="204" width="840" height="96" rx="12" class="panel"/>
+  <text x="50" y="240" class="layer">Silver</text>
+  <text x="50" y="262" class="d">parsed, typed, checked</text>
+  <g>
+    <rect x="240" y="226" width="102" height="52" rx="8" class="chip"/>
+    <text x="248" y="248" class="m" font-size="11">silver.seller</text><text x="248" y="267" class="s">per site</text>
+    <rect x="348" y="226" width="89" height="52" rx="8" class="chip"/>
+    <text x="356" y="248" class="m" font-size="11">silver.part</text><text x="356" y="267" class="s">our parts</text>
+    <rect x="443" y="226" width="95" height="52" rx="8" class="chip"/>
+    <text x="451" y="248" class="m" font-size="11">silver.offer</text><text x="451" y="267" class="s">per listing</text>
+    <rect x="544" y="226" width="174" height="52" rx="8" class="chip" stroke="#2563EB"/>
+    <text x="552" y="248" class="m" font-size="11">silver.price_observation</text><text x="552" y="267" class="s">append-only history</text>
+    <rect x="724" y="226" width="128" height="52" rx="8" class="chip" stroke-dasharray="5 4"/>
+    <text x="732" y="248" class="m" font-size="11">silver.quarantine</text><text x="732" y="267" class="s">kept, not dropped</text>
+  </g>
+  <path d="M460 300V330" class="ln"/>
+  <text x="472" y="320" class="d">load the star</text>
+
+  <!-- Gold -->
+  <rect x="30" y="332" width="840" height="214" rx="12" class="panel"/>
+  <text x="50" y="368" class="layer">Gold</text>
+  <text x="50" y="390" class="d">Kimball star</text>
+  <text x="50" y="408" class="d">for Power BI</text>
+  <g stroke="#94A3B8" stroke-width="1.5">
+    <line x1="560" y1="420" x2="410" y2="372"/>
+    <line x1="560" y1="420" x2="410" y2="436"/>
+    <line x1="560" y1="420" x2="710" y2="380"/>
+  </g>
+  <rect x="240" y="356" width="170" height="32" rx="8" class="chip"/>
+  <text x="254" y="377" class="m">gold.dim_seller</text>
+  <rect x="240" y="410" width="170" height="52" rx="8" class="chip"/>
+  <text x="254" y="432" class="m">gold.dim_part</text>
+  <text x="254" y="451" class="s">family, brand, part number</text>
+  <rect x="710" y="356" width="148" height="52" rx="8" class="chip"/>
+  <text x="724" y="378" class="m">gold.dim_date</text>
+  <text x="724" y="397" class="s">week</text>
+  <rect x="440" y="396" width="240" height="50" rx="8" fill="#2563EB"/>
+  <text x="560" y="417" class="mon" text-anchor="middle">gold.fact_price_observation</text>
+  <text x="560" y="436" class="on" text-anchor="middle">grain: one offer per run week</text>
+  <text x="240" y="502" class="d">views</text>
+  <rect x="284" y="484" width="140" height="28" rx="14" class="chip"/>
+  <text x="354" y="503" class="m" text-anchor="middle">gold.price_gap</text>
+  <rect x="434" y="484" width="140" height="28" rx="14" class="chip"/>
+  <text x="504" y="503" class="m" text-anchor="middle">gold.undercut</text>
+  <rect x="584" y="484" width="164" height="28" rx="14" class="chip"/>
+  <text x="666" y="503" class="m" text-anchor="middle">gold.price_change</text>
+  <text x="240" y="532" class="s">our price against each seller's latest, where a seller is cheaper, and every price move</text>
+  <path d="M460 546V576" class="ln"/>
+  <text x="472" y="566" class="d">import</text>
+
+  <!-- Power BI -->
+  <rect x="30" y="578" width="840" height="56" rx="12" fill="#2563EB"/>
+  <text x="50" y="612" class="onb">Power BI</text>
+  <text x="240" y="611" class="on" font-size="13">price gaps by part and seller, undercuts, price changes week by week</text>
+</svg>
