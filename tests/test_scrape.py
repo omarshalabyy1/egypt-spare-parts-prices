@@ -49,11 +49,17 @@ def test_good_row_passes():
     ({"url": "ftp://shop.example/p/1"}, "url not http(s)"),
     ({"price": 350.25}, "price not a Decimal between 0 and 1,000,000"),
     ({"price": Decimal("0")}, "price not a Decimal between 0 and 1,000,000"),
+    ({"price": Decimal("1.00")}, "placeholder price"),
+    ({"price": Decimal("4.99")}, "placeholder price"),
     ({"currency": "USD"}, "currency not EGP"),
     ({"listing_key": ""}, "listing_key missing"),
 ])
 def test_bad_rows_have_reasons(change, reason):
     assert scrape.check({**GOOD, **change}) == reason
+
+
+def test_five_pounds_is_a_price():
+    assert scrape.check({**GOOD, "price": Decimal("5.00")}) is None
 
 
 def test_cached_page_is_read_not_fetched_and_not_slept_on(offline):
@@ -126,18 +132,20 @@ def test_save_twice_adds_nothing():
     except (KeyError, psycopg.OperationalError):
         pytest.skip("no warehouse reachable")
     try:
-        conn.execute((tracker.ROOT / "sql" / "schema.sql").read_text())
-        conn.execute("INSERT INTO seller (seller_id, name, base_url) VALUES ('test-seller', 'Test', 'https://shop.example')")
+        for file in tracker.LAYERS:
+            conn.execute((tracker.ROOT / "sql" / file).read_text(encoding="utf-8"))
+        conn.execute("INSERT INTO silver.seller (seller_id, name, base_url) VALUES ('test-seller', 'Test', 'https://shop.example')")
         rows = [GOOD,
                 {**GOOD, "listing_key": URL + "-b", "url": URL + "-b", "price": Decimal("1350.25")},
-                {**GOOD, "listing_key": URL + "-c", "url": URL + "-c", "price": Decimal("0")}]
+                {**GOOD, "listing_key": URL + "-c", "url": URL + "-c", "price": Decimal("0")},
+                {**GOOD, "price": Decimal("999")}]  # the same listing again, later on the site: the first row wins
 
         def totals():
             return conn.execute(
-                "SELECT (SELECT count(*) FROM offer WHERE seller_id = 'test-seller'),"
+                "SELECT (SELECT count(*) FROM silver.offer WHERE seller_id = 'test-seller'),"
                 " count(*), sum(price), md5(string_agg(listing_key || ':' || price, ',' ORDER BY listing_key)),"
-                " (SELECT count(*) FROM quarantine WHERE seller_id = 'test-seller')"
-                " FROM price_observation WHERE seller_id = 'test-seller'"
+                " (SELECT count(*) FROM silver.quarantine WHERE seller_id = 'test-seller')"
+                " FROM silver.price_observation WHERE seller_id = 'test-seller'"
             ).fetchone()
 
         assert tracker.save(conn, rows, WEEK) == (2, 1)
@@ -146,7 +154,7 @@ def test_save_twice_adds_nothing():
         assert totals() == first
         assert first[:3] == (2, 2, Decimal("1700.50")) and first[4] == 1
         with pytest.raises(psycopg.errors.RaiseException, match="append-only"):
-            conn.execute("UPDATE price_observation SET price = 1 WHERE seller_id = 'test-seller'")
+            conn.execute("UPDATE silver.price_observation SET price = 1 WHERE seller_id = 'test-seller'")
     finally:
         conn.rollback()
         conn.close()

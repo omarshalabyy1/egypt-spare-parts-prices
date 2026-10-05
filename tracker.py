@@ -1,16 +1,22 @@
-"""The weekly steps Airflow runs: load the reference data, fetch the competitor pages, parse the
-offers, match them to our parts, and email an alert where a competitor is cheaper. One function each."""
+"""The weekly steps Airflow runs: load the reference data, fetch the competitor pages, load the
+parsed offers into silver, match them to our parts, rebuild the gold star, and email an alert where
+a competitor is cheaper. One function each."""
 
 import csv
 import gzip
 import json
 import os
+import smtplib
+from collections import defaultdict
 from datetime import date, timedelta
+from email.message import EmailMessage
 from pathlib import Path
 
 import psycopg
+from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
+import enrich
 import scrape
 from scrapers import (amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress,
                       pringi, sparezone, tawfiqia, yourparts, zaitandfilters)
@@ -42,11 +48,17 @@ def connect():
 
 # --- Step 1: reference data ------------------------------------------------------------------
 
+LAYERS = ("bronze.sql", "silver.sql", "gold.sql")
+
+
 def load_reference():
-    """Create the tables and views, then load the competitor sites and our catalogue from data/."""
+    """Create the schemas, tables and views of each layer, then load the competitor sites and our
+    catalogue from data/."""
     with connect() as conn:
-        conn.execute((ROOT / "sql" / "schema.sql").read_text())
-        for table, key, file in (("seller", "seller_id", "sellers.csv"), ("part", "part_no", "catalogue.csv")):
+        for file in LAYERS:
+            conn.execute((ROOT / "sql" / file).read_text(encoding="utf-8"))
+        for table, key, file in (("silver.seller", "seller_id", "sellers.csv"),
+                                 ("silver.part", "part_no", "catalogue.csv")):
             with open(ROOT / "data" / file, newline="", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 rows = [[r[c] or None for c in reader.fieldnames] for r in reader]
@@ -146,68 +158,219 @@ def offers(seller_id, run_week):
     return rows
 
 
-def parse_offers(run_week):
-    """Parse every site's kept pages for the week and save the offers, in one transaction."""
+def load_pages(conn, seller_id, run_week):
+    """The site's index.jsonl for the week into bronze.page; a line already loaded is skipped."""
+    with open(ROOT / "data" / "raw" / seller_id / str(run_week) / "index.jsonl", encoding="utf-8") as f:
+        lines = [{"via": None, **json.loads(line), "seller_id": seller_id, "run_week": run_week} for line in f]
+    conn.cursor().executemany(
+        "INSERT INTO bronze.page (seller_id, run_week, url, path, status, fetched_at, via) VALUES (%(seller_id)s,"
+        " %(run_week)s, %(url)s, %(path)s, %(status)s, %(fetched_at)s, %(via)s) ON CONFLICT DO NOTHING",
+        lines,
+    )
+    return len(lines)
+
+
+def load_silver(run_week):
+    """Load every site's page index into bronze, then parse its kept pages for the week and save the
+    offers into silver, in one transaction: a site that fails leaves nothing of the week behind."""
+    print(f"load_silver: run_week {run_week}")
     with connect() as conn:
         for seller_id in SCRAPERS:
+            pages = load_pages(conn, seller_id, run_week)
             saved, quarantined = save(conn, offers(seller_id, run_week), run_week)
-            print(f"{seller_id}: {saved} saved, {quarantined} quarantined")
+            print(f"{seller_id}: {pages} pages, {saved} offers saved, {quarantined} quarantined")
 
 
-# --- Steps 4 and 5: not written yet ----------------------------------------------------------------
+# --- Step 4: match ------------------------------------------------------------------------------
+
+def match_groups(rows):
+    """Which group each offer belongs to: {(seller_id, listing_key): (match_grade, match_key)}.
+    First by part code, when two sellers or more sell that code ('part_number'); then the offers
+    left, by part type and car model (and position, for brake pads) sold by two sellers or more
+    ('type_model'). A plain 'filter' and a brake pad of unknown position are never grouped by type:
+    either could be one of several parts. Each row: seller_id, listing_key, part_code, part_type,
+    position, car_make, car_model."""
+    def shared(keys):
+        sellers = defaultdict(set)
+        for (seller_id, _), key in keys.items():
+            sellers[key].add(seller_id)
+        return {offer: key for offer, key in keys.items() if len(sellers[key]) >= 2}
+
+    codes = {(r["seller_id"], r["listing_key"]): r["part_code"] for r in rows if r["part_code"]}
+    groups = {offer: ("part_number", key) for offer, key in shared(codes).items()}
+    types = {}
+    for r in rows:
+        offer = (r["seller_id"], r["listing_key"])
+        if offer in groups or not r["car_model"] or r["part_type"] in (None, "filter"):
+            continue
+        if r["part_type"] == "brake pad" and not r["position"]:
+            continue
+        types[offer] = "|".join(x for x in (r["part_type"], f"{r['car_make']}-{r['car_model']}", r["position"]) if x)
+    groups.update({offer: ("type_model", key) for offer, key in shared(types).items()})
+    return groups
+
 
 def match():
-    print("match: not implemented yet")
+    """Rebuild silver.offer_match: each offer in a match group maps to that group's catalogue part."""
+    with connect() as conn:
+        offers_ = conn.cursor(row_factory=dict_row).execute(
+            "SELECT seller_id, listing_key, part_code, part_type, position, car_make, car_model FROM silver.offer"
+        ).fetchall()
+        groups = match_groups(offers_)
+        parts = {(grade, key): part_no for part_no, grade, key in
+                 conn.execute("SELECT part_no, match_grade, match_key FROM silver.part")}
+        rows = [(s, l, parts[group], *group) for (s, l), group in groups.items() if group in parts]
+        if not rows:
+            raise ValueError(f"{len(groups)} offers in match groups, none maps to a catalogue part:"
+                             " is data/catalogue.csv loaded?")
+        conn.execute("DELETE FROM silver.offer_match")
+        conn.cursor().executemany("INSERT INTO silver.offer_match (seller_id, listing_key, part_no, match_grade,"
+                                  " match_key) VALUES (%s, %s, %s, %s, %s)", rows)
+        print(f"match: {len(offers_)} offers, {len(groups)} in match groups, {len(rows)} matched to"
+              f" {len({r[2] for r in rows})} catalogue parts")
 
+
+# --- Step 5: gold -------------------------------------------------------------------------------
+
+BUILD_GOLD = """
+TRUNCATE gold.fact_price_observation, gold.dim_part, gold.dim_seller, gold.dim_date;
+
+INSERT INTO gold.dim_seller (seller_key, seller_id, name, base_url)
+SELECT row_number() OVER (ORDER BY seller_id), seller_id, name, base_url FROM silver.seller;
+
+INSERT INTO gold.dim_part (part_key, part_no, name, family, brand, car_key, our_price, is_key)
+SELECT 0, 'unmatched', 'Not one of our parts', 'n/a', 'n/a', NULL, NULL, false
+UNION ALL
+SELECT row_number() OVER (ORDER BY part_no), part_no, name, family, brand, car_key, our_price, is_key
+FROM silver.part;
+
+INSERT INTO gold.dim_date (date_key, date, run_week, iso_year, iso_week, month)
+SELECT to_char(d, 'YYYYMMDD')::int, d, date_trunc('week', d)::date, extract(isoyear FROM d)::int,
+       extract(week FROM d)::int, date_trunc('month', d)::date
+FROM generate_series((SELECT min(observed_on) FROM silver.price_observation),
+                     (SELECT max(observed_on) FROM silver.price_observation), interval '1 day') AS d;
+
+-- One row per offer per run week: the week's last observation.
+INSERT INTO gold.fact_price_observation (date_key, seller_key, part_key, listing_key, match_grade, price,
+                                         in_stock, is_discounted, part_type, car_key)
+SELECT DISTINCT ON (o.seller_id, o.listing_key, o.run_week)
+       to_char(o.observed_on, 'YYYYMMDD')::int, s.seller_key, coalesce(p.part_key, 0), o.listing_key,
+       m.match_grade, o.price, o.in_stock, o.is_discounted, x.part_type, x.car_key
+FROM silver.price_observation o
+JOIN silver.offer x USING (seller_id, listing_key)
+JOIN gold.dim_seller s USING (seller_id)
+LEFT JOIN silver.offer_match m USING (seller_id, listing_key)
+LEFT JOIN gold.dim_part p ON p.part_no = m.part_no
+ORDER BY o.seller_id, o.listing_key, o.run_week, o.observed_on DESC;
+"""
+
+
+def build_gold():
+    """Rebuild the gold star from silver in one transaction (truncate, then insert). Fails if the
+    fact comes out empty."""
+    with connect() as conn:
+        conn.execute(BUILD_GOLD)
+        counts = conn.execute(
+            "SELECT (SELECT count(*) FROM gold.dim_seller), (SELECT count(*) FROM gold.dim_part),"
+            " (SELECT count(*) FROM gold.dim_date), (SELECT count(*) FROM gold.fact_price_observation),"
+            " (SELECT count(*) FROM gold.fact_price_observation WHERE part_key <> 0)").fetchone()
+        if not counts[3]:
+            raise ValueError("gold.fact_price_observation came out empty: is silver loaded?")
+        print("build_gold: dim_seller {}, dim_part {}, dim_date {}, fact {} ({} matched)".format(*counts))
+
+
+# --- Step 6: alert ------------------------------------------------------------------------------
 
 def send_alert(run_week):
-    print("send_alert: not implemented yet")
+    """Email the key parts a competitor sells below our price in this run week. Without GMAIL_USER
+    and GMAIL_APP_PASSWORD the count is logged and no email is sent."""
+    with connect() as conn:
+        rows = conn.execute(
+            "SELECT part_no, name, seller_id, their_price, our_price, gap_pct FROM gold.undercut"
+            " WHERE is_key AND run_week = %s ORDER BY gap_pct DESC, part_no, seller_id", (run_week,)).fetchall()
+        if not rows:
+            print(f"No key part undercut in run week {run_week}")
+            return
+        if not (os.environ.get("GMAIL_USER") and os.environ.get("GMAIL_APP_PASSWORD")):
+            print(f"{len(rows)} key-part undercuts in run week {run_week}, but GMAIL_USER and GMAIL_APP_PASSWORD"
+                  " are not set in .env: no email")
+            return
+        message = EmailMessage()
+        message["Subject"] = f"Spare parts price alert: {len(rows)} key-part undercuts (week of {run_week})"
+        message["From"] = os.environ["GMAIL_USER"]
+        message["To"] = os.environ.get("MAIL_TO") or os.environ["GMAIL_USER"]
+        message.set_content("\n".join(
+            [f"Competitors sell these key parts below our price (week of {run_week}, prices in EGP):", ""]
+            + [f"- {part_no} {name}: {seller_id} {theirs} (ours {ours}, we are {gap}% dearer)"
+               for part_no, name, seller_id, theirs, ours, gap in rows]))
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login(os.environ["GMAIL_USER"], os.environ["GMAIL_APP_PASSWORD"])
+            smtp.send_message(message)
+        conn.execute(
+            "INSERT INTO silver.alert_sent (run_week, undercut_count, sent_at) VALUES (%s, %s, now())"
+            " ON CONFLICT (run_week) DO UPDATE SET undercut_count = EXCLUDED.undercut_count, sent_at = now()",
+            (run_week, len(rows)))
+        print(f"Alert sent: {len(rows)} key-part undercuts")
 
 
 # --- Saving parsed offers ----------------------------------------------------------------------
 
 def save(conn, rows, run_week):
-    """Check each parsed offer; send the bad ones to quarantine, upsert the good ones into offer
-    (latest title, brand, part number, url and last_seen win) and add their prices to the history
-    (never overwritten). Returns (saved, quarantined).
+    """Keep the first row of each listing (a listing on two pages of a site is one offer); check
+    each, send the bad ones to quarantine, enrich the good ones from their title (enrich.py), upsert
+    them into silver.offer (latest title, brand, part number, url, enrichment and last_seen win) and
+    add their prices to the history (never overwritten). Returns (saved, quarantined).
 
     Each row: seller_id, listing_key, family, title, brand, part_no, url, price (Decimal), currency,
-    is_discounted, observed_on, fetched_at, and optionally in_stock and car_make (None = not stated). observed_on and fetched_at must come from the page's
-    index.jsonl line, not the clock, so a rerun on the cached pages adds nothing."""
+    is_discounted, observed_on, fetched_at, and optionally in_stock and car_make (the car the site
+    states; None = not stated). observed_on and fetched_at must come from the page's index.jsonl
+    line, not the clock, so a rerun on the cached pages adds nothing."""
+    first = {}
+    for row in rows:
+        first.setdefault(row.get("listing_key"), row)
     good = []
-    for row in ({"in_stock": None, "car_make": None, **r} for r in rows):
+    for row in ({"in_stock": None, "car_make": None, **r} for r in first.values()):
         reason = scrape.check(row)
         if reason:
             quarantine(conn, row["seller_id"], run_week, row.get("url"), reason, row)
-        else:
-            good.append(row)
+            continue
+        part_type, position = enrich.part_type(row["title"])
+        car_make, car_model, year_from, year_to, car_key = enrich.car(row["title"], row["car_make"])
+        good.append({**row, "part_type": part_type, "position": position, "car_make": car_make,
+                     "car_model": car_model, "year_from": year_from, "year_to": year_to, "car_key": car_key,
+                     "part_code": enrich.part_code(row["part_no"], row["title"])})
     if not good:
         raise ValueError(f"{len(rows)} rows parsed, none passed the check: a parser is broken")
     cur = conn.cursor()
     cur.executemany(
-        "INSERT INTO offer (seller_id, listing_key, family, title, brand, part_no, car_make, url, first_seen,"
-        " last_seen) VALUES (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s,"
-        " %(car_make)s, %(url)s, %(observed_on)s, %(observed_on)s)"
-        " ON CONFLICT (seller_id, listing_key) DO UPDATE SET family = EXCLUDED.family, car_make = EXCLUDED.car_make,"
-        " title = EXCLUDED.title, brand = EXCLUDED.brand,"
-        " part_no = EXCLUDED.part_no, url = EXCLUDED.url, first_seen = least(offer.first_seen, EXCLUDED.first_seen),"
-        " last_seen = greatest(offer.last_seen, EXCLUDED.last_seen)",
+        "INSERT INTO silver.offer (seller_id, listing_key, family, title, brand, part_no, url, first_seen, last_seen,"
+        " part_type, position, car_make, car_model, year_from, year_to, car_key, part_code) VALUES (%(seller_id)s,"
+        " %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s, %(url)s, %(observed_on)s,"
+        " %(observed_on)s, %(part_type)s, %(position)s, %(car_make)s, %(car_model)s, %(year_from)s, %(year_to)s,"
+        " %(car_key)s, %(part_code)s)"
+        " ON CONFLICT (seller_id, listing_key) DO UPDATE SET family = EXCLUDED.family, title = EXCLUDED.title,"
+        " brand = EXCLUDED.brand, part_no = EXCLUDED.part_no, url = EXCLUDED.url,"
+        " first_seen = least(offer.first_seen, EXCLUDED.first_seen),"
+        " last_seen = greatest(offer.last_seen, EXCLUDED.last_seen), part_type = EXCLUDED.part_type,"
+        " position = EXCLUDED.position, car_make = EXCLUDED.car_make, car_model = EXCLUDED.car_model,"
+        " year_from = EXCLUDED.year_from, year_to = EXCLUDED.year_to, car_key = EXCLUDED.car_key,"
+        " part_code = EXCLUDED.part_code",
         good,
     )
     cur.executemany(
-        "INSERT INTO price_observation (seller_id, listing_key, observed_on, price, is_discounted, in_stock,"
+        "INSERT INTO silver.price_observation (seller_id, listing_key, observed_on, price, is_discounted, in_stock,"
         " run_week, fetched_at) VALUES (%(seller_id)s, %(listing_key)s, %(observed_on)s, %(price)s,"
         " %(is_discounted)s, %(in_stock)s, %(run_week)s, %(fetched_at)s) ON CONFLICT DO NOTHING",
         [{**r, "run_week": run_week} for r in good],
     )
-    return len(good), len(rows) - len(good)
+    return len(good), len(first) - len(good)
 
 
 def quarantine(conn, seller_id, run_week, url, reason, raw):
     """Keep a row that failed the check, as it came, with the reason. The same row twice in one
     run is kept once."""
     conn.execute(
-        "INSERT INTO quarantine (seller_id, run_week, url, reason, raw, fetched_at)"
+        "INSERT INTO silver.quarantine (seller_id, run_week, url, reason, raw, fetched_at)"
         " VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING",
         (seller_id, run_week, url, reason, Jsonb(raw, dumps=lambda o: json.dumps(o, default=str)),
          raw.get("fetched_at")),
