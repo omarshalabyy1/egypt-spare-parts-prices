@@ -1,26 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 660" width="900" height="660" role="img" aria-label="Bronze, silver, gold. Bronze: raw pages gzipped under data/raw by seller and week with an index.jsonl, bronze.page one row per fetched page. Silver: silver.seller, silver.part, silver.offer, silver.price_observation append-only, silver.quarantine. Gold: a star with gold.fact_price_observation at the centre, one offer per run week, and gold.dim_seller, gold.dim_part with family, brand and part number, gold.dim_date by week; views gold.price_gap, gold.undercut and gold.price_change. Then Power BI.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" width="1000" height="660" role="img" aria-label="Bronze, silver, gold. Bronze: raw pages gzipped under data/raw by seller and week with an index.jsonl, bronze.page one row per fetched page. Silver: silver.seller, silver.part, silver.offer, silver.price_observation append-only, silver.quarantine. Gold: a star with gold.fact_price_observation at the centre, one offer per run week, and gold.dim_seller, gold.dim_part with family, brand and part number, gold.dim_date by week; views gold.price_gap, gold.undercut and gold.price_change. Then Power BI.">
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M0 0L10 5L0 10z" fill="#475569"/>
+      <path d="M0 0L10 5L0 10z" fill="#64748B"/>
     </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#16233B"/>
+    </linearGradient>
   </defs>
   <style>
-    text { font-family: "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; fill: #0E1630; }
+    text { font-family: "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; fill: #FFFFFF; }
     .title { font-size: 21px; font-weight: 700; }
-    .sub { font-size: 13.5px; fill: #475569; }
+    .sub { font-size: 13.5px; fill: #CBD5E1; }
     .layer { font-size: 17px; font-weight: 700; }
-    .d { font-size: 12.5px; fill: #475569; }
-    .s { font-size: 11px; fill: #475569; }
-    .m { font-family: Consolas, Menlo, monospace; font-size: 11.5px; fill: #0E1630; }
-    .mon { font-family: Consolas, Menlo, monospace; font-size: 12px; font-weight: 700; fill: #FFFFFF; }
-    .on { font-size: 12px; fill: #FFFFFF; }
-    .onb { font-size: 16px; font-weight: 700; fill: #FFFFFF; }
-    .panel { fill: #FFFFFF; stroke: #C3CCDC; stroke-width: 1.5; }
-    .chip { fill: #F4F6FB; stroke: #C3CCDC; }
-    .ln { fill: none; stroke: #475569; stroke-width: 2; marker-end: url(#a); }
+    .d { font-size: 12.5px; fill: #94A3B8; }
+    .s { font-size: 11px; fill: #94A3B8; }
+    .m { font-size: 12px; font-weight: 600; fill: #E2E8F0; }
+    .mon { font-size: 13px; font-weight: 700; fill: #0B1220; }
+    .on { font-size: 12px; fill: #0B1220; }
+    .onb { font-size: 16px; font-weight: 700; fill: #0B1220; }
+    .panel { fill: #FFFFFF; fill-opacity: 0.04; stroke: #334155; stroke-width: 1.5; }
+    .chip { fill: #FFFFFF; fill-opacity: 0.06; stroke: #475569; }
+    .ln { fill: none; stroke: #64748B; stroke-width: 2; marker-end: url(#a); }
   </style>
 
-  <rect x="1" y="1" width="898" height="658" rx="22" fill="#F4F6FB" stroke="#DCE2EE"/>
+  <rect width="1000" height="660" rx="22" fill="url(#bg)"/>
+  <g transform="translate(50 0)">
   <text x="30" y="44" class="title">Bronze, silver, gold</text>
   <text x="30" y="68" class="sub">Each layer only reads the one above it. The run week is the watermark: a rerun of a week adds nothing twice.</text>
 
@@ -48,7 +53,7 @@
     <text x="356" y="248" class="m" font-size="11">silver.part</text><text x="356" y="267" class="s">our parts</text>
     <rect x="443" y="226" width="95" height="52" rx="8" class="chip"/>
     <text x="451" y="248" class="m" font-size="11">silver.offer</text><text x="451" y="267" class="s">per listing</text>
-    <rect x="544" y="226" width="174" height="52" rx="8" class="chip" stroke="#2563EB"/>
+    <rect x="544" y="226" width="174" height="52" rx="8" class="chip" stroke="#F59E0B"/>
     <text x="552" y="248" class="m" font-size="11">silver.price_observation</text><text x="552" y="267" class="s">append-only history</text>
     <rect x="724" y="226" width="128" height="52" rx="8" class="chip" stroke-dasharray="5 4"/>
     <text x="732" y="248" class="m" font-size="11">silver.quarantine</text><text x="732" y="267" class="s">kept, not dropped</text>
@@ -61,7 +66,7 @@
   <text x="50" y="368" class="layer">Gold</text>
   <text x="50" y="390" class="d">Kimball star</text>
   <text x="50" y="408" class="d">for Power BI</text>
-  <g stroke="#94A3B8" stroke-width="1.5">
+  <g stroke="#64748B" stroke-width="1.5">
     <line x1="560" y1="420" x2="410" y2="372"/>
     <line x1="560" y1="420" x2="410" y2="436"/>
     <line x1="560" y1="420" x2="710" y2="380"/>
@@ -74,7 +79,7 @@
   <rect x="710" y="356" width="148" height="52" rx="8" class="chip"/>
   <text x="724" y="378" class="m">gold.dim_date</text>
   <text x="724" y="397" class="s">week</text>
-  <rect x="440" y="396" width="240" height="50" rx="8" fill="#2563EB"/>
+  <rect x="440" y="396" width="240" height="50" rx="8" fill="#F59E0B"/>
   <text x="560" y="417" class="mon" text-anchor="middle">gold.fact_price_observation</text>
   <text x="560" y="436" class="on" text-anchor="middle">grain: one offer per run week</text>
   <text x="240" y="502" class="d">views</text>
@@ -89,7 +94,8 @@
   <text x="472" y="566" class="d">import</text>
 
   <!-- Power BI -->
-  <rect x="30" y="578" width="840" height="56" rx="12" fill="#2563EB"/>
+  <rect x="30" y="578" width="840" height="56" rx="12" fill="#F59E0B"/>
   <text x="50" y="612" class="onb">Power BI</text>
   <text x="240" y="611" class="on" font-size="13">price gaps by part and seller, undercuts, price changes week by week</text>
+  </g>
 </svg>
