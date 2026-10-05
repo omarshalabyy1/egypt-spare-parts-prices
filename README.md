@@ -44,7 +44,7 @@ brand, title and link. The first 10 rows:
 | air filter | Zait and Filters | 200.00 | فلتر هواء شيفروليه اوبترا 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 HIGH TECH |
 | air filter | Zait and Filters | 220.00 | فلتر هواء شيفروليه اوبترا 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 AZAB |
 
-Listings are grouped by part type only; same-type prices are not like-for-like (a hand audit found 13 of 30 such groups fully clean), so compare exact part numbers above.
+Listings are grouped by part type only; same-type prices are not like-for-like (a hand audit found 13 of 30 such groups fully clean). Exact part-number matches for this car are too few to compare this week.
 
 ## Run it
 
