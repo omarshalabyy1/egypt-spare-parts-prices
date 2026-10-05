@@ -108,10 +108,10 @@ curl http://127.0.0.1:8100/api/v2/monitor/health  # wait until the scheduler sho
 docker compose exec airflow airflow dags unpause spare_parts_prices  # or unpause it in Airflow's page
 ```
 
-Once unpaused, the first run starts at once, for the week ending 2026-10-05, then once a week. A
-fresh clone replays the committed pages under `data/raw/`, makes no request, and rebuilds in a few
-minutes. A live week is bound by its slowest seller, as the sellers are fetched side by side: Zait
-and Filters, about <!--n:fetch_longest_minutes-->180<!--/n--> minutes.
+Once unpaused, the first run starts at once, for the week ending 2026-10-05, then once a week. The
+committed week ending 2026-10-05 is replayed from the pages under `data/raw/` without a request, in a
+few minutes; any later week is fetched live. A live week is bound by its slowest seller, as the
+sellers are fetched side by side: Zait and Filters, about <!--n:fetch_longest_minutes-->180<!--/n--> minutes.
 
 Then the tests and the numbers:
 

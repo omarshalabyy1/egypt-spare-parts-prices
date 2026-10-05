@@ -63,7 +63,6 @@
   "discounted_index_median": 1.0190023140953692,
   "discounted_offers": 44,
   "fetch_longest_minutes": 180,
-  "fetch_span_minutes_all": 180,
   "full_price_below_median_pct": 44.0004659832246,
   "full_price_index_median": 1.0,
   "full_price_offers": 8584,
