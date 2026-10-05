@@ -41,6 +41,8 @@ def name(grade, key, part_type, family, make, model):
         words.append(fields[0])
     elif fields[-2] in ("front", "rear"):
         words.append(fields[-2])
+    elif fields[1] in ("timing", "drive"):  # a belt's function: 'Belt timing for Kia Cerato'
+        words.append(fields[1])
     if fields[-1] == "set":
         words.append("set")
     if make and model:
@@ -51,8 +53,8 @@ def name(grade, key, part_type, family, make, model):
 
 def catalogue(offers):
     """One part per match group. offers: seller_id, listing_key, title, price (the offer's latest),
-    in_stock, brand, family, part_type, position, pack, car_make, car_model, generation, car_key,
-    part_code. The top 20% of
+    in_stock, brand, family, part_type, position, pack, belt_function, car_make, car_model, generation,
+    car_key, part_code. The top 20% of
     groups by number of sellers (ties by number of offers) are key parts."""
     groups = tracker.match_groups(offers)
     medians = tracker.group_medians(offers, groups)

@@ -206,8 +206,8 @@ def match_groups(rows):
     'filter' and a brake pad of unknown position are never grouped by type: either could be one of
     several parts. The car model carries its generation when the title names one (nissan-sunny-n17):
     such an offer compares only with the same generation, an offer naming none only with others
-    naming none. Each row: seller_id, listing_key, part_code, part_type, position, pack, car_make,
-    car_model, generation."""
+    naming none. A belt carries what it drives (timing or drive) the same way. Each row: seller_id,
+    listing_key, part_code, part_type, position, pack, belt_function, car_make, car_model, generation."""
     def shared(keys):
         sellers = defaultdict(set)
         for (seller_id, _), key in keys.items():
@@ -224,7 +224,7 @@ def match_groups(rows):
         if r["part_type"] == "brake pad" and not r["position"]:
             continue
         car = f"{r['car_make']}-{r['car_model']}" + (f"-{r['generation'].lower()}" if r["generation"] else "")
-        types[offer] = "|".join(x for x in (r["part_type"], car, r["position"], r["pack"]) if x)
+        types[offer] = "|".join(x for x in (r["part_type"], r["belt_function"], car, r["position"], r["pack"]) if x)
     groups.update({offer: ("type_model", key) for offer, key in shared(types).items()})
     return groups
 
@@ -257,7 +257,8 @@ def comparable(price, median):
 
 LATEST_OFFERS = """
 SELECT DISTINCT ON (o.seller_id, o.listing_key) o.seller_id, o.listing_key, o.title, p.price, p.in_stock, o.brand,
-       o.family, o.part_type, o.position, o.pack, o.car_make, o.car_model, o.generation, o.car_key, o.part_code
+       o.family, o.part_type, o.position, o.pack, o.belt_function, o.car_make, o.car_model, o.generation, o.car_key,
+       o.part_code
 FROM silver.offer o JOIN silver.price_observation p USING (seller_id, listing_key)
 ORDER BY o.seller_id, o.listing_key, p.observed_on DESC
 """
@@ -408,7 +409,9 @@ def save(conn, rows, run_week):
         part_type, position, pack = enrich.part_type(row["title"])
         car_make, car_model, year_from, year_to, car_key = enrich.car(row["title"], row["car_make"])
         good.append({**row, "part_type": part_type, "position": position, "pack": pack, "car_make": car_make,
-                     "car_model": car_model, "generation": enrich.generation(row["title"], row["car_make"], car_model),
+                     "car_model": car_model,
+                     "generation": enrich.generation(row["title"], row["car_make"], car_model, year_from, year_to),
+                     "belt_function": enrich.belt_function(row["title"]) if part_type == "belt" else None,
                      "year_from": year_from, "year_to": year_to, "car_key": car_key,
                      "part_code": enrich.part_code(row["part_no"], row["title"])})
     if not good:
@@ -416,9 +419,10 @@ def save(conn, rows, run_week):
     cur = conn.cursor()
     cur.executemany(
         "INSERT INTO silver.offer (seller_id, listing_key, family, title, brand, part_no, url, first_seen, last_seen,"
-        " part_type, position, pack, car_make, car_model, generation, year_from, year_to, car_key, part_code) VALUES"
-        " (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s, %(url)s, %(observed_on)s,"
-        " %(observed_on)s, %(part_type)s, %(position)s, %(pack)s, %(car_make)s, %(car_model)s, %(generation)s,"
+        " part_type, position, pack, belt_function, car_make, car_model, generation, year_from, year_to, car_key,"
+        " part_code) VALUES (%(seller_id)s, %(listing_key)s, %(family)s, %(title)s, %(brand)s, %(part_no)s, %(url)s,"
+        " %(observed_on)s, %(observed_on)s, %(part_type)s, %(position)s, %(pack)s, %(belt_function)s, %(car_make)s,"
+        " %(car_model)s, %(generation)s,"
         " %(year_from)s,"
         " %(year_to)s,"
         " %(car_key)s, %(part_code)s)"
@@ -426,7 +430,8 @@ def save(conn, rows, run_week):
         " brand = EXCLUDED.brand, part_no = EXCLUDED.part_no, url = EXCLUDED.url,"
         " first_seen = least(offer.first_seen, EXCLUDED.first_seen),"
         " last_seen = greatest(offer.last_seen, EXCLUDED.last_seen), part_type = EXCLUDED.part_type,"
-        " position = EXCLUDED.position, pack = EXCLUDED.pack, car_make = EXCLUDED.car_make,"
+        " position = EXCLUDED.position, pack = EXCLUDED.pack, belt_function = EXCLUDED.belt_function,"
+        " car_make = EXCLUDED.car_make,"
         " car_model = EXCLUDED.car_model, generation = EXCLUDED.generation,"
         " year_from = EXCLUDED.year_from, year_to = EXCLUDED.year_to, car_key = EXCLUDED.car_key,"
         " part_code = EXCLUDED.part_code",

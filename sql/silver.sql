@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS silver.part (      -- one row per catalogue part of t
     our_price   numeric(10, 2) NOT NULL CHECK (our_price > 0),  -- EGP
     is_key      boolean NOT NULL,             -- key parts get the undercut alert
     match_grade text NOT NULL CHECK (match_grade IN ('part_number', 'type_model')),
-    match_key   text NOT NULL,                -- part code|pack, or part type|car model[-generation][|position]|pack
+    match_key   text NOT NULL,                -- part code|pack, or part type[|belt function]|car model[-generation][|position]|pack
     UNIQUE (match_grade, match_key)
 );
 
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS silver.offer (     -- one row per listing as one sell
                 'brake pad', 'brake shoe', 'spark plug', 'battery', 'belt', 'bulb', 'wiper', 'oil')),
     position    text CHECK (position IN ('front', 'rear')),  -- brake pads only
     pack        text NOT NULL CHECK (pack IN ('set', 'single')),  -- 'set' when the title says several pieces
+    belt_function text CHECK (belt_function IN ('timing', 'drive')),  -- belts only; NULL = not stated
     car_make    text,
     car_model   text,
     generation  text,                         -- the model's generation the title names (N17, MD); NULL = none

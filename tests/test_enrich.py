@@ -88,7 +88,7 @@ def test_part_code(part_no, title, code):
 
 @pytest.mark.parametrize("title, expected", [
     ("تيل خلفي قباقيب هيونداي اكسنت 2006 LUXSY", ("brake shoe", None, "single")),  # drum shoes, not pads
-    ("Brake Shoes Set Rear Chevrolet Aveo [Hi Tec] (Made in Korea) (LD07)", ("brake shoe", None, "set")),
+    ("Brake Shoes Set Rear Chevrolet Aveo [Hi Tec] (Made in Korea) (LD07)", ("brake shoe", None, "single")),  # per axle
     ("شداد سير دينامو هيونداي النترا", (None, None, "single")),  # a belt's tensioner
     ("بلية سير كاتينه ثابته اوبل استرا 2004 SCHAEFFLER INA", (None, None, "single")),  # its bearing
     ("كاتينة جنزير هيونداي فيرنا", (None, None, "single")),  # a timing chain
@@ -123,3 +123,53 @@ def test_car_audit_rules():
 ])
 def test_generation(title, model, gen):
     assert enrich.generation(title, None, model) == gen
+
+
+@pytest.mark.parametrize("title, expected", [
+    ("سير كاتينة 117 عقلة هيونداي فيرنا DAYCO", "timing"),
+    ("Timing Belt 117 Teeth Toyota Avensis [Bosch]", "timing"),
+    ("سير دينامو 6PK1255 القصير كيا ريو 2012 MOBIS", "drive"),
+    ("سير مجموعه 7PK1125 رينو ميجان DONGIL", "drive"),
+    ("Belt 4PK815 A/C Hyundai Verna (Made in Korea)", "drive"),
+    ("سير هيونداي فيرنا", None),  # not stated
+])
+def test_belt_function(title, expected):
+    assert enrich.belt_function(title) == expected
+
+
+@pytest.mark.parametrize("title, expected", [
+    ("طقم سير كاتينه وبلية كيا سيراتو", (None, None, "set")),  # و + بليه: with its bearing
+    ("سير مجموعه وشدادة هيونداي النترا", (None, None, "single")),
+    ("سير دينامو بلي هيونداي فيرنا", (None, None, "single")),
+    ("طقم طنابير خلفي قباقيب نيسان صني", (None, None, "set")),  # brake drums
+    ("موبينه بسلك البوجيهات رينو كليو 2005 GBTECH", (None, None, "single")),  # an ignition coil
+    ("دينمو شحن البطارية رينو داستر", (None, None, "single")),  # an alternator
+])
+def test_part_type_round_two(title, expected):
+    assert enrich.part_type(title) == expected
+
+
+@pytest.mark.parametrize("title, model, years, gen", [
+    ("فلتر هواء نيسان صني 17N", "sunny", (None, None), "N17"),
+    ("Air filter Nissan Sunny N-16", "sunny", (None, None), "N16"),
+    ("Brake pads Nissan Sunny N 18", "sunny", (None, None), "N18"),
+    ("تيل امامي ميتسوبيشي لانسر بومه", "lancer", (None, None), "PUMA"),
+    ("تيل امامي ميتسوبيشي لانسر شارك HI-Q", "lancer", (None, None), "SHARK"),
+    ("فلتر زيت رينو نيو لوجان", "logan", (None, None), "NEW"),
+    ("فلتر هواء شيفروليه نيو اوبترا", "optra", (None, None), "NEW"),
+    ("طقم تيل امامي فولكس فاجن باسات B7", "passat", (None, None), "B7"),
+    ("تيل امامي رينو ميجان 3", "megane", (None, None), "3"),
+    ("Air filter Peugeot 5008 (II)", "5008", (None, None), "II"),
+    ("تيل امامي كيا بيكانتو 2012 2013 2014", "picanto", (2012, 2014), "2012-2018"),
+    ("تيل امامي كيا بيكانتو 2008 2009 2010 2011 2012", "picanto", (2008, 2012), None),  # spans two
+    ("تيل امامي رينو سانديرو 2013 2014 2015", "sandero", (2013, 2015), "2013+"),
+    ("تيل امامي ميتسوبيشي لانسر بومه شارك", "lancer", (None, None), None),  # two named: none
+])
+def test_generation_round_two(title, model, years, gen):
+    assert enrich.generation(title, None, model, *years) == gen
+
+
+def test_grand_models_and_stepway():
+    assert enrich.car("تيل امامي كيا جراند سيراتو 2018 ETD")[:2] == ("kia", "grand cerato")
+    assert enrich.car("تيل امامي كيا سيراتو K3")[:2] == ("kia", "cerato")
+    assert enrich.car("سير مجموعة رينو سانديرو ستيبواي")[:2] == ("renault", "sandero")

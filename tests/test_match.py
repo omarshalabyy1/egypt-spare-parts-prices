@@ -8,11 +8,12 @@ import tracker
 
 
 def offer(seller_id, listing_key, price, part_code=None, part_type=None, position=None, car=None, brand=None,
-          family="filter", pack="single", in_stock=None, title=None, generation=None):
+          family="filter", pack="single", in_stock=None, title=None, generation=None, belt_function=None):
     make, model = car.split("-") if car else (None, None)
     return {"seller_id": seller_id, "listing_key": listing_key, "title": title or f"{seller_id}/{listing_key}",
             "price": Decimal(price), "in_stock": in_stock, "brand": brand, "family": family, "part_type": part_type,
-            "position": position, "pack": pack, "car_make": make, "car_model": model, "generation": generation,
+            "position": position, "pack": pack, "belt_function": belt_function, "car_make": make, "car_model": model,
+            "generation": generation,
             "car_key": car, "part_code": part_code}
 
 
@@ -118,3 +119,11 @@ def test_a_group_of_fewer_than_three_prices_is_all_comparable():
             offer("b", "1", "1000", part_type="oil filter", car="kia-rio")]
     assert tracker.group_medians(rows, tracker.match_groups(rows)) == {}
     assert tracker.comparable(Decimal("1000"), None)
+
+
+def test_belt_function_splits_type_groups():
+    rows = [offer(s, f"{s}{f}", "100", part_type="belt", family="belt", car="kia-cerato", belt_function=f)
+            for s in ("a", "b") for f in ("timing", "drive", None)]
+    assert set(tracker.match_groups(rows).values()) == {
+        ("type_model", "belt|timing|kia-cerato|single"), ("type_model", "belt|drive|kia-cerato|single"),
+        ("type_model", "belt|kia-cerato|single")}  # naming no function: compared only with each other
