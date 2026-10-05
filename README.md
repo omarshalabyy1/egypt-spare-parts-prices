@@ -65,6 +65,17 @@ Every number below comes from [the notebook](analysis/analysis.ipynb).
 - **Which cars:** <!--n:offers_with_car_pct-->58.3<!--/n-->% of the prices name the car,
   <!--n:car_models-->90<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
   <!--n:top_model-->Hyundai Elantra<!--/n--> (<!--n:top_model_offers-->776<!--/n--> prices).
+- **In stock:** where the seller says, <!--n:in_stock_pct-->89.5<!--/n-->% of
+  <!--n:stock_stated_offers-->20,116<!--/n--> prices are marked in stock.
+- **Read in full:** for the four sites that state their own count (Auto Spare, Tawfiqia, Jumia and
+  Fit and Fix), the run read between <!--n:coverage_jumia_pct-->99.8<!--/n-->% and
+  <!--n:coverage_autospare_pct-->100.0<!--/n-->% of what each site says it lists.
+- **Discounts:** <!--n:discount_share_pct-->9.1<!--/n-->% of the prices are shown with a struck-out
+  price; <!--n:discount_always_sellers-->1<!--/n--> seller, Pringi, shows one on
+  <!--n:discount_share_pringi_pct-->100.0<!--/n-->% of its prices.
+- **Set aside:** <!--n:quarantine_pct-->3.7<!--/n-->% of the rows failed the check, most of them
+  (<!--n:quarantined_getradingeg-->1,052<!--/n--> of <!--n:quarantined-->1,094<!--/n-->) GE Trading
+  listings with no price or a placeholder price.
 
 Comparisons of the same part type for the same car are being tightened and are not shown yet.
 
@@ -78,7 +89,8 @@ more: <!--n:shared_belt_codes-->113<!--/n--> belts, <!--n:shared_filter_codes-->
 cheapest (the picture above). Price changes week over week start with the second run week.
 
 <p align="center">
-  <img width="100%" src="docs/offers-by-car.png" alt="Prices by car model, the 15 most listed, Hyundai Elantra first">
+  <img width="49%" src="docs/offers-by-car.png" alt="Prices by car model, the 15 most listed, Hyundai Elantra first">
+  <img width="49%" src="docs/discounts-by-seller.png" alt="Share of each seller's prices shown with a struck-out price, Pringi on every one">
 </p>
 
 ## 🧰 The product
@@ -113,6 +125,16 @@ committed week ending 2026-10-05 is replayed from the pages under `data/raw/` wi
 few minutes; any later week is fetched live. A live week is bound by its slowest seller, as the
 sellers are fetched side by side: Zait and Filters, about <!--n:fetch_longest_minutes-->180<!--/n--> minutes.
 
+### How it runs
+
+<p align="center">
+  <img width="49%" src="docs/airflow-graph.png" alt="Airflow graph view of spare_parts_prices: load_reference, fetch_pages once per seller, load_silver, match, build_gold and send_alert, all green">
+  <img width="49%" src="docs/airflow-grid.png" alt="Airflow grid view of spare_parts_prices: every run kept, one earlier manual run failed in red">
+</p>
+
+The weekly run replaying the committed week ending <!--n:run_week-->2026-10-05<!--/n-->, every step green
+(left); the grid keeps every run, including an earlier manual run that failed (right, in red).
+
 Then the tests and the numbers:
 
 ```bash
@@ -122,7 +144,8 @@ python -m pytest
 jupyter lab analysis/analysis.ipynb
 ```
 
-The notebook needs the warehouse up, and it rewrites README.md, analysis/numbers.json and docs/*.
+The notebook needs the warehouse up, and it rewrites README.md, analysis/numbers.json and docs/*, and analysis/price_list.csv when a car is set
+in [config/client.yaml](config/client.yaml).
 
 For a seller that only opens in a visible browser, run `python scripts/fetch_with_browser.py <seller_id>`:
 you clear any challenge, login or cookie banner yourself in the window, and the session is kept in
