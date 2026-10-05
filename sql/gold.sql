@@ -69,6 +69,28 @@ ORDER BY p.part_no, s.seller_id, f.in_stock IS FALSE, f.price, f.listing_key;
 CREATE OR REPLACE VIEW gold.undercut AS
 SELECT * FROM gold.price_gap WHERE their_price <= our_price * 0.95 AND in_stock IS NOT FALSE;
 
+-- What the alert emails: one row per key part's comparable offer, not shown out of stock, that this
+-- run week is at least 5% below our price (UNDERCUT_PCT in tracker.py) and either cut its price from
+-- its previous observed week ('price cut') or is new this week at a seller already tracked in an
+-- earlier week ('new offer'). A seller's first tracked week is its baseline: no alert.
+CREATE OR REPLACE VIEW gold.undercut_alert AS
+SELECT run_week, part_no, name, seller_id, listing_key, observed_on,
+       CASE WHEN old_price IS NULL THEN 'new offer' ELSE 'price cut' END AS reason,
+       old_price, their_price, our_price, our_price - their_price AS gap_egp,
+       round((our_price - their_price) / our_price * 100, 1) AS gap_pct, match_grade
+FROM (
+    SELECT d.run_week, d.date AS observed_on, p.part_no, p.name, p.is_key, p.our_price, s.seller_id, f.listing_key,
+           f.price AS their_price, f.comparable, f.in_stock, f.match_grade,
+           lag(f.price) OVER (PARTITION BY f.seller_key, f.listing_key ORDER BY d.run_week) AS old_price,
+           min(d.run_week) OVER (PARTITION BY f.seller_key) AS seller_first_week
+    FROM gold.fact_price_observation f
+    JOIN gold.dim_part p USING (part_key)
+    JOIN gold.dim_seller s USING (seller_key)
+    JOIN gold.dim_date d USING (date_key)
+) t
+WHERE is_key AND comparable AND in_stock IS NOT FALSE AND their_price <= our_price * 0.95
+  AND (their_price < old_price OR (old_price IS NULL AND run_week > seller_first_week));
+
 -- Every price change of an offer from one run week to the next. Empty until a second week is loaded.
 CREATE OR REPLACE VIEW gold.price_change AS
 SELECT seller_id, listing_key, part_no, run_week, old_price, new_price, new_price - old_price AS change_egp,

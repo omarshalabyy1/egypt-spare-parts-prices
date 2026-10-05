@@ -15,7 +15,7 @@ import enrich
     ("حشو فلتر زيت فتيس نيسان سنترا FEBI", ("filter", None, "single")),  # a gearbox filter is not an engine oil filter
     ("تيل خلفي كيا سبورتاج 2005 2006 2007 2008 2009 2010 FERBE", ("brake pad", "rear", "single")),
     ("تيل امامى اوبل استرا 2010 AUTO TOP", ("brake pad", "front", "single")),
-    ("Brake Pads Set Front Skoda Octavia A8 [Rbrake] (Made in Spain) (RB2369)", ("brake pad", "front", "set")),
+    ("Brake Pads Set Front Skoda Octavia A8 [Rbrake] (Made in Spain) (RB2369)", ("brake pad", "front", "single")),
     ("وسادات الفرامل (مرسيدس بنز B180 (W246))_158200", ("brake pad", None, "single")),
     ("طقم بوجيهات بلاتينيوم كيا كارينز 2014 MOBIS", ("spark plug", None, "set")),
     ("شمعة الإشعال (SEAT Altea)", ("spark plug", None, "single")),
@@ -28,7 +28,7 @@ import enrich
     ("CPC XPL Motor Oil, 20W-50, 1L", ("oil", None, "single")),
     ("اويل سيل فلتر زيت – شيرى نيو تيجو موديل (2014 – 2018)", (None, None, "single")),  # an oil seal
     ("موبينة هيونداي النترا AD", (None, None, "single")),  # an ignition coil: none of our families
-    ("طقم تيل فرامل امامي سيراتو", ("brake pad", "front", "set")),  # سير inside سيراتو is not a belt
+    ("طقم تيل فرامل امامي سيراتو", ("brake pad", "front", "single")),  # سير inside سيراتو is not a belt
     ("KaberMisr Xenon Headlight Bulbs Kit for Cars (2 Piece Set, 500W)", ("bulb", None, "set")),
     ("NGK Spark Plug BKR6E x4", ("spark plug", None, "set")),
     ("بوجيه عدد 4 كيا ريو", ("spark plug", None, "set")),

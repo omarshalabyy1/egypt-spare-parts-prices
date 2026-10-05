@@ -55,7 +55,7 @@ week, the later day's price is the one kept. Key: (`seller_key`, `listing_key`, 
 | seller_key | integer | The seller (dim_seller) |
 | part_key | integer | Our part this offer is (dim_part); 0 when it is none of ours |
 | listing_key | text | Degenerate dimension: the seller's own product id |
-| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers), both split into sets and single pieces; NULL when unmatched |
+| match_grade | text | How the offer was matched: `part_number` (same part code at 2+ sellers) or `type_model` (same part type and car model at 2+ sellers), both split into sets and single pieces (a brake pad is never a set: an axle set is the unit); NULL when unmatched |
 | comparable | boolean | False when the offer's price is above 3 times or below a third of its match group's median: kept here, left out of the views; NULL when unmatched |
 | price | numeric(10,2) | The seller's price, EGP |
 | in_stock | boolean | Whether the seller showed it in stock; NULL when the site does not say |
@@ -88,6 +88,25 @@ Grain and columns as `gold.price_gap`, only the rows where the seller is at leas
 (`their_price <= our_price * 0.95`; `UNDERCUT_PCT` in tracker.py) and does not show the part out
 of stock. `send_alert` emails the key parts in this view for
 the run week.
+
+## gold.undercut_alert (view)
+
+Grain: one row per key part's offer per run week that the alert email lists. The offer is
+comparable, not shown out of stock, at least 5% below our price (`UNDERCUT_PCT`), and either cut
+its price from its previous observed week (`price cut`) or is new this week at a seller already
+tracked in an earlier week (`new offer`). A seller's first tracked week is its baseline: no alerts.
+`send_alert` reads this view for the run week.
+
+| Column | Meaning |
+|---|---|
+| run_week, observed_on | The run week and the day of the price |
+| part_no, name | The key part |
+| seller_id, listing_key | The offer |
+| reason | `price cut` or `new offer` |
+| old_price | The offer's price in its previous observed week, EGP; NULL for a new offer |
+| their_price, our_price | The seller's price and ours, EGP |
+| gap_egp, gap_pct | `our_price - their_price`, and that as a percent of our price |
+| match_grade | `part_number` or `type_model` |
 
 ## gold.price_change (view)
 

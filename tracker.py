@@ -30,7 +30,8 @@ SCRAPERS = {m.__name__.split(".")[-1]: m for m in (
     pringi, sparezone, tawfiqia, yourparts)}
 MAX_PAGES = 250  # per PAGES entry; a listing longer than this is cut off, with a log line
 COMPARABLE_RATIO = 3  # an offer priced above 3x or below 1/3 of its match group's median is not comparable
-UNDERCUT_PCT = 5  # a competitor at least 5% below our price undercuts us (also in the gold.undercut view)
+UNDERCUT_PCT = 5  # a competitor at least 5% below our price undercuts us (also in the gold.undercut and
+                  # gold.undercut_alert views: change them together)
 
 
 def week_of(day):
@@ -58,21 +59,31 @@ def load_reference():
     """Create the schemas, tables and views of each layer, then load the competitor sites and our
     catalogue from data/."""
     with connect() as conn:
-        for file in LAYERS:
-            conn.execute((ROOT / "sql" / file).read_text(encoding="utf-8"))
-        for table, key, file in (("silver.seller", "seller_id", "sellers.csv"),
-                                 ("silver.part", "part_no", "catalogue.csv")):
-            with open(ROOT / "data" / file, newline="", encoding="utf-8") as f:
-                reader = csv.DictReader(f)
-                rows = [[r[c] or None for c in reader.fieldnames] for r in reader]
-            cols = reader.fieldnames
-            updates = ", ".join(f"{c} = EXCLUDED.{c}" for c in cols if c != key)
-            conn.cursor().executemany(
-                f"INSERT INTO {table} ({', '.join(cols)}) VALUES ({', '.join(['%s'] * len(cols))}) "
-                f"ON CONFLICT ({key}) DO UPDATE SET {updates}",
-                rows,
-            )
-            print(f"{table}: {len(rows)} rows loaded")
+        load_reference_into(conn)
+
+
+def load_reference_into(conn):
+    """load_reference on an open connection. A part no longer in data/catalogue.csv is deleted (its
+    offer matches first), so a catalogue change never leaves a stale part behind."""
+    for file in LAYERS:
+        conn.execute((ROOT / "sql" / file).read_text(encoding="utf-8"))
+    for table, key, file in (("silver.seller", "seller_id", "sellers.csv"),
+                             ("silver.part", "part_no", "catalogue.csv")):
+        with open(ROOT / "data" / file, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = [[r[c] or None for c in reader.fieldnames] for r in reader]
+        cols = reader.fieldnames
+        updates = ", ".join(f"{c} = EXCLUDED.{c}" for c in cols if c != key)
+        conn.cursor().executemany(
+            f"INSERT INTO {table} ({', '.join(cols)}) VALUES ({', '.join(['%s'] * len(cols))}) "
+            f"ON CONFLICT ({key}) DO UPDATE SET {updates}",
+            rows,
+        )
+        print(f"{table}: {len(rows)} rows loaded")
+    part_nos = [row[cols.index("part_no")] for row in rows]  # the catalogue's rows, loaded last
+    conn.execute("DELETE FROM silver.offer_match WHERE part_no <> ALL(%s)", (part_nos,))
+    gone = conn.execute("DELETE FROM silver.part WHERE part_no <> ALL(%s)", (part_nos,)).rowcount
+    print(f"silver.part: {gone} parts no longer in the catalogue deleted")
 
 
 # --- Step 2: fetch ----------------------------------------------------------------------------
@@ -318,29 +329,35 @@ def build_gold():
 # --- Step 6: alert ------------------------------------------------------------------------------
 
 def send_alert(run_week):
-    """Email the key parts a competitor sells at least UNDERCUT_PCT below our price in this run week
-    (the gold.undercut rule). Without GMAIL_USER and GMAIL_APP_PASSWORD the count is logged and no
-    email is sent."""
+    """Email this run week's rows of gold.undercut_alert: a seller cut a key part's price, or listed it
+    new, to at least UNDERCUT_PCT below ours. A week with no earlier week is a baseline and alerts
+    nothing. Without GMAIL_USER and GMAIL_APP_PASSWORD the count is logged and no email is sent."""
     with connect() as conn:
         rows = conn.execute(
-            "SELECT part_no, name, seller_id, their_price, our_price, gap_pct FROM gold.price_gap"
-            " WHERE is_key AND run_week = %s AND their_price <= our_price * (100 - %s) / 100"
-            " AND in_stock IS NOT FALSE ORDER BY gap_pct DESC, part_no, seller_id", (run_week, UNDERCUT_PCT)).fetchall()
+            "SELECT part_no, name, seller_id, reason, old_price, their_price, our_price, gap_pct FROM gold.undercut_alert"
+            " WHERE run_week = %s ORDER BY gap_pct DESC, part_no, seller_id", (run_week,)).fetchall()
+        earlier = conn.execute("SELECT count(*) FROM gold.fact_price_observation JOIN gold.dim_date USING (date_key)"
+                               " WHERE run_week < %s", (run_week,)).fetchone()[0]
+        if not earlier:
+            print(f"Run week {run_week} is the baseline week: no previous prices, {len(rows)} alerts")
+            return
         if not rows:
-            print(f"No key part undercut in run week {run_week}")
+            print(f"0 alerts in run week {run_week}: no key-part price cut to {UNDERCUT_PCT}% or more below ours")
             return
         if not (os.environ.get("GMAIL_USER") and os.environ.get("GMAIL_APP_PASSWORD")):
-            print(f"{len(rows)} key-part undercuts in run week {run_week}, but GMAIL_USER and GMAIL_APP_PASSWORD"
-                  " are not set in .env: no email")
+            print(f"{len(rows)} alerts in run week {run_week}, but GMAIL_USER and GMAIL_APP_PASSWORD are not set in"
+                  " .env: no email")
             return
         message = EmailMessage()
         message["Subject"] = f"Spare parts price alert: {len(rows)} key-part undercuts (week of {run_week})"
         message["From"] = os.environ["GMAIL_USER"]
         message["To"] = os.environ.get("MAIL_TO") or os.environ["GMAIL_USER"]
         message.set_content("\n".join(
-            [f"Competitors sell these key parts below our price (week of {run_week}, prices in EGP):", ""]
-            + [f"- {part_no} {name}: {seller_id} {theirs} (ours {ours}, we are {gap}% dearer)"
-               for part_no, name, seller_id, theirs, ours, gap in rows]))
+            [f"Competitors cut these key parts to {UNDERCUT_PCT}% or more below our price"
+             f" (week of {run_week}, prices in EGP):", ""]
+            + [f"- {part_no} {name}: {seller_id} {f'{old} -> ' if old else 'new at '}{theirs}"
+               f" (ours {ours}, we are {gap}% dearer)"
+               for part_no, name, seller_id, reason, old, theirs, ours, gap in rows]))
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(os.environ["GMAIL_USER"], os.environ["GMAIL_APP_PASSWORD"])
             smtp.send_message(message)

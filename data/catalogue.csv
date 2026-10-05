@@ -1,5 +1,5 @@
 part_no,brand,family,name,car_key,our_price,is_key,match_grade,match_key
-EG-0085DB07,BESER,brake pad,Brake pad front for Fiat Tipo,fiat-tipo,950.00,False,type_model,brake pad|fiat-tipo|front|single
+EG-0085DB07,BESER,brake pad,Brake pad front for Fiat Tipo,fiat-tipo,965.00,False,type_model,brake pad|fiat-tipo|front|single
 EG-00EFBA2A,GSP,filter,Fuel filter for Hyundai Matrix,hyundai-matrix,285.00,False,type_model,fuel filter|hyundai-matrix|single
 EG-012542B0,ماركة بديلة,belt,Belt for Speranza M11,speranza-m11,700.00,False,type_model,belt|speranza-m11|single
 EG-018C98DA,ماركة بديلة,belt,Belt for Fiat Punto,fiat-punto,550.00,False,type_model,belt|fiat-punto|single
@@ -12,9 +12,10 @@ EG-02C767D9,NGK,spark plug,Spark plug set for Renault Sandero,renault-sandero-20
 EG-02D348D6,MANDO,filter,Oil filter for Kia Picanto,kia-picanto,215.00,False,type_model,oil filter|kia-picanto|single
 EG-036BF2E1,R BRAKE,brake pad,Brake pad rear for Seat Leon,seat-leon,1420.00,False,type_model,brake pad|seat-leon|rear|single
 EG-03C798CB,BOSCH,spark plug,Spark plug for Skoda Octavia,skoda-octavia,1953.50,False,type_model,spark plug|skoda-octavia|single
-EG-03CA8983,BESER,brake pad,Brake pad front for Mazda 3,mazda-3,946.00,False,type_model,brake pad|mazda-3|front|single
+EG-03CA8983,N Auto Express,brake pad,Brake pad front for Mazda 3,mazda-3,1300.00,True,type_model,brake pad|mazda-3|front|single
 EG-03F4E41F,N Auto Express,filter,Air filter 2811322600 for Hyundai Verna,hyundai-verna,62.00,False,part_number,2811322600|single
 EG-0409259C,MANDO,filter,Air filter for Chevrolet Cruze,chevrolet-cruze,350.00,True,type_model,air filter|chevrolet-cruze|single
+EG-042B849D,JP GROUP,brake pad,Brake pad front for Skoda Rapid,skoda-rapid,1200.00,False,type_model,brake pad|skoda-rapid|front|single
 EG-04C26312,BOSCH,spark plug,Spark plug for Volkswagen Passat,volkswagen-passat,1716.00,False,type_model,spark plug|volkswagen-passat|single
 EG-04C3A91F,FERBE,brake pad,Brake pad front for Seat Leon,seat-leon,1750.00,False,type_model,brake pad|seat-leon|front|single
 EG-04E2C8D8,MOBIS,belt,Belt for Kia Sportage,kia-sportage-2016-2022,720.00,False,type_model,belt|kia-sportage|single
@@ -22,17 +23,15 @@ EG-05B4F4CF,ANSCO,filter,Air filter for BYD L3,byd-l3,200.00,False,type_model,ai
 EG-05BFB58A,DONGIL,belt,Belt for Hyundai I10,hyundai-i10,487.50,False,type_model,belt|hyundai-i10|single
 EG-0608D0CA,HI-Q,brake pad,Brake pad rear for Renault Sandero,renault-sandero-2008-2013,950.00,False,type_model,brake pad|renault-sandero|rear|single
 EG-0641F698,Generic,belt,Belt 6PK1865 for Geely Emgrand,geely-emgrand-2014-2019,350.00,False,part_number,6PK1865|single
-EG-06A23EF4,Generic,brake pad,Brake pad rear set for MG Zs,mg-zs,3789.00,False,type_model,brake pad|mg-zs|rear|set
 EG-0724B21E,After-Market,filter,Fuel filter for Hyundai I10,hyundai-i10,1547.00,False,type_model,fuel filter|hyundai-i10|single
 EG-0730E0A8,BOSCH,spark plug,Spark plug set for Peugeot 508,peugeot-508,2500.00,False,type_model,spark plug|peugeot-508|set
 EG-077CA783,GSP,filter,Cabin filter for Mitsubishi Lancer,mitsubishi-lancer,200.00,True,type_model,cabin filter|mitsubishi-lancer|single
 EG-07E4CE19,N Auto Express,filter,Fuel filter 96444649,,49.50,False,part_number,96444649|single
 EG-07F87D4B,BOSCH,wiper,Wiper 3397015558,,253.00,False,part_number,3397015558|single
-EG-080836E6,BESER,brake pad,Brake pad rear for Nissan Qashqai,nissan-qashqai,850.00,False,type_model,brake pad|nissan-qashqai|rear|single
+EG-080836E6,BESER,brake pad,Brake pad rear for Nissan Qashqai,nissan-qashqai,875.00,True,type_model,brake pad|nissan-qashqai|rear|single
 EG-0922425C,GENUINE PARTS,belt,Belt 6PK1195 for Hyundai Tucson,hyundai-tucson,1330.00,False,part_number,6PK1195|single
 EG-094BC6B0,HI-Q,brake pad,Brake pad front for MG Hs,mg-hs,1000.00,False,type_model,brake pad|mg-hs|front|single
-EG-097F75EF,MOBIS,brake pad,Brake pad front set for Hyundai IX35,hyundai-ix35,4050.00,False,type_model,brake pad|hyundai-ix35|front|set
-EG-0A1C8A5C,JH,brake pad,Brake pad front for Daewoo Nubira,daewoo-nubira,650.00,False,type_model,brake pad|daewoo-nubira|front|single
+EG-0A1C8A5C,JH,brake pad,Brake pad front for Daewoo Nubira,daewoo-nubira,650.00,True,type_model,brake pad|daewoo-nubira|front|single
 EG-0A382B3F,BOSCH,spark plug,Spark plug set for Seat Toledo,seat-toledo-2012-2019,980.00,False,type_model,spark plug|seat-toledo|set
 EG-0AF83CFB,GM,filter,Fuel filter for Chevrolet Captiva,chevrolet-captiva,600.00,False,type_model,fuel filter|chevrolet-captiva|single
 EG-0B5A1616,WIX,filter,Air filter for Skoda Kodiaq,skoda-kodiaq,734.50,False,type_model,air filter|skoda-kodiaq|single
@@ -46,42 +45,38 @@ EG-0D5C3C66,wonder,filter,Cabin filter for Nissan Tiida,nissan-tiida,250.00,Fals
 EG-0DEB0196,ASG,filter,Fuel filter for MG MG6,mg-mg6,340.00,False,type_model,fuel filter|mg-mg6|single
 EG-0E3F8831,DAYCO,belt,Belt 5PK1065 for Mitsubishi Lancer,mitsubishi-lancer,450.00,False,part_number,5PK1065|single
 EG-0E6ED6D6,WIX,filter,Air filter for Seat Leon,seat-leon,487.50,False,type_model,air filter|seat-leon|single
-EG-0F16580D,ASG,brake pad,Brake pad front for Renault Logan,renault-logan,900.00,True,type_model,brake pad|renault-logan|front|single
+EG-0F16580D,ASG,brake pad,Brake pad front for Renault Logan,renault-logan,915.00,True,type_model,brake pad|renault-logan|front|single
 EG-102DF350,ATE,brake pad,Brake pad rear for Seat Ibiza,seat-ibiza-2017-2022,980.00,False,type_model,brake pad|seat-ibiza|rear|single
 EG-10BC2FE1,ATE,brake pad,Brake pad rear for Renault Fluence,renault-fluence,975.00,False,type_model,brake pad|renault-fluence|rear|single
-EG-10BF3DD1,Generic,brake pad,Brake pad front set for Peugeot 308,peugeot-308,1700.00,False,type_model,brake pad|peugeot-308|front|set
 EG-1139E53C,BOSCH,filter,Oil filter for Renault Megane,renault-megane,300.00,True,type_model,oil filter|renault-megane|single
-EG-12032FEF,ASG,brake pad,Brake pad front for Nissan Juke,nissan-juke,965.00,False,type_model,brake pad|nissan-juke|front|single
-EG-1223B01E,NOUVA,brake pad,Brake pad rear for Renault Duster,renault-duster-2010-2022,1050.00,False,type_model,brake pad|renault-duster|rear|single
+EG-12032FEF,ASG,brake pad,Brake pad front for Nissan Juke,nissan-juke,982.50,False,type_model,brake pad|nissan-juke|front|single
+EG-1223B01E,NOUVA,brake pad,Brake pad rear for Renault Duster,renault-duster,1250.00,False,type_model,brake pad|renault-duster|rear|single
 EG-1229B4BE,BOSCH,belt,Belt 5PK1145 for Fiat Tipo,fiat-tipo,650.00,False,part_number,5PK1145|single
 EG-1234101C,ASG,brake pad,Brake pad front for Peugeot 5008,peugeot-5008,1450.00,False,type_model,brake pad|peugeot-5008|front|single
 EG-1252CBB4,NGK,spark plug,Spark plug set for Kia Cerato,kia-cerato,875.00,False,type_model,spark plug|kia-cerato|set
 EG-127B428D,AZAB,filter,Air filter for Chery Envy,chery-envy,325.00,False,type_model,air filter|chery-envy|single
-EG-12978A1C,HI-Q,brake pad,Brake pad rear set for Kia Carens,kia-carens,677.00,False,type_model,brake pad|kia-carens|rear|set
 EG-13015987,MOBIS,belt,Belt 6PK1263 for Hyundai Elantra,hyundai-elantra,920.00,False,part_number,6PK1263|single
 EG-131C31AA,N Auto Express,filter,Oil filter OE6486,,199.50,False,part_number,OE6486|single
-EG-134C24AC,N Auto Express,brake pad,Brake pad SP1399 set for Hyundai Accent,hyundai-accent,1026.00,False,part_number,SP1399|set
 EG-13511547,BOSCH,filter,Oil filter for Toyota Corolla,toyota-corolla,200.00,True,type_model,oil filter|toyota-corolla|single
 EG-136FBD4A,CONTINENTAL,belt,Belt 6PK1105 for Nissan Sunny,nissan-sunny,550.00,True,part_number,6PK1105|single
 EG-1393E78B,CHERY,spark plug,Spark plug set for Chery Tiggo,chery-tiggo,500.00,False,type_model,spark plug|chery-tiggo|set
 EG-13C914AD,DAYCO,belt,Belt 5PK1150,,586.00,False,part_number,5PK1150|single
-EG-142B3D5E,D NAO,brake pad,Brake pad rear set for Speranza A516,speranza-a516-2008-2012,475.00,False,type_model,brake pad|speranza-a516|rear|set
 EG-143B480E,DAYCO,belt,Belt 4PK841,,325.00,False,part_number,4PK841|single
 EG-1455D21A,WIX,filter,Air filter for Volkswagen Passat,volkswagen-passat,533.00,True,type_model,air filter|volkswagen-passat|single
 EG-145BE077,MANNOL,belt,Belt 6PK1750,,155.00,False,part_number,6PK1750|single
 EG-14F23185,BOSCH,belt,Belt for Renault Clio,renault-clio-2005-2008,634.00,False,type_model,belt|renault-clio|single
 EG-14F3DFD8,AZAB,filter,Air filter for Renault Logan,renault-logan,300.00,True,type_model,air filter|renault-logan|single
 EG-1530BF44,FERBE,brake pad,Brake pad rear for Nissan Tiida,nissan-tiida,775.00,False,type_model,brake pad|nissan-tiida|rear|single
+EG-163113B7,FERBE,brake pad,Brake pad front for Hyundai Creta,hyundai-creta,850.00,False,type_model,brake pad|hyundai-creta|front|single
 EG-165CA623,ROADHOUSE,brake pad,Brake pad front for Peugeot 3008,peugeot-3008,1700.00,False,type_model,brake pad|peugeot-3008|front|single
 EG-168B2FAE,BOSCH,spark plug,Spark plug set for Volkswagen Golf,volkswagen-golf,500.00,False,type_model,spark plug|volkswagen-golf|set
-EG-16B27297,ATE,brake pad,Brake pad front for Volkswagen Golf,volkswagen-golf,1650.00,False,type_model,brake pad|volkswagen-golf|front|single
-EG-179FE557,D-NAO,brake pad,Brake pad rear for Geely Emgrand,geely-emgrand,825.50,False,type_model,brake pad|geely-emgrand|rear|single
+EG-16B27297,ATE,brake pad,Brake pad front for Volkswagen Golf,volkswagen-golf,1600.00,False,type_model,brake pad|volkswagen-golf|front|single
+EG-179FE557,D-NAO,brake pad,Brake pad rear for Geely Emgrand,geely-emgrand,650.00,True,type_model,brake pad|geely-emgrand|rear|single
 EG-1808A6EF,AZAB,filter,Cabin filter for Daewoo Nubira,daewoo-nubira,267.00,False,type_model,cabin filter|daewoo-nubira|single
 EG-180C114E,After-Market,filter,Fuel filter for Nissan Sentra,nissan-sentra,550.00,False,type_model,fuel filter|nissan-sentra|single
-EG-1864EEC5,HI Q,brake pad,Brake pad rear set for Nissan Qashqai,nissan-qashqai,1400.00,False,type_model,brake pad|nissan-qashqai|rear|set
+EG-185791C4,N Auto Express,brake pad,Brake pad SP1240 for Kia Cerato,kia-cerato-2010-2010,1083.00,False,part_number,SP1240|single
 EG-186610F4,DAEWHA,filter,Oil filter for Hyundai Getz,hyundai-getz,200.00,False,type_model,oil filter|hyundai-getz|single
 EG-18965711,BOSCH,belt,Belt set for Volkswagen Jetta,volkswagen-jetta,3150.00,False,type_model,belt|volkswagen-jetta|set
-EG-198FB111,SUMMIT,brake pad,Brake pad front set for Hyundai Tucson,hyundai-tucson,1600.00,False,type_model,brake pad|hyundai-tucson|front|set
 EG-19B48230,After-Market,filter,Cabin filter for Hyundai Elantra,hyundai-elantra,200.00,True,type_model,cabin filter|hyundai-elantra|single
 EG-1A34B584,CHERY,belt,Belt for Chery Arrizo,chery-arrizo,700.00,False,type_model,belt|chery-arrizo|single
 EG-1AFB3EDC,ASG,brake pad,Brake pad front for Peugeot 307,peugeot-307,900.00,False,type_model,brake pad|peugeot-307|front|single
@@ -89,8 +84,6 @@ EG-1B1D7D26,ASG,belt,Belt 6PK1055 for Peugeot 301,peugeot-301,550.00,False,part_
 EG-1B3C3EEA,MOBIS,belt,Belt for Hyundai Tucson,hyundai-tucson-2014-2021,625.00,False,type_model,belt|hyundai-tucson|single
 EG-1B71ED2B,ASG,belt,Belt for Renault Fluence,renault-fluence,255.00,False,type_model,belt|renault-fluence|single
 EG-1C1EF5A4,BOSCH,filter,Cabin filter for Opel Corsa,opel-corsa,325.00,False,type_model,cabin filter|opel-corsa|single
-EG-1C4206BD,Generic,brake pad,Brake pad rear set for MG RX5,mg-rx5,687.50,False,type_model,brake pad|mg-rx5|rear|set
-EG-1C61906A,ماركة بديلة,brake pad,Brake pad front set for Hyundai I10,hyundai-i10,429.00,False,type_model,brake pad|hyundai-i10|front|set
 EG-1C6B2FA0,AZAB,filter,Cabin filter for BYD L3,byd-l3,201.50,False,type_model,cabin filter|byd-l3|single
 EG-1DF4324E,N Auto Express,filter,Oil filter E4G161012040,,199.50,False,part_number,E4G161012040|single
 EG-1DF55B25,After-Market,spark plug,Spark plug for Hyundai Matrix,hyundai-matrix,637.00,False,type_model,spark plug|hyundai-matrix|single
@@ -102,10 +95,11 @@ EG-1FA42149,MOBIS,belt,Belt 6PK1257 for Hyundai Elantra,hyundai-elantra,900.00,F
 EG-1FEC17F3,CR ELKORY,filter,Fuel filter for Mitsubishi Lancer,mitsubishi-lancer,430.50,True,type_model,fuel filter|mitsubishi-lancer|single
 EG-20F1519B,RENAULT GROUP,belt,Belt 7PK1570 for Nissan Qashqai,nissan-qashqai-2014-2021,1375.00,False,part_number,7PK1570|single
 EG-214FD1E8,DONGIL,belt,Belt 4PK812 for Hyundai Matrix,hyundai-matrix,260.00,True,part_number,4PK812|single
+EG-21994A6E,FERBE,brake pad,Brake pad front for Peugeot 308,peugeot-308,1200.00,False,type_model,brake pad|peugeot-308|front|single
 EG-21A07B64,CHERY,filter,Fuel filter for Chery Tiggo,chery-tiggo,295.00,False,type_model,fuel filter|chery-tiggo|single
 EG-21CEB6E8,After-Market,filter,Fuel filter for Speranza Tiggo,speranza-tiggo,266.50,False,type_model,fuel filter|speranza-tiggo|single
 EG-21EAA858,GSP,filter,Fuel filter for Nissan Sunny,nissan-sunny,375.00,True,type_model,fuel filter|nissan-sunny|single
-EG-224745C7,AYD,brake pad,Brake pad front set for Hyundai Accent,hyundai-accent,1150.00,False,type_model,brake pad|hyundai-accent|front|set
+EG-21F2D24F,D NAO,brake pad,Brake pad front for Speranza A113,speranza-a113-2008-2015,534.00,False,type_model,brake pad|speranza-a113|front|single
 EG-225D86CB,BOSCH,spark plug,Spark plug set for Skoda Octavia,skoda-octavia,700.00,False,type_model,spark plug|skoda-octavia|set
 EG-22692285,After-Market,filter,Oil filter for Speranza Tiggo,speranza-tiggo,230.00,False,type_model,oil filter|speranza-tiggo|single
 EG-23068EC0,RENAULT GROUP,filter,Fuel filter for Peugeot 3008,peugeot-3008,500.00,False,type_model,fuel filter|peugeot-3008|single
@@ -114,14 +108,13 @@ EG-23600BAA,DAEWHA,filter,Fuel filter for Hyundai I30,hyundai-i30,1436.50,False,
 EG-238BF9CE,OEM,filter,Fuel filter for MG MG5,mg-mg5,395.00,False,type_model,fuel filter|mg-mg5|single
 EG-23DC1265,CONTINENTAL,belt,Belt for Skoda Kodiaq,skoda-kodiaq,1350.00,False,type_model,belt|skoda-kodiaq|single
 EG-2425FB1E,NGK,spark plug,Spark plug set for Geely Emgrand,geely-emgrand-2014-2019,500.00,False,type_model,spark plug|geely-emgrand|set
-EG-246F107D,COGEFA,belt,Belt 6PK1822 for Renault Logan,renault-logan,840.00,True,part_number,6PK1822|single
+EG-246F107D,COGEFA,belt,Belt 6PK1822 for Renault Logan,renault-logan,840.00,False,part_number,6PK1822|single
 EG-2470050D,OPTIBELT,belt,Belt 6PK1070 for Peugeot 307,peugeot-307,625.00,False,part_number,6PK1070|single
 EG-25513553,WUNDER,filter,Air filter for Nissan Sentra,nissan-sentra,260.00,False,type_model,air filter|nissan-sentra|single
-EG-257CA0F2,Generic,brake pad,Brake pad front set for Chery Tiggo,chery-tiggo,660.00,False,type_model,brake pad|chery-tiggo|front|set
-EG-25974365,MK II,brake pad,Brake pad rear set for Nissan Sunny,nissan-sunny,750.00,False,type_model,brake pad|nissan-sunny|rear|set
-EG-259AABD6,GM,brake pad,Brake pad front for Chevrolet Captiva,chevrolet-captiva,1800.00,False,type_model,brake pad|chevrolet-captiva|front|single
+EG-259AABD6,GM,brake pad,Brake pad front for Chevrolet Captiva,chevrolet-captiva,1725.00,False,type_model,brake pad|chevrolet-captiva|front|single
 EG-25A8651E,BOSCH,filter,Cabin filter for Nissan Qashqai,nissan-qashqai,230.00,True,type_model,cabin filter|nissan-qashqai|single
 EG-25AAB3DA,NGK,spark plug,Spark plug set for Mazda 3,mazda-3,900.00,False,type_model,spark plug|mazda-3|set
+EG-2622EE1E,D NAO,brake pad,Brake pad front for Chery Arrizo,chery-arrizo,550.00,False,type_model,brake pad|chery-arrizo|front|single
 EG-2663CB77,NGK,spark plug,Spark plug set for Hyundai Matrix,hyundai-matrix,492.50,False,type_model,spark plug|hyundai-matrix|set
 EG-26B22DB1,AZAB,filter,Cabin filter for Renault Clio,renault-clio-2005-2008,262.50,False,type_model,cabin filter|renault-clio|single
 EG-26D7DAD4,KOREAN BRANDS,filter,Fuel filter 319112D000 for Hyundai Elantra,hyundai-elantra-2005-2005,470.50,False,part_number,319112D000|single
@@ -132,35 +125,32 @@ EG-27F6368B,N Auto Express,filter,Air filter 28113D3300,,243.50,False,part_numbe
 EG-28480B9E,WUNDER,filter,Air filter for Nissan Juke,nissan-juke,260.00,False,type_model,air filter|nissan-juke|single
 EG-285D9BC8,NGK,spark plug,Spark plug set for Hyundai Accent,hyundai-accent,550.00,False,type_model,spark plug|hyundai-accent|set
 EG-28BA44C9,AZAB,filter,Cabin filter for Chery Arrizo,chery-arrizo,250.00,False,type_model,cabin filter|chery-arrizo|single
-EG-2941E21E,D-NAO,brake pad,Brake pad rear set for Geely Emgrand,geely-emgrand,490.00,False,type_model,brake pad|geely-emgrand|rear|set
 EG-29EB1D45,N Auto Express,filter,Air filter MR968274 for Mitsubishi Lancer,mitsubishi-lancer,221.00,False,part_number,MR968274|single
 EG-2A25B05C,NGK,spark plug,Spark plug for Hyundai Elantra,hyundai-elantra,700.00,False,type_model,spark plug|hyundai-elantra|single
 EG-2A3965DE,BOSCH,belt,Belt set for Volkswagen Golf,volkswagen-golf,7890.00,False,type_model,belt|volkswagen-golf|set
 EG-2A8AEC39,DOOWON,filter,Cabin filter for Hyundai I30,hyundai-i30,375.00,False,type_model,cabin filter|hyundai-i30|single
 EG-2B0D9B2B,AZAB,filter,Air filter for Kia Cerato,kia-cerato,300.00,True,type_model,air filter|kia-cerato|single
 EG-2B597544,DAYCO,belt,Belt 6PK1820 for Renault Sandero,renault-sandero,580.00,False,part_number,6PK1820|single
-EG-2B9C603E,Generic,brake pad,Brake pad front set for Opel Insignia,opel-insignia-2015-2015,1297.50,False,type_model,brake pad|opel-insignia|front|set
 EG-2BC840B8,OPTIBELT,belt,Belt 5PK950,,360.00,False,part_number,5PK950|single
 EG-2CC5658A,VW GROUP,filter,Air filter 04E129620 for Skoda Octavia,skoda-octavia,1999.50,False,part_number,04E129620|single
 EG-2CD47100,MECCA,belt,Belt for Nissan Sunny,nissan-sunny,497.50,False,type_model,belt|nissan-sunny|single
-EG-2DC7524D,AYD,brake pad,Brake pad front set for Toyota Corolla,toyota-corolla,350.00,True,type_model,brake pad|toyota-corolla|front|set
 EG-2DEB392E,ASG,belt,Belt for Renault Kadjar,renault-kadjar,799.00,False,type_model,belt|renault-kadjar|single
 EG-2E53FBF0,NGK,spark plug,Spark plug for Hyundai Accent,hyundai-accent,1342.50,False,type_model,spark plug|hyundai-accent|single
-EG-2E9C082B,D-NAO,brake pad,Brake pad front for Chevrolet Aveo,chevrolet-aveo,642.00,True,type_model,brake pad|chevrolet-aveo|front|single
+EG-2E9C082B,D-NAO,brake pad,Brake pad front for Chevrolet Aveo,chevrolet-aveo,615.00,True,type_model,brake pad|chevrolet-aveo|front|single
 EG-2ED63C6D,BOSCH,spark plug,Spark plug for Fiat Tipo,fiat-tipo,500.00,False,type_model,spark plug|fiat-tipo|single
 EG-2EFA853C,AZAB,filter,Cabin filter for BYD F3,byd-f3,181.00,False,type_model,cabin filter|byd-f3|single
-EG-2F201F59,D-NAO,brake pad,Brake pad front for Mitsubishi Lancer,mitsubishi-lancer,750.00,True,type_model,brake pad|mitsubishi-lancer|front|single
+EG-2F201F59,HI-Q,brake pad,Brake pad front for Mitsubishi Lancer,mitsubishi-lancer,740.00,True,type_model,brake pad|mitsubishi-lancer|front|single
 EG-2F949B56,FILTORQ FILTER,filter,Air filter for Opel Vectra,opel-vectra,250.00,False,type_model,air filter|opel-vectra|single
 EG-2F9B2547,NGK,spark plug,Spark plug for BYD F3,byd-f3,850.00,False,type_model,spark plug|byd-f3|single
 EG-30028EED,After-Market,filter,Oil filter for Geely Emgrand,geely-emgrand,125.00,False,type_model,oil filter|geely-emgrand|single
 EG-30047428,WIX,filter,Cabin filter for Volkswagen Golf,volkswagen-golf,425.00,True,type_model,cabin filter|volkswagen-golf|single
 EG-3040CD1A,BOSCH,filter,Oil filter for Seat Toledo,seat-toledo,409.50,False,type_model,oil filter|seat-toledo|single
-EG-30CD4E84,MANDO,brake pad,Brake pad front for Kia Picanto,kia-picanto,750.00,True,type_model,brake pad|kia-picanto|front|single
+EG-30CD4E84,MANDO,brake pad,Brake pad front for Kia Picanto,kia-picanto,706.50,True,type_model,brake pad|kia-picanto|front|single
 EG-3111C0DE,WUNDER,filter,Air filter for Renault Duster,renault-duster,275.00,True,type_model,air filter|renault-duster|single
 EG-3145C60A,FILTRON,filter,Cabin filter for Volkswagen Jetta,volkswagen-jetta,452.50,True,type_model,cabin filter|volkswagen-jetta|single
 EG-3169D1ED,After-Market,filter,Oil filter for Fiat Punto,fiat-punto,283.00,False,type_model,oil filter|fiat-punto|single
 EG-317CC4D8,BANDO,belt,Belt for Speranza A113,speranza-a113-2008-2015,736.00,False,type_model,belt|speranza-a113|single
-EG-31B79696,ROADHOUSE,brake pad,Brake pad front for Renault Megane,renault-megane,1100.00,True,type_model,brake pad|renault-megane|front|single
+EG-31B79696,ROADHOUSE,brake pad,Brake pad front for Renault Megane,renault-megane,1137.50,True,type_model,brake pad|renault-megane|front|single
 EG-32B318E6,WIX,filter,Cabin filter for Volkswagen Passat,volkswagen-passat,440.00,True,type_model,cabin filter|volkswagen-passat|single
 EG-33D99484,BOSCH,belt,Belt for Seat Ibiza,seat-ibiza,930.00,False,type_model,belt|seat-ibiza|single
 EG-3420E014,BOSCH,filter,Fuel filter for Seat Ibiza,seat-ibiza,1111.50,False,type_model,fuel filter|seat-ibiza|single
@@ -169,7 +159,6 @@ EG-34A3C583,After-Market,filter,Fuel filter for BYD L3,byd-l3,183.50,False,type_
 EG-34C335DE,SCHAEFFLER,belt,Belt for Skoda Rapid,skoda-rapid,877.50,False,type_model,belt|skoda-rapid|single
 EG-35098D60,After-Market,filter,Oil filter for Speranza M11,speranza-m11,201.50,False,type_model,oil filter|speranza-m11|single
 EG-351AAF83,DAYCO,belt,Belt for Volkswagen Golf,volkswagen-golf,900.00,False,type_model,belt|volkswagen-golf|single
-EG-3525A69B,HI-Q,brake pad,Brake pad front set for Hyundai Creta,hyundai-creta,722.50,False,type_model,brake pad|hyundai-creta|front|set
 EG-35261841,N Auto Express,filter,Fuel filter 311121R000 for Hyundai Accent,hyundai-accent,360.00,False,part_number,311121R000|single
 EG-35B74A26,DONGIL,belt,Belt 4PK870 for Mitsubishi Lancer,mitsubishi-lancer,165.00,False,part_number,4PK870|single
 EG-3635A2EE,DAYCO,belt,Belt 6PK1555 for Opel Astra,opel-astra,700.00,False,part_number,6PK1555|single
@@ -178,12 +167,12 @@ EG-364484CD,LUXSY,belt,Belt for MG MG6,mg-mg6,550.00,False,type_model,belt|mg-mg
 EG-368568BA,ROADHOUSE,brake pad,Brake pad rear for Volkswagen Passat,volkswagen-passat,1295.00,False,type_model,brake pad|volkswagen-passat|rear|single
 EG-36A1C48B,MOBIS,belt,Belt 6PK1255 for Hyundai Elantra,hyundai-elantra,900.00,False,part_number,6PK1255|single
 EG-36C0CAAF,After-Market,filter,Oil filter for Mazda 3,mazda-3,200.00,False,type_model,oil filter|mazda-3|single
-EG-37221D47,FERBE,brake pad,Brake pad front set for MG MG5,mg-mg5,947.50,False,type_model,brake pad|mg-mg5|front|set
 EG-375BF748,NGK,spark plug,Spark plug set for Toyota Corolla,toyota-corolla,890.00,False,type_model,spark plug|toyota-corolla|set
 EG-37EB519F,NGK,spark plug,Spark plug set for Chery Envy,chery-envy,495.00,False,type_model,spark plug|chery-envy|set
+EG-386DF56B,ATE,brake pad,Brake pad rear for Skoda Kodiaq,skoda-kodiaq,1900.00,False,type_model,brake pad|skoda-kodiaq|rear|single
 EG-38D4BD89,ASG,filter,Cabin filter for Nissan Juke,nissan-juke,245.00,False,type_model,cabin filter|nissan-juke|single
 EG-3953502F,BOSCH,spark plug,Spark plug for Chevrolet Spark,chevrolet-spark,410.50,False,type_model,spark plug|chevrolet-spark|single
-EG-39774B6B,MK II,brake pad,Brake pad rear for Nissan Sentra,nissan-sentra,895.00,False,type_model,brake pad|nissan-sentra|rear|single
+EG-39774B6B,MK II,brake pad,Brake pad rear for Nissan Sentra,nissan-sentra,847.50,False,type_model,brake pad|nissan-sentra|rear|single
 EG-398751A2,DAYCO,belt,Belt 6PK1130 for Renault Duster,renault-duster,775.00,False,part_number,6PK1130|single
 EG-3991D35C,DAEWHA,filter,Oil filter for Nissan Sunny,nissan-sunny,182.00,True,type_model,oil filter|nissan-sunny|single
 EG-3A08151C,BLUE PRINT,filter,Fuel filter for Peugeot 5008,peugeot-5008,370.50,False,type_model,fuel filter|peugeot-5008|single
@@ -201,7 +190,7 @@ EG-3D6F4E1C,MOBIS,filter,Air filter for Kia Sportage,kia-sportage,390.00,True,ty
 EG-3DFC3F3C,After-Market,filter,Cabin filter for Toyota Corolla,toyota-corolla,190.00,True,type_model,cabin filter|toyota-corolla|single
 EG-3E2376C6,ماركة بديلة,belt,Belt for Toyota Yaris,toyota-yaris-2006-2013,370.00,False,type_model,belt|toyota-yaris|single
 EG-3E23E821,DAEWHA,filter,Oil filter for Hyundai I30,hyundai-i30,200.00,False,type_model,oil filter|hyundai-i30|single
-EG-3E3230CE,BESER,brake pad,Brake pad front for Nissan Tiida,nissan-tiida,1075.00,False,type_model,brake pad|nissan-tiida|front|single
+EG-3E3230CE,BESER,brake pad,Brake pad front for Nissan Tiida,nissan-tiida,925.00,False,type_model,brake pad|nissan-tiida|front|single
 EG-3E536417,WUNDER,filter,Cabin filter for Renault Fluence,renault-fluence,260.00,False,type_model,cabin filter|renault-fluence|single
 EG-3EA27077,OEM,filter,Air filter for MG MG6,mg-mg6,312.50,True,type_model,air filter|mg-mg6|single
 EG-3EEA5E12,AZAB,filter,Air filter for Daewoo Nubira,daewoo-nubira,195.50,False,type_model,air filter|daewoo-nubira|single
@@ -210,29 +199,28 @@ EG-3F6D698E,Generic,belt,Belt 4PK685 for Speranza A113,speranza-a113-2008-2015,1
 EG-3F892A0E,BOSCH,belt,Belt 5PK1750 for Renault Clio,renault-clio-2005-2008,540.00,True,part_number,5PK1750|single
 EG-3FDE53AA,NISSAN,filter,Oil filter 1520900Q0F for Nissan Qashqai,nissan-qashqai,251.00,False,part_number,1520900Q0F|single
 EG-403F6C74,BOSCH,spark plug,Spark plug set for Fiat Tipo,fiat-tipo,1237.50,False,type_model,spark plug|fiat-tipo|set
-EG-404B69C7,MANDO,brake pad,Brake pad front set for Chevrolet Aveo,chevrolet-aveo,500.00,False,type_model,brake pad|chevrolet-aveo|front|set
 EG-4094E1F3,DONGIL,belt,Belt 5PK970 for Chevrolet Lanos,chevrolet-lanos,287.00,False,part_number,5PK970|single
 EG-40C08C9A,BOSCH,belt,Belt 4PK611 for Hyundai Verna,hyundai-verna,277.00,False,part_number,4PK611|single
 EG-40D4E26D,DAEWHA,filter,Oil filter for Mitsubishi Lancer,mitsubishi-lancer,180.00,True,type_model,oil filter|mitsubishi-lancer|single
-EG-41730870,AYD,brake pad,Brake pad front set for Nissan Sentra,nissan-sentra,955.00,False,type_model,brake pad|nissan-sentra|front|set
 EG-41A6C300,After-Market,filter,Cabin filter for Kia Carens,kia-carens,230.00,False,type_model,cabin filter|kia-carens|single
 EG-4215937D,BOSCH,filter,Cabin filter for Peugeot 301,peugeot-301,330.00,True,type_model,cabin filter|peugeot-301|single
+EG-427F931B,D-NAO,brake pad,Brake pad front for BYD F3,byd-f3,700.00,False,type_model,brake pad|byd-f3|front|single
 EG-42FA8DF9,DAYCO,belt,Belt 6PK1053 for Volkswagen Passat,volkswagen-passat,550.00,False,part_number,6PK1053|single
-EG-43525068,Generic,brake pad,Brake pad rear for Chery Envy,chery-envy-2014-2019,713.00,False,type_model,brake pad|chery-envy|rear|single
+EG-43525068,Generic,brake pad,Brake pad rear for Chery Envy,chery-envy-2014-2019,468.00,False,type_model,brake pad|chery-envy|rear|single
 EG-439039DD,BOSCH,filter,Oil filter for Volkswagen Jetta,volkswagen-jetta,365.00,True,type_model,oil filter|volkswagen-jetta|single
-EG-439CDFDC,PHC VALEO,brake pad,Brake pad front for Hyundai Accent,hyundai-accent,740.00,False,type_model,brake pad|hyundai-accent|front|single
+EG-439CDFDC,PHC VALEO,brake pad,Brake pad front for Hyundai Accent,hyundai-accent,725.00,False,type_model,brake pad|hyundai-accent|front|single
 EG-43B4B14F,Generic,brake pad,Oil for Daewoo Nubira,daewoo-nubira,3340.50,False,type_model,oil|daewoo-nubira|single
+EG-44B10506,D NAO,brake pad,Brake pad front for Hyundai Getz,hyundai-getz,450.00,False,type_model,brake pad|hyundai-getz|front|single
 EG-44BE24CD,DONGIL,belt,Belt 6PK1115 for Volkswagen Passat,volkswagen-passat,492.50,False,part_number,6PK1115|single
 EG-451B99A3,BOSCH,filter,Oil filter for Renault Clio,renault-clio,247.00,True,type_model,oil filter|renault-clio|single
 EG-45C6F39B,BEST PLUS,brake pad,Brake pad front for Hyundai Matrix,hyundai-matrix,750.00,False,type_model,brake pad|hyundai-matrix|front|single
 EG-45C79065,After-Market,filter,Cabin filter for Geely Emgrand,geely-emgrand,204.50,True,type_model,cabin filter|geely-emgrand|single
-EG-461B3488,ICHIBAN,brake pad,Brake pad rear set for MG Hs,mg-hs,3892.00,False,type_model,brake pad|mg-hs|rear|set
 EG-465224A7,MOBIS,brake pad,Brake pad front for Hyundai Elantra,hyundai-elantra,800.00,True,type_model,brake pad|hyundai-elantra|front|single
 EG-46ACF73D,GATES,belt,Belt 6PK905 for Peugeot 5008,peugeot-5008-2009-2016,620.00,False,part_number,6PK905|single
+EG-46DF701A,N Auto Express,brake pad,Brake pad SP1156 for Nissan Sunny,nissan-sunny,781.00,False,part_number,SP1156|single
 EG-4704F4C5,DONGIL,belt,Belt 5PK1210 for Kia Picanto,kia-picanto,464.50,False,part_number,5PK1210|single
 EG-472DF57C,NGK,spark plug,Spark plug set for Kia Picanto,kia-picanto,600.00,False,type_model,spark plug|kia-picanto|set
 EG-47F6DD08,WIX,filter,Air filter for Volkswagen Golf,volkswagen-golf,531.50,True,type_model,air filter|volkswagen-golf|single
-EG-480F6CEE,ماركة بديلة,brake pad,Brake pad front set for Hyundai Elantra,hyundai-elantra,1600.00,True,type_model,brake pad|hyundai-elantra|front|set
 EG-48263291,After-Market,filter,Air filter for Mazda 3,mazda-3,707.00,False,type_model,air filter|mazda-3|single
 EG-48B50A30,BOSCH,spark plug,Spark plug set for Chevrolet Cruze,chevrolet-cruze,600.00,False,type_model,spark plug|chevrolet-cruze|set
 EG-48F748A3,MOBIS,filter,Oil filter for Kia Rio,kia-rio,217.50,False,type_model,oil filter|kia-rio|single
@@ -242,7 +230,7 @@ EG-4A09BA28,MANN FILTER,filter,Oil filter for Seat Leon,seat-leon,400.00,False,t
 EG-4ACD09B8,VW GROUP,filter,Cabin filter 1K1819653B for Skoda Octavia,skoda-octavia,1547.00,False,part_number,1K1819653B|single
 EG-4B006DDF,DAYCO,belt,Belt 4PK954 for Chevrolet Spark,chevrolet-spark,350.00,False,part_number,4PK954|single
 EG-4C13ACEE,RENAULT GROUP,filter,Fuel filter for Renault Fluence,renault-fluence,495.00,False,type_model,fuel filter|renault-fluence|single
-EG-4C8735AA,SUPER-MAX,brake pad,Brake pad front for Suzuki Ciaz,suzuki-ciaz,634.50,False,type_model,brake pad|suzuki-ciaz|front|single
+EG-4C8735AA,SUPER-MAX,brake pad,Brake pad front for Suzuki Ciaz,suzuki-ciaz,519.00,False,type_model,brake pad|suzuki-ciaz|front|single
 EG-4C894080,DONGIL,belt,Belt 4PK930 for Mitsubishi Lancer,mitsubishi-lancer,367.50,False,part_number,4PK930|single
 EG-4C8AA9D5,WIX,filter,Cabin filter for Renault Logan,renault-logan,315.00,True,type_model,cabin filter|renault-logan|single
 EG-4CAE2992,NGK,spark plug,Spark plug for Mitsubishi Lancer,mitsubishi-lancer,399.50,True,type_model,spark plug|mitsubishi-lancer|single
@@ -254,16 +242,14 @@ EG-4E7CB71A,WIX,filter,Cabin filter for Skoda Rapid,skoda-rapid,487.50,False,typ
 EG-4EF96E11,After-Market,filter,Fuel filter for Hyundai IX35,hyundai-ix35,819.00,False,type_model,fuel filter|hyundai-ix35|single
 EG-4EFF2250,WIX,filter,Air filter WA9766,,456.00,False,part_number,WA9766|single
 EG-4FD39011,BOSCH,filter,Cabin filter for Opel Vectra,opel-vectra,250.00,True,type_model,cabin filter|opel-vectra|single
-EG-4FE0D776,FERBE,brake pad,Brake pad front for Renault Kadjar,renault-kadjar,1100.00,False,type_model,brake pad|renault-kadjar|front|single
+EG-4FE0D776,FERBE,brake pad,Brake pad front for Renault Kadjar,renault-kadjar,1125.00,False,type_model,brake pad|renault-kadjar|front|single
 EG-4FF857FC,OPTIBELT,belt,Belt 4PK845 for Hyundai Verna,hyundai-verna,350.00,True,part_number,4PK845|single
 EG-5054EC5E,Generic,belt,Belt 6PK1885 for Geely Emgrand,geely-emgrand-2014-2019,450.00,False,part_number,6PK1885|single
 EG-50CBC733,BOSCH,spark plug,Spark plug set for Honda Civic,honda-civic,1000.00,False,type_model,spark plug|honda-civic|set
-EG-5100387E,N Auto Express,brake pad,Brake pad rear set for Toyota Corolla,toyota-corolla,300.00,False,type_model,brake pad|toyota-corolla|rear|set
 EG-512FAE81,KOREAN BRANDS,filter,Air filter 281132G000 for Kia Carens,kia-carens,171.00,False,part_number,281132G000|single
 EG-51341449,After-Market,filter,Fuel filter for Nissan Juke,nissan-juke,300.00,False,type_model,fuel filter|nissan-juke|single
-EG-513E4B05,AYD,brake pad,Brake pad front set for Chevrolet Cruze,chevrolet-cruze,990.00,False,type_model,brake pad|chevrolet-cruze|front|set
 EG-514A2570,MOBIS,filter,Fuel filter for Hyundai Accent,hyundai-accent,599.00,True,type_model,fuel filter|hyundai-accent|single
-EG-518000C3,PHC VALEO,brake pad,Brake pad front for Kia Cerato,kia-cerato,820.00,True,type_model,brake pad|kia-cerato|front|single
+EG-518000C3,PHC VALEO,brake pad,Brake pad front for Kia Cerato,kia-cerato,850.00,True,type_model,brake pad|kia-cerato|front|single
 EG-5244C901,MOBIS,spark plug,Spark plug set for Kia Carens,kia-carens,945.00,False,type_model,spark plug|kia-carens|set
 EG-5250B37E,DAYCO,belt,Belt for Peugeot 307,peugeot-307,950.00,False,type_model,belt|peugeot-307|single
 EG-526BD088,BOSCH,filter,Oil filter 1457429243,,288.50,False,part_number,1457429243|single
@@ -274,6 +260,7 @@ EG-52F21AA0,DONGIL,belt,Belt for Hyundai Matrix,hyundai-matrix,342.50,False,type
 EG-5343EA8F,BOSCH,filter,Cabin filter for Peugeot 308,peugeot-308,350.00,False,type_model,cabin filter|peugeot-308|single
 EG-536B4DD3,Generic,oil,Oil for Renault Clio,renault-clio,595.00,False,type_model,oil|renault-clio|single
 EG-536D1B0B,DAEWHA,filter,Oil filter for Hyundai Elantra,hyundai-elantra,200.00,True,type_model,oil filter|hyundai-elantra|single
+EG-537FFFB2,ROADHOUSE,brake pad,Brake pad rear for Peugeot 301,peugeot-301,1385.00,False,type_model,brake pad|peugeot-301|rear|single
 EG-53F0FCC8,ICER,brake pad,Brake pad front for Skoda Kodiaq,skoda-kodiaq,2500.00,False,type_model,brake pad|skoda-kodiaq|front|single
 EG-542F2685,BOSCH,filter,Fuel filter for Chevrolet Lanos,chevrolet-lanos,170.00,False,type_model,fuel filter|chevrolet-lanos|single
 EG-54714CA3,WIX,filter,Cabin filter for Seat Leon,seat-leon,380.50,True,type_model,cabin filter|seat-leon|single
@@ -281,7 +268,7 @@ EG-549A4755,AZAB,filter,Air filter for Hyundai Verna,hyundai-verna,190.00,True,t
 EG-54C4F535,RENAULT GROUP,filter,Fuel filter for Peugeot 508,peugeot-508,370.50,False,type_model,fuel filter|peugeot-508|single
 EG-54D587C7,MOBIS,filter,Fuel filter for Kia Sportage,kia-sportage,1150.50,False,type_model,fuel filter|kia-sportage|single
 EG-55527EE8,OEM,belt,Belt for MG RX5,mg-rx5,550.00,False,type_model,belt|mg-rx5|single
-EG-55704F98,DAYCO,belt,Belt 6PK1200 for Renault Logan,renault-logan,650.00,True,part_number,6PK1200|single
+EG-55704F98,DAYCO,belt,Belt 6PK1200 for Renault Logan,renault-logan,650.00,False,part_number,6PK1200|single
 EG-5579B186,BOSCH,spark plug,Spark plug set for Renault Megane,renault-megane,1000.00,False,type_model,spark plug|renault-megane|set
 EG-55B131B2,Generic,filter,Oil for Skoda Kodiaq,skoda-kodiaq,565.00,False,type_model,oil|skoda-kodiaq|single
 EG-55BA81A9,DENSO,wiper,Wiper for Kia Rio,kia-rio-2006-2011,399.00,False,type_model,wiper|kia-rio|single
@@ -291,49 +278,47 @@ EG-55DE786A,DAEWHA,filter,Oil filter for Hyundai Accent,hyundai-accent,182.00,Tr
 EG-56075DD4,After-Market,filter,Air filter for Speranza M11,speranza-m11,300.00,False,type_model,air filter|speranza-m11|single
 EG-5652EE45,MOBIS,spark plug,Spark plug set for Hyundai I30,hyundai-i30,830.00,False,type_model,spark plug|hyundai-i30|set
 EG-56939CB3,Bosch,filter,Cabin filter for Fiat Tipo,fiat-tipo,195.00,True,type_model,cabin filter|fiat-tipo|single
-EG-56CB88A4,Generic,brake pad,Brake pad front set for Speranza M11,speranza-m11-2008-2015,597.50,False,type_model,brake pad|speranza-m11|front|set
+EG-56ADF3A4,OEM,brake pad,Brake pad rear for MG MG6,mg-mg6,2500.00,False,type_model,brake pad|mg-mg6|rear|single
 EG-56F73867,AUTO TOP,brake pad,Brake pad front for Opel Astra,opel-astra,900.00,False,type_model,brake pad|opel-astra|front|single
 EG-56FC5618,DONGIL,belt,Belt for BYD F3,byd-f3,725.00,False,type_model,belt|byd-f3|single
 EG-572A745A,DONGIL,belt,Belt 5PK865 for Mitsubishi Lancer,mitsubishi-lancer,320.00,False,part_number,5PK865|single
-EG-57A6B906,WIX,filter,Air filter for Seat Toledo,seat-toledo,400.00,True,type_model,air filter|seat-toledo|single
+EG-57A6B906,WIX,filter,Air filter for Seat Toledo,seat-toledo,400.00,False,type_model,air filter|seat-toledo|single
 EG-57B8BDDC,HSC,belt,Belt for Hyundai IX35,hyundai-ix35,850.00,False,type_model,belt|hyundai-ix35|single
 EG-58383449,EUROREPAR,filter,Oil filter for Peugeot 5008,peugeot-5008,350.00,False,type_model,oil filter|peugeot-5008|single
-EG-5877B4A4,PHC VALEO,brake pad,Brake pad front for Chevrolet Lanos,chevrolet-lanos,550.00,False,type_model,brake pad|chevrolet-lanos|front|single
+EG-5877B4A4,PHC VALEO,brake pad,Brake pad front for Chevrolet Lanos,chevrolet-lanos,550.00,True,type_model,brake pad|chevrolet-lanos|front|single
+EG-59E329CF,D NAO,brake pad,Brake pad rear for Speranza A516,speranza-a516-2008-2012,475.00,False,type_model,brake pad|speranza-a516|rear|single
 EG-5A037F78,BOSCH,filter,Fuel filter for Opel Vectra,opel-vectra,325.00,False,type_model,fuel filter|opel-vectra|single
 EG-5A292E69,Generic,belt,Belt 6PK2155,,620.00,False,part_number,6PK2155|single
 EG-5A54F39E,BOSCH,filter,Fuel filter for Skoda Rapid,skoda-rapid,1137.50,False,type_model,fuel filter|skoda-rapid|single
-EG-5A9D7368,HI-Q,brake pad,Brake pad front for Toyota Corolla,toyota-corolla,817.50,True,type_model,brake pad|toyota-corolla|front|single
-EG-5B0739EA,N Auto Express,brake pad,Brake pad front set for Renault Megane,renault-megane,1368.00,False,type_model,brake pad|renault-megane|front|set
+EG-5A9D7368,HI-Q,brake pad,Brake pad front for Toyota Corolla,toyota-corolla,800.00,True,type_model,brake pad|toyota-corolla|front|single
 EG-5B518FE9,After-Market,filter,Cabin filter for Speranza A516,speranza-a516,200.00,True,type_model,cabin filter|speranza-a516|single
 EG-5BACB334,MOBIS,filter,Oil filter for Kia Cerato,kia-cerato,240.00,True,type_model,oil filter|kia-cerato|single
-EG-5BCE94A4,MOBIS,brake pad,Brake pad rear for Hyundai Elantra,hyundai-elantra,800.00,True,type_model,brake pad|hyundai-elantra|rear|single
+EG-5BCE94A4,MOBIS,brake pad,Brake pad rear for Hyundai Elantra,hyundai-elantra,800.00,False,type_model,brake pad|hyundai-elantra|rear|single
 EG-5C0D3F75,WIX,filter,Cabin filter for Peugeot 508,peugeot-508,409.50,True,type_model,cabin filter|peugeot-508|single
 EG-5D479706,BOSCH,wiper,Wiper for Volkswagen Golf,volkswagen-golf,744.00,False,type_model,wiper|volkswagen-golf|single
-EG-5D6DCE7A,ROADHOUSE,brake pad,Brake pad rear for Renault Clio,renault-clio-2005-2008,1050.00,False,type_model,brake pad|renault-clio|rear|single
+EG-5D6DCE7A,ROADHOUSE,brake pad,Brake pad rear for Renault Clio,renault-clio,1050.00,False,type_model,brake pad|renault-clio|rear|single
 EG-5DFE1328,DAYCO,belt,Belt for Hyundai Verna,hyundai-verna,350.00,True,type_model,belt|hyundai-verna|single
 EG-5FB40D45,HSC,belt,Belt for Chevrolet Optra,chevrolet-optra,700.00,False,type_model,belt|chevrolet-optra|single
 EG-5FCD6380,NGK,spark plug,Spark plug set for Hyundai Verna,hyundai-verna,525.00,True,type_model,spark plug|hyundai-verna|set
-EG-5FDA7EA8,Generic,brake pad,Brake pad front set for Renault Logan,renault-logan,930.00,False,type_model,brake pad|renault-logan|front|set
 EG-600997D7,BOSCH,spark plug,Spark plug set for Renault Fluence,renault-fluence,2047.50,False,type_model,spark plug|renault-fluence|set
-EG-6144E1DA,N Auto Express,brake pad,Brake pad SP1156 set for Nissan Sunny,nissan-sunny,781.00,False,part_number,SP1156|set
-EG-61CC6CAC,HI-Q,brake pad,Brake pad front for MG Zs,mg-zs,782.50,False,type_model,brake pad|mg-zs|front|single
+EG-61CC6CAC,HI-Q,brake pad,Brake pad front for MG Zs,mg-zs,865.00,False,type_model,brake pad|mg-zs|front|single
 EG-627AED00,WIX,filter,Cabin filter for Skoda Octavia,skoda-octavia,437.00,True,type_model,cabin filter|skoda-octavia|single
 EG-629B06F1,DONGIL,belt,Belt 7PK1127 for Nissan Sunny,nissan-sunny,450.00,False,part_number,7PK1127|single
-EG-62C605E7,BEST,brake pad,Brake pad front set for Geely Emgrand,geely-emgrand,640.00,True,type_model,brake pad|geely-emgrand|front|set
 EG-62EB5AE7,AZAB,filter,Air filter for Nissan Sunny,nissan-sunny,250.00,True,type_model,air filter|nissan-sunny|single
 EG-633DB435,ROADHOUSE,brake pad,Brake pad rear for Peugeot 3008,peugeot-3008,1375.00,False,type_model,brake pad|peugeot-3008|rear|single
-EG-635A6011,HI-Q,brake pad,Brake pad front for Kia Sportage,kia-sportage,867.50,False,type_model,brake pad|kia-sportage|front|single
+EG-635A6011,PHC VALEO,brake pad,Brake pad front for Kia Sportage,kia-sportage,870.00,False,type_model,brake pad|kia-sportage|front|single
 EG-643BCEB5,AZAB,filter,Air filter for Hyundai Accent,hyundai-accent,390.00,True,type_model,air filter|hyundai-accent|single
 EG-644DA0E2,AZAB,filter,Air filter for Nissan Qashqai,nissan-qashqai,260.00,True,type_model,air filter|nissan-qashqai|single
-EG-6477AEE6,Generic,brake pad,Brake pad front set for Renault Kadjar,renault-kadjar,1500.00,False,type_model,brake pad|renault-kadjar|front|set
 EG-6494BCD5,WIX,filter,Cabin filter for Opel Astra,opel-astra,288.00,True,type_model,cabin filter|opel-astra|single
+EG-649582ED,FERBE,brake pad,Brake pad front for Skoda Fabia,skoda-fabia,1225.00,False,type_model,brake pad|skoda-fabia|front|single
 EG-64AB5421,ATE,brake pad,Brake pad front for Volkswagen Passat,volkswagen-passat,1400.00,False,type_model,brake pad|volkswagen-passat|front|single
 EG-64EC5A02,BOSCH,spark plug,Spark plug set for Skoda Kodiaq,skoda-kodiaq,2150.00,False,type_model,spark plug|skoda-kodiaq|set
 EG-650EBD83,HI-Q,brake pad,Brake pad rear for Kia Sportage,kia-sportage,750.00,False,type_model,brake pad|kia-sportage|rear|single
+EG-6568FD80,D-NAO,brake pad,Brake pad rear for Chery Tiggo,chery-tiggo,623.50,False,type_model,brake pad|chery-tiggo|rear|single
 EG-656EB0FC,DONGIL,belt,Belt for Chevrolet Lanos,chevrolet-lanos,490.00,True,type_model,belt|chevrolet-lanos|single
 EG-65721CE7,Generic,filter,Fuel filter for Speranza A113,speranza-a113-2008-2015,182.50,False,type_model,fuel filter|speranza-a113|single
 EG-65F712D4,NGK,spark plug,Spark plug for Nissan Sunny,nissan-sunny,468.00,False,type_model,spark plug|nissan-sunny|single
-EG-6651BC1C,AZAB,filter,Air filter for Kia Soul,kia-soul,290.00,True,type_model,air filter|kia-soul|single
+EG-6651BC1C,AZAB,filter,Air filter for Kia Soul,kia-soul,290.00,False,type_model,air filter|kia-soul|single
 EG-669F7311,AZAB,filter,Air filter for Hyundai Tucson,hyundai-tucson,425.00,False,type_model,air filter|hyundai-tucson|single
 EG-66A2B667,OEM,filter,Oil filter for MG Hs,mg-hs,340.00,False,type_model,oil filter|mg-hs|single
 EG-66D233BE,CONTINENTAL,belt,Belt 6PK1000 for Seat Ibiza,seat-ibiza,660.00,True,part_number,6PK1000|single
@@ -354,7 +339,7 @@ EG-6AE3EA8D,BOSCH,spark plug,Spark plug for Renault Megane,renault-megane,734.50
 EG-6B02047A,After-Market,filter,Fuel filter for Hyundai Elantra,hyundai-elantra,773.50,True,type_model,fuel filter|hyundai-elantra|single
 EG-6BD0F66E,BOSCH,belt,Belt 6PK1256 for Hyundai I30,hyundai-i30,642.50,False,part_number,6PK1256|single
 EG-6C267734,DONGIL,belt,Belt 6PK955 for Hyundai Elantra,hyundai-elantra,312.50,False,part_number,6PK955|single
-EG-6C26EFC0,BESER,brake pad,Brake pad front for Nissan Qashqai,nissan-qashqai,990.00,False,type_model,brake pad|nissan-qashqai|front|single
+EG-6C26EFC0,BESER,brake pad,Brake pad front for Nissan Qashqai,nissan-qashqai,990.00,True,type_model,brake pad|nissan-qashqai|front|single
 EG-6C3901B5,Generic,filter,Cabin filter for Chery Envy,chery-envy,155.00,False,type_model,cabin filter|chery-envy|single
 EG-6C4250D3,DAYCO,belt,Belt for Mitsubishi Lancer,mitsubishi-lancer,490.00,True,type_model,belt|mitsubishi-lancer|single
 EG-6C453CB5,BOSCH,spark plug,Spark plug set for Nissan Sunny,nissan-sunny,1040.00,False,type_model,spark plug|nissan-sunny|set
@@ -363,28 +348,27 @@ EG-6D21396A,ماركة بديلة,belt,Belt for Speranza A620,speranza-a620-2008
 EG-6DD2A979,NGK,spark plug,Spark plug for Renault Fluence,renault-fluence,600.00,False,type_model,spark plug|renault-fluence|single
 EG-6E261F4C,ASG,filter,Cabin filter for Nissan Sentra,nissan-sentra,260.00,False,type_model,cabin filter|nissan-sentra|single
 EG-6EB90314,Generic,belt,Belt 6PK1560,,160.00,False,part_number,6PK1560|single
-EG-6ECEE2AB,D NAO,brake pad,Brake pad front for Nissan Sentra,nissan-sentra,750.00,False,type_model,brake pad|nissan-sentra|front|single
+EG-6ECEE2AB,AYD,brake pad,Brake pad front for Nissan Sentra,nissan-sentra,805.00,False,type_model,brake pad|nissan-sentra|front|single
 EG-6EE64392,BOSCH,filter,Oil filter for Renault Captur,renault-captur,460.00,False,type_model,oil filter|renault-captur|single
 EG-6EEB1AF4,NGK,spark plug,Spark plug set for Hyundai I10,hyundai-i10,500.00,False,type_model,spark plug|hyundai-i10|set
-EG-6FA3DAD7,Generic,brake pad,Brake pad front set for Skoda Kodiaq,skoda-kodiaq,3423.00,False,type_model,brake pad|skoda-kodiaq|front|set
+EG-6F04972F,SUPER GOLD,brake pad,Brake pad rear for Chery Arrizo,chery-arrizo,501.50,False,type_model,brake pad|chery-arrizo|rear|single
 EG-6FC79987,AC DELCO,filter,Cabin filter for Chevrolet Aveo,chevrolet-aveo,160.50,True,type_model,cabin filter|chevrolet-aveo|single
 EG-6FFAA22D,BANDO,belt,Belt 6PK1875 for Chevrolet Aveo,chevrolet-aveo,610.00,False,part_number,6PK1875|single
 EG-70132758,GM,filter,Fuel filter for Chevrolet Optra,chevrolet-optra,250.00,False,type_model,fuel filter|chevrolet-optra|single
 EG-702A42E8,LUXSY,belt,Belt for MG MG5,mg-mg5,720.00,False,type_model,belt|mg-mg5|single
 EG-704F126B,Generic,wiper,Wiper set for Fiat Tipo,fiat-tipo,253.50,False,type_model,wiper|fiat-tipo|set
 EG-706C4524,WUNDER,filter,Air filter for Renault Fluence,renault-fluence,275.00,True,type_model,air filter|renault-fluence|single
+EG-70C9F7D0,FERBE,brake pad,Brake pad rear for Skoda Superb,skoda-superb,1850.00,False,type_model,brake pad|skoda-superb|rear|single
 EG-70DB3028,N Auto Express,filter,Air filter PW811941,,189.00,False,part_number,PW811941|single
 EG-7104EB59,EUROREPAR,filter,Air filter for Peugeot 301,peugeot-301,255.00,True,type_model,air filter|peugeot-301|single
 EG-714F6F0B,OEM,filter,Fuel filter for MG Zs,mg-zs,250.00,False,type_model,fuel filter|mg-zs|single
 EG-717ABCAC,After-Market,filter,Fuel filter for Speranza A516,speranza-a516,227.50,False,type_model,fuel filter|speranza-a516|single
 EG-7259B614,After-Market,filter,Oil filter for Suzuki Ciaz,suzuki-ciaz,150.00,False,type_model,oil filter|suzuki-ciaz|single
-EG-7284F5FA,Generic,brake pad,Brake pad rear set for Hyundai Accent,hyundai-accent,1600.00,False,type_model,brake pad|hyundai-accent|rear|set
 EG-735DB004,WUNDER,filter,Oil filter for Seat Ibiza,seat-ibiza,350.00,False,type_model,oil filter|seat-ibiza|single
-EG-73A0B6ED,PHC VALEO,brake pad,Brake pad rear for Hyundai Accent,hyundai-accent,1100.00,False,type_model,brake pad|hyundai-accent|rear|single
+EG-73A0B6ED,PHC VALEO,brake pad,Brake pad rear for Hyundai Accent,hyundai-accent,1115.00,True,type_model,brake pad|hyundai-accent|rear|single
 EG-746AB05D,BLUE PRINT,filter,Fuel filter for Peugeot 307,peugeot-307,370.50,False,type_model,fuel filter|peugeot-307|single
-EG-7511A028,MANDO,brake pad,Brake pad rear for Kia Carens,kia-carens,750.00,False,type_model,brake pad|kia-carens|rear|single
+EG-7511A028,MANDO,brake pad,Brake pad rear for Kia Carens,kia-carens,727.50,True,type_model,brake pad|kia-carens|rear|single
 EG-751E94EF,Generic,belt,Belt 6PK1038,,165.00,False,part_number,6PK1038|single
-EG-7524D0BC,HI Q,brake pad,Brake pad rear set for Hyundai Verna,hyundai-verna,600.00,False,type_model,brake pad|hyundai-verna|rear|set
 EG-755E0105,OPTIBELT,belt,Belt 4PK900 for Mitsubishi Lancer,mitsubishi-lancer,350.00,False,part_number,4PK900|single
 EG-75C64A46,DONGIL,belt,Belt 6PK1630 for Chery Tiggo,chery-tiggo,480.00,False,part_number,6PK1630|single
 EG-75F7DF0A,OEM,filter,Cabin filter for MG MG5,mg-mg5,200.00,True,type_model,cabin filter|mg-mg5|single
@@ -393,31 +377,31 @@ EG-7622C8F7,After-Market,filter,Cabin filter for Kia Soul,kia-soul,210.00,True,t
 EG-762C78A7,N Auto Express,filter,Air filter 28113F2000 for Hyundai Elantra,hyundai-elantra-2000-2000,313.50,False,part_number,28113F2000|single
 EG-7697E0EF,NGK,spark plug,Spark plug for MG MG6,mg-mg6,1600.00,False,type_model,spark plug|mg-mg6|single
 EG-76F58434,NGK,spark plug,Spark plug for Mazda 3,mazda-3,1033.50,False,type_model,spark plug|mazda-3|single
+EG-76F6FD96,HI-Q,brake pad,Brake pad front for Hyundai IX35,hyundai-ix35,1100.00,False,type_model,brake pad|hyundai-ix35|front|single
 EG-7754C4D3,OEM,filter,Air filter for MG RX5,mg-rx5,200.00,True,type_model,air filter|mg-rx5|single
 EG-77694487,DAYCO,belt,Belt 5PK1355 for Opel Astra,opel-astra-2004-2009,425.00,False,part_number,5PK1355|single
 EG-78A48C46,NISSAN,belt,Belt for Nissan Sentra,nissan-sentra,700.00,False,type_model,belt|nissan-sentra|single
 EG-78E5CF7B,After-Market,filter,Cabin filter for Toyota Yaris,toyota-yaris,195.00,False,type_model,cabin filter|toyota-yaris|single
 EG-790C6B93,ROADHOUSE,brake pad,Brake pad rear for Opel Astra,opel-astra,1050.00,False,type_model,brake pad|opel-astra|rear|single
-EG-796D8E30,PHC VALEO,brake pad,Brake pad rear set for Kia Cerato,kia-cerato-2004-2009,290.00,False,type_model,brake pad|kia-cerato|rear|set
+EG-79717359,N Auto Express,brake pad,Brake pad RB1388402 for Peugeot 301,peugeot-301,997.50,False,part_number,RB1388402|single
 EG-7A49EA10,After-Market,filter,Air filter for Daewoo Matiz,daewoo-matiz,514.50,False,type_model,air filter|daewoo-matiz|single
 EG-7AC201D0,Generic,brake pad,Oil for Geely Emgrand,geely-emgrand-2014-2019,375.00,False,type_model,oil|geely-emgrand|single
 EG-7B23C2C8,After-Market,filter,Air filter for Suzuki Swift,suzuki-swift,409.50,False,type_model,air filter|suzuki-swift|single
 EG-7CD52F18,MOBIS,belt,Belt for Kia Rio,kia-rio-2012-2017,805.00,False,type_model,belt|kia-rio|single
-EG-7DF57133,MK-II,brake pad,Brake pad rear for Mitsubishi Lancer,mitsubishi-lancer,900.00,False,type_model,brake pad|mitsubishi-lancer|rear|single
+EG-7CEC202F,ATE,brake pad,Brake pad front for Skoda Superb,skoda-superb,3175.00,False,type_model,brake pad|skoda-superb|front|single
+EG-7DF57133,MK-II,brake pad,Brake pad rear for Mitsubishi Lancer,mitsubishi-lancer,875.00,False,type_model,brake pad|mitsubishi-lancer|rear|single
 EG-7DFD4CA9,A-PART,filter,Oil filter for Speranza A516,speranza-a516-2008-2012,195.00,False,type_model,oil filter|speranza-a516|single
 EG-7E1D2F18,A-PART,spark plug,Spark plug set for Speranza A516,speranza-a516,386.00,False,type_model,spark plug|speranza-a516|set
 EG-7E865843,BANDO,belt,Belt 4PK1180 for Toyota Corolla,toyota-corolla-2000-2007,273.50,False,part_number,4PK1180|single
 EG-7E929C53,NGK,spark plug,Spark plug set for Mitsubishi Lancer,mitsubishi-lancer,595.00,False,type_model,spark plug|mitsubishi-lancer|set
-EG-7EC2F998,PHC VALEO,brake pad,Brake pad rear for Kia Picanto,kia-picanto-2012-2018,647.50,False,type_model,brake pad|kia-picanto|rear|single
-EG-7F5F2DE4,N Auto Express,brake pad,Brake pad front set for Fiat Tipo,fiat-tipo,1197.00,False,type_model,brake pad|fiat-tipo|front|set
-EG-804F4640,ROADHOUSE,brake pad,Brake pad front for Skoda Octavia,skoda-octavia,1390.00,True,type_model,brake pad|skoda-octavia|front|single
-EG-813FF167,HI-Q,brake pad,Brake pad front for Toyota Yaris,toyota-yaris,790.00,True,type_model,brake pad|toyota-yaris|front|single
+EG-7EC2F998,PHC VALEO,brake pad,Brake pad rear for Kia Picanto,kia-picanto-2013-2018,647.50,False,type_model,brake pad|kia-picanto|rear|single
+EG-804F4640,ROADHOUSE,brake pad,Brake pad front for Skoda Octavia,skoda-octavia,1385.00,True,type_model,brake pad|skoda-octavia|front|single
+EG-813FF167,HI-Q,brake pad,Brake pad front for Toyota Yaris,toyota-yaris,775.00,True,type_model,brake pad|toyota-yaris|front|single
 EG-81E19DE6,DOOWON,filter,Cabin filter for Hyundai Tucson,hyundai-tucson,350.00,True,type_model,cabin filter|hyundai-tucson|single
 EG-82A8EABD,BOSCH,filter,Oil filter for Opel Astra,opel-astra,250.00,True,type_model,oil filter|opel-astra|single
-EG-82CCFD52,RENAULT GROUP,belt,Belt 7PK1140 for Renault Fluence,renault-fluence,665.00,True,part_number,7PK1140|single
+EG-82CCFD52,RENAULT GROUP,belt,Belt 7PK1140 for Renault Fluence,renault-fluence,665.00,False,part_number,7PK1140|single
 EG-83044528,NGK,spark plug,Spark plug set for MG MG5,mg-mg5,600.00,False,type_model,spark plug|mg-mg5|set
 EG-832FE896,BOSCH,spark plug,Spark plug set for Volkswagen Passat,volkswagen-passat,1650.00,False,type_model,spark plug|volkswagen-passat|set
-EG-833EC594,Generic,brake pad,Brake pad rear set for Renault Megane,renault-megane,850.00,False,type_model,brake pad|renault-megane|rear|set
 EG-83580613,BOSCH,belt,Belt 6PK1054 for Volkswagen Golf,volkswagen-golf,590.00,False,part_number,6PK1054|single
 EG-8360BB47,BOSCH,belt,Belt 4PK1538 for Renault Clio,renault-clio-2005-2008,565.00,False,part_number,4PK1538|single
 EG-83DAB132,DAYCO,belt,Belt for Peugeot 301,peugeot-301,950.00,False,type_model,belt|peugeot-301|single
@@ -425,9 +409,8 @@ EG-84680248,BOSCH,wiper,Wiper set for Seat Toledo,seat-toledo-2012-2019,928.50,F
 EG-847E18B1,After-Market,filter,Cabin filter for Fiat Punto,fiat-punto,604.50,False,type_model,cabin filter|fiat-punto|single
 EG-848E2131,OEM,filter,Oil filter for MG MG5,mg-mg5,250.00,True,type_model,oil filter|mg-mg5|single
 EG-84D1ACF1,DAEWHA,filter,Oil filter for Opel Vectra,opel-vectra,200.00,False,type_model,oil filter|opel-vectra|single
-EG-84EC08B9,GM,brake pad,Brake pad rear for Chevrolet Captiva,chevrolet-captiva,4400.00,False,type_model,brake pad|chevrolet-captiva|rear|single
+EG-84EC08B9,GM,brake pad,Brake pad rear for Chevrolet Captiva,chevrolet-captiva,3300.00,False,type_model,brake pad|chevrolet-captiva|rear|single
 EG-856DDA8E,OEM,belt,Belt for MG Zs,mg-zs,570.00,False,type_model,belt|mg-zs|single
-EG-85950A9F,Generic,brake pad,Brake pad rear set for Skoda Kodiaq,skoda-kodiaq,2600.00,False,type_model,brake pad|skoda-kodiaq|rear|set
 EG-85A45DE1,NISSAN GROUP,filter,Oil filter for Nissan Qashqai,nissan-qashqai,275.00,True,type_model,oil filter|nissan-qashqai|single
 EG-8628DB5C,Generic,bulb,Wiper for Nissan Sunny,nissan-sunny,599.50,False,type_model,wiper|nissan-sunny|single
 EG-8636EA90,KHEMS,filter,Cabin filter for Chevrolet Captiva,chevrolet-captiva,500.00,False,type_model,cabin filter|chevrolet-captiva|single
@@ -448,16 +431,14 @@ EG-8BD7EB24,BOSCH,spark plug,Spark plug set for Chevrolet Spark,chevrolet-spark,
 EG-8C00D074,Generic,wiper,Wiper set for Volkswagen Golf,volkswagen-golf,245.00,False,type_model,wiper|volkswagen-golf|set
 EG-8CF63CCE,DAYCO,belt,Belt for Opel Astra,opel-astra,750.00,False,type_model,belt|opel-astra|single
 EG-8D3449C6,MANDO,brake pad,Brake pad rear for Chevrolet Aveo,chevrolet-aveo,850.00,True,type_model,brake pad|chevrolet-aveo|rear|single
-EG-8D5BFF83,Generic,brake pad,Brake pad front for Honda Civic,honda-civic,529.00,False,type_model,brake pad|honda-civic|front|single
+EG-8D5BFF83,Generic,brake pad,Brake pad front for Honda Civic,honda-civic,294.50,False,type_model,brake pad|honda-civic|front|single
 EG-8E069F29,BOSCH,belt,Belt 6PK1080 for Volkswagen Golf,volkswagen-golf,362.50,False,part_number,6PK1080|single
 EG-8E7AF442,NGK,spark plug,Spark plug set for Chery Arrizo,chery-arrizo,1300.00,False,type_model,spark plug|chery-arrizo|set
 EG-8E82B57F,After-Market,filter,Air filter for Kia Rio,kia-rio,390.00,False,type_model,air filter|kia-rio|single
 EG-8E93371F,EUROREPAR,filter,Oil filter for Peugeot 3008,peugeot-3008,350.00,False,type_model,oil filter|peugeot-3008|single
-EG-8F0D0948,N Auto Express,brake pad,Brake pad front set for Mazda 3,mazda-3,1636.00,False,type_model,brake pad|mazda-3|front|set
 EG-8FD3533C,NGK,spark plug,Spark plug set for Nissan Sentra,nissan-sentra,1700.00,False,type_model,spark plug|nissan-sentra|set
 EG-901BDB9C,MOBIS,spark plug,Spark plug set for Hyundai Creta,hyundai-creta,850.00,False,type_model,spark plug|hyundai-creta|set
 EG-91660413,BOSCH,filter,Air filter for Skoda Superb,skoda-superb,734.50,False,type_model,air filter|skoda-superb|single
-EG-916FD38A,HI Q,brake pad,Brake pad front set for Kia Picanto,kia-picanto,310.00,False,type_model,brake pad|kia-picanto|front|set
 EG-91A53796,DONGIL,belt,Belt 6PK1635 for Speranza A516,speranza-a516-2008-2012,451.00,False,part_number,6PK1635|single
 EG-92184248,OEM,filter,Cabin filter for MG Zs,mg-zs,215.00,True,type_model,cabin filter|mg-zs|single
 EG-922A3D71,HI-Q,brake pad,Brake pad front for MG MG6,mg-mg6,980.00,False,type_model,brake pad|mg-mg6|front|single
@@ -471,13 +452,13 @@ EG-93500D7B,Generic,belt,Belt 6PK2100,,870.50,False,part_number,6PK2100|single
 EG-937AECC7,BOSCH,filter,Oil filter for Renault Kadjar,renault-kadjar,370.50,True,type_model,oil filter|renault-kadjar|single
 EG-93BFB678,Multibrand,filter,Air filter 1780122020 for Toyota Corolla,toyota-corolla-2001-2001,199.50,False,part_number,1780122020|single
 EG-9404F947,NGK,spark plug,Spark plug for Fiat Punto,fiat-punto,1131.00,False,type_model,spark plug|fiat-punto|single
+EG-94614413,ROADHOUSE,brake pad,Brake pad rear for Peugeot 308,peugeot-308,1550.00,False,type_model,brake pad|peugeot-308|rear|single
 EG-946C999C,KOREAN BRANDS,filter,Fuel filter 311123X000 for Hyundai Elantra,hyundai-elantra,473.00,False,part_number,311123X000|single
 EG-94C7CE99,ANSCO,filter,Air filter for Geely Emgrand,geely-emgrand,170.00,True,type_model,air filter|geely-emgrand|single
 EG-94F3D95C,BLUE PRINT,filter,Fuel filter for Peugeot 301,peugeot-301,335.50,False,type_model,fuel filter|peugeot-301|single
 EG-953B3D94,EUROREPAR,filter,Air filter for Peugeot 508,peugeot-508,561.00,False,type_model,air filter|peugeot-508|single
 EG-9546B138,BOSCH,filter,Cabin filter for Peugeot 5008,peugeot-5008,572.00,False,type_model,cabin filter|peugeot-5008|single
 EG-96129225,Generic,belt,Belt 6PK1840 for Geely Emgrand,geely-emgrand-2014-2019,315.00,False,part_number,6PK1840|single
-EG-96397DFE,D NAO,brake pad,Brake pad front set for Kia Cerato,kia-cerato,1400.00,False,type_model,brake pad|kia-cerato|front|set
 EG-9649899B,AZAB,filter,Air filter for Hyundai Matrix,hyundai-matrix,225.00,True,type_model,air filter|hyundai-matrix|single
 EG-96B69EE4,After-Market,filter,Oil filter for Honda Civic,honda-civic,165.00,False,type_model,oil filter|honda-civic|single
 EG-971CC2D9,HI-Q,brake pad,Brake pad rear for Renault Logan,renault-logan,1050.00,False,type_model,brake pad|renault-logan|rear|single
@@ -491,13 +472,12 @@ EG-98ECEFA0,BOSCH,filter,Fuel filter for Skoda Octavia,skoda-octavia,757.50,True
 EG-9945AFB2,BOSCH,filter,Air filter for Opel Insignia,opel-insignia,650.00,True,type_model,air filter|opel-insignia|single
 EG-9AB3160D,WIX,filter,Cabin filter for Peugeot 3008,peugeot-3008,572.00,True,type_model,cabin filter|peugeot-3008|single
 EG-9C0B6538,DONGIL,belt,Belt 6PK1230 for Toyota Corolla,toyota-corolla-2013-2019,470.50,False,part_number,6PK1230|single
-EG-9D17C5AD,HI-Q,brake pad,Brake pad front set for Mitsubishi Lancer,mitsubishi-lancer,627.50,True,type_model,brake pad|mitsubishi-lancer|front|set
 EG-9DE1C7E1,After-Market,filter,Cabin filter for Hyundai Accent,hyundai-accent,344.50,True,type_model,cabin filter|hyundai-accent|single
-EG-9E142765,HI-Q,brake pad,Brake pad front set for Chevrolet Lanos,chevrolet-lanos,357.50,False,type_model,brake pad|chevrolet-lanos|front|set
+EG-9E178304,OEM,brake pad,Brake pad front for MG RX5,mg-rx5,1947.50,False,type_model,brake pad|mg-rx5|front|single
 EG-9E7667EA,After-Market,filter,Cabin filter for Speranza Tiggo,speranza-tiggo,377.00,False,type_model,cabin filter|speranza-tiggo|single
-EG-9E7D2A1F,AUTO STOP,brake pad,Brake pad rear for Chevrolet Lanos,chevrolet-lanos,895.00,False,type_model,brake pad|chevrolet-lanos|rear|single
+EG-9E7D2A1F,PHC VALEO,brake pad,Brake pad rear for Chevrolet Lanos,chevrolet-lanos,900.00,False,type_model,brake pad|chevrolet-lanos|rear|single
 EG-9E8CF92E,BOSCH,filter,Cabin filter for Hyundai IX35,hyundai-ix35,372.50,False,type_model,cabin filter|hyundai-ix35|single
-EG-9F50911F,MOBIS,brake pad,Brake pad rear for Hyundai Tucson,hyundai-tucson-2014-2021,1107.50,False,type_model,brake pad|hyundai-tucson|rear|single
+EG-9F50911F,MOBIS,brake pad,Brake pad rear for Hyundai Tucson,hyundai-tucson-2014-2021,1270.00,False,type_model,brake pad|hyundai-tucson|rear|single
 EG-9F5AA245,DAYCO,belt,Belt 6PK1705 for Opel Insignia,opel-insignia-2013-2017,780.00,False,part_number,6PK1705|single
 EG-9F99E459,ماركة بديلة,filter,Air filter for Speranza Tiggo,speranza-tiggo,292.50,False,type_model,air filter|speranza-tiggo|single
 EG-A12A093B,WUNDER,filter,Air filter for Renault Kadjar,renault-kadjar,305.00,False,type_model,air filter|renault-kadjar|single
@@ -508,7 +488,6 @@ EG-A23A58AD,Generic,belt,Belt for Daewoo Nubira,daewoo-nubira,1200.00,False,type
 EG-A2745C2B,DAYCO,belt,Belt 6PK906 for Peugeot 508,peugeot-508-2011-2018,550.00,False,part_number,6PK906|single
 EG-A281D04A,DONGIL,belt,Belt 5PK870 for Mitsubishi Lancer,mitsubishi-lancer,350.00,False,part_number,5PK870|single
 EG-A28A5859,HSC,belt,Belt for Hyundai Accent,hyundai-accent,372.50,True,type_model,belt|hyundai-accent|single
-EG-A29CE557,AYD,brake pad,Brake pad rear set for Chevrolet Cruze,chevrolet-cruze,975.00,False,type_model,brake pad|chevrolet-cruze|rear|set
 EG-A2E81103,ATE,brake pad,Brake pad front for MG MG5,mg-mg5,875.00,False,type_model,brake pad|mg-mg5|front|single
 EG-A311D520,R BRAKE,brake pad,Brake pad rear for Volkswagen Jetta,volkswagen-jetta,1260.00,False,type_model,brake pad|volkswagen-jetta|rear|single
 EG-A31D8F09,EL CATALOG,filter,Cabin filter for Chevrolet Spark,chevrolet-spark,350.00,False,type_model,cabin filter|chevrolet-spark|single
@@ -521,17 +500,14 @@ EG-A5341AD9,MOBIS,filter,Fuel filter for Kia Cerato,kia-cerato,450.00,False,type
 EG-A58A996D,A-PART,filter,Fuel filter for Hyundai Verna,hyundai-verna,240.00,True,type_model,fuel filter|hyundai-verna|single
 EG-A61A1B87,ASG,belt,Belt for Nissan Qashqai,nissan-qashqai-2014-2021,790.00,False,type_model,belt|nissan-qashqai|single
 EG-A62FC0D4,DAEWHA,filter,Oil filter for Hyundai Creta,hyundai-creta,201.50,False,type_model,oil filter|hyundai-creta|single
-EG-A64B7F13,SUPER-MAX,brake pad,Brake pad rear for Toyota Corolla,toyota-corolla,700.00,True,type_model,brake pad|toyota-corolla|rear|single
+EG-A64B7F13,SUPER-MAX,brake pad,Brake pad rear for Toyota Corolla,toyota-corolla,672.50,True,type_model,brake pad|toyota-corolla|rear|single
 EG-A6DFD5ED,ETE,filter,Fuel filter for Kia Picanto,kia-picanto,510.00,False,type_model,fuel filter|kia-picanto|single
-EG-A6F86D29,AYD,brake pad,Brake pad front set for Toyota Yaris,toyota-yaris,300.00,True,type_model,brake pad|toyota-yaris|front|set
-EG-A81960C2,AYD,brake pad,Brake pad front set for Nissan Qashqai,nissan-qashqai,900.00,False,type_model,brake pad|nissan-qashqai|front|set
 EG-A8922FF6,NGK,spark plug,Spark plug set for Chevrolet Captiva,chevrolet-captiva,500.00,False,type_model,spark plug|chevrolet-captiva|set
 EG-A8AE0130,MOBIS,spark plug,Spark plug set for Kia Rio,kia-rio,800.00,False,type_model,spark plug|kia-rio|set
-EG-A8B4FAA9,Generic,brake pad,Brake pad front set for Skoda Octavia,skoda-octavia,1200.00,False,type_model,brake pad|skoda-octavia|front|set
 EG-A8C20F62,BOSCH,filter,Oil filter for Renault Sandero,renault-sandero,330.00,False,type_model,oil filter|renault-sandero|single
 EG-A94ADEE0,BLUE PRINT,filter,Fuel filter for Peugeot 308,peugeot-308,370.50,False,type_model,fuel filter|peugeot-308|single
 EG-A9793A5B,MK-II,brake pad,Brake pad rear for Toyota Yaris,toyota-yaris,835.00,False,type_model,brake pad|toyota-yaris|rear|single
-EG-AA653ABE,Generic,brake pad,Brake pad front set for Renault Fluence,renault-fluence,1500.00,False,type_model,brake pad|renault-fluence|front|set
+EG-A9BEB05F,OEM,brake pad,Brake pad rear for MG RX5,mg-rx5,2500.00,False,type_model,brake pad|mg-rx5|rear|single
 EG-AA67D21D,ASG,filter,Oil filter for MG Zs,mg-zs,394.00,False,type_model,oil filter|mg-zs|single
 EG-AAC2F6F6,DAEWHA,filter,Oil filter for Kia Sportage,kia-sportage,300.00,False,type_model,oil filter|kia-sportage|single
 EG-AAC45B24,GM,filter,Oil filter for Daewoo Matiz,daewoo-matiz,200.00,False,type_model,oil filter|daewoo-matiz|single
@@ -542,8 +518,8 @@ EG-AB995863,GATES,belt,Belt 6PK2138 for Kia Cerato,kia-cerato-2009-2013,665.00,F
 EG-ABEF513B,HSC,belt,Belt for Chevrolet Aveo,chevrolet-aveo,650.00,False,type_model,belt|chevrolet-aveo|single
 EG-AC1D97E3,DONGIL,belt,Belt 4PK643 for Opel Astra,opel-astra,250.00,False,part_number,4PK643|single
 EG-AC657B1C,WIX,filter,Cabin filter for Volkswagen Polo,volkswagen-polo,275.00,False,type_model,cabin filter|volkswagen-polo|single
-EG-AC6942A0,OEM,filter,Oil filter for MG MG6,mg-mg6,377.00,True,type_model,oil filter|mg-mg6|single
-EG-AC71CB31,N Auto Express,filter,Oil filter for Chery Tiggo,chery-tiggo,150.00,True,type_model,oil filter|chery-tiggo|single
+EG-AC6942A0,OEM,filter,Oil filter for MG MG6,mg-mg6,377.00,False,type_model,oil filter|mg-mg6|single
+EG-AC71CB31,N Auto Express,filter,Oil filter for Chery Tiggo,chery-tiggo,150.00,False,type_model,oil filter|chery-tiggo|single
 EG-ACD9F60D,DENSO,wiper,Wiper for Kia Cerato,kia-cerato-2018-2022,225.00,False,type_model,wiper|kia-cerato|single
 EG-AE34F5D6,DAYCO,belt,Belt for Toyota Corolla,toyota-corolla,420.00,False,type_model,belt|toyota-corolla|single
 EG-AE40643D,BOSCH,filter,Fuel filter for Speranza M11,speranza-m11,450.00,False,type_model,fuel filter|speranza-m11|single
@@ -557,7 +533,6 @@ EG-B0A231C7,BOSCH,wiper,Wiper set for Renault Captur,renault-captur-2018-2022,74
 EG-B0A6B2D0,FERBE,brake pad,Brake pad front for Renault Duster,renault-duster,925.00,False,type_model,brake pad|renault-duster|front|single
 EG-B11FC127,DAEWHA,filter,Air filter for Chevrolet Aveo,chevrolet-aveo,220.00,True,type_model,air filter|chevrolet-aveo|single
 EG-B129E6E7,NGK,spark plug,Spark plug set for Renault Logan,renault-logan,650.00,False,type_model,spark plug|renault-logan|set
-EG-B15B73A9,N Auto Express,brake pad,Brake pad SP1240 set for Kia Cerato,kia-cerato-2010-2010,1083.00,False,part_number,SP1240|set
 EG-B29FCEBE,MANDO,filter,Air filter for BYD F3,byd-f3,200.00,True,type_model,air filter|byd-f3|single
 EG-B2F45FA7,WIX,filter,Oil filter for Skoda Kodiaq,skoda-kodiaq,400.00,False,type_model,oil filter|skoda-kodiaq|single
 EG-B301D6CE,GSP,spark plug,Spark plug for Hyundai Verna,hyundai-verna,400.00,False,type_model,spark plug|hyundai-verna|single
@@ -574,12 +549,11 @@ EG-B5A25DA8,After-Market,filter,Fuel filter for Fiat Tipo,fiat-tipo,487.50,False
 EG-B5BF3D0A,BLUE PRINT,filter,Oil filter for Skoda Fabia,skoda-fabia,409.50,False,type_model,oil filter|skoda-fabia|single
 EG-B6060C8D,MOBIS,belt,Belt 6PK2140 for Hyundai Accent,hyundai-accent,700.00,True,part_number,6PK2140|single
 EG-B65343A3,BOSCH,spark plug,Spark plug set for Nissan Qashqai,nissan-qashqai,2195.00,False,type_model,spark plug|nissan-qashqai|set
-EG-B68F2F86,DAEWHA,filter,Oil filter for Kia Carens,kia-carens,205.00,True,type_model,oil filter|kia-carens|single
+EG-B68F2F86,DAEWHA,filter,Oil filter for Kia Carens,kia-carens,205.00,False,type_model,oil filter|kia-carens|single
 EG-B6B8F626,PHC VALEO,brake pad,Brake pad rear for Kia Cerato,kia-cerato,775.00,True,type_model,brake pad|kia-cerato|rear|single
 EG-B6C1426E,BOSCH,belt,Belt for Seat Leon,seat-leon,1250.00,False,type_model,belt|seat-leon|single
 EG-B7CD4CBB,ASG,filter,Air filter for Peugeot 308,peugeot-308,312.50,False,type_model,air filter|peugeot-308|single
 EG-B7F4FDC6,OEM,spark plug,Spark plug for MG Hs,mg-hs,1600.00,False,type_model,spark plug|mg-hs|single
-EG-B8398D0D,D NAO,brake pad,Brake pad rear set for Hyundai Elantra,hyundai-elantra,1675.00,False,type_model,brake pad|hyundai-elantra|rear|set
 EG-B83FCE2B,MANDO,brake pad,Brake pad front for Kia Soul,kia-soul,850.00,False,type_model,brake pad|kia-soul|front|single
 EG-B893824C,HI-Q,brake pad,Brake pad front for Kia Carens,kia-carens,950.00,False,type_model,brake pad|kia-carens|front|single
 EG-B8A23CF3,DAEWHA,filter,Fuel filter for Kia Rio,kia-rio,519.00,False,type_model,fuel filter|kia-rio|single
@@ -592,36 +566,30 @@ EG-BA69FC08,BOSCH,spark plug,Spark plug set for Peugeot 3008,peugeot-3008,2897.5
 EG-BB24767C,BOSCH,belt,Belt 6PK1740 for Volkswagen Jetta,volkswagen-jetta,395.00,False,part_number,6PK1740|single
 EG-BB4B725A,GSP,filter,Fuel filter for Chevrolet Cruze,chevrolet-cruze,165.00,False,type_model,fuel filter|chevrolet-cruze|single
 EG-BB7969FE,NGK,spark plug,Spark plug set for Chevrolet Optra,chevrolet-optra,525.00,False,type_model,spark plug|chevrolet-optra|set
-EG-BBB14B14,AYD,brake pad,Brake pad front set for MG Zs,mg-zs,750.00,False,type_model,brake pad|mg-zs|front|set
-EG-BBD4AF0A,FERBE,brake pad,Brake pad rear for Mazda 3,mazda-3,800.00,False,type_model,brake pad|mazda-3|rear|single
+EG-BBD4AF0A,FERBE,brake pad,Brake pad rear for Mazda 3,mazda-3,1050.00,False,type_model,brake pad|mazda-3|rear|single
 EG-BBE9BCB9,BOSCH,spark plug,Spark plug set for Opel Insignia,opel-insignia,2600.00,False,type_model,spark plug|opel-insignia|set
-EG-BC310431,OEM,filter,Cabin filter for MG MG6,mg-mg6,240.00,True,type_model,cabin filter|mg-mg6|single
+EG-BC310431,OEM,filter,Cabin filter for MG MG6,mg-mg6,240.00,False,type_model,cabin filter|mg-mg6|single
 EG-BC56A8FE,DAYCO,belt,Belt for Renault Logan,renault-logan,747.50,False,type_model,belt|renault-logan|single
-EG-BCEE49E5,PHC VALEO,brake pad,Brake pad front for Hyundai Verna,hyundai-verna,550.00,False,type_model,brake pad|hyundai-verna|front|single
+EG-BCEE49E5,PHC VALEO,brake pad,Brake pad front for Hyundai Verna,hyundai-verna,550.00,True,type_model,brake pad|hyundai-verna|front|single
 EG-BD7661FA,BOSCH,filter,Fuel filter for Volkswagen Jetta,volkswagen-jetta,970.00,False,type_model,fuel filter|volkswagen-jetta|single
 EG-BDDCED6E,After-Market,filter,Cabin filter for Speranza A620,speranza-a620,219.00,False,type_model,cabin filter|speranza-a620|single
-EG-BE1F4D22,Generic,brake pad,Brake pad rear set for Chery Tiggo,chery-tiggo-2019-2025,605.00,False,type_model,brake pad|chery-tiggo|rear|set
 EG-BE479750,HI-Q,brake pad,Brake pad rear for Nissan Sunny,nissan-sunny,900.00,True,type_model,brake pad|nissan-sunny|rear|single
 EG-BED43763,BOSCH,filter,Oil filter for Chevrolet Cruze,chevrolet-cruze,224.00,True,type_model,oil filter|chevrolet-cruze|single
 EG-BF2B615C,WIX,filter,Cabin filter for Renault Duster,renault-duster,295.00,True,type_model,cabin filter|renault-duster|single
 EG-BF6E06D2,DAYCO,belt,Belt for Skoda Octavia,skoda-octavia,960.00,True,type_model,belt|skoda-octavia|single
 EG-BF77C7CE,DAEWHA,filter,Oil filter for Nissan Juke,nissan-juke,200.00,False,type_model,oil filter|nissan-juke|single
 EG-BF794122,Generic,wiper,Wiper set for Peugeot 307,peugeot-307,405.00,False,type_model,wiper|peugeot-307|set
-EG-C00DA512,AYD,brake pad,Brake pad front set for Hyundai Verna,hyundai-verna,520.00,False,type_model,brake pad|hyundai-verna|front|set
 EG-C02D096F,N Auto Express,filter,Air filter 96553450 for Chevrolet Optra,chevrolet-optra,171.00,False,part_number,96553450|single
-EG-C16F5FE7,RENAULT GROUP,filter,Oil filter for Renault Fluence,renault-fluence,250.00,True,type_model,oil filter|renault-fluence|single
+EG-C16F5FE7,RENAULT GROUP,filter,Oil filter for Renault Fluence,renault-fluence,250.00,False,type_model,oil filter|renault-fluence|single
 EG-C1C810C6,Bosch,filter,Air filter for Fiat Tipo,fiat-tipo,228.00,False,type_model,air filter|fiat-tipo|single
 EG-C2503E13,MANDO,filter,Cabin filter for Hyundai Creta,hyundai-creta,400.00,True,type_model,cabin filter|hyundai-creta|single
 EG-C253D872,N Auto Express,belt,Belt 3PK510,,444.50,False,part_number,3PK510|single
 EG-C29BA3BE,DAYCO,belt,Belt 4PK1025 for Speranza A113,speranza-a113-2008-2015,189.00,False,part_number,4PK1025|single
 EG-C2E0F44F,DOOWON,filter,Cabin filter for Kia Cerato,kia-cerato,300.00,True,type_model,cabin filter|kia-cerato|single
-EG-C35523C3,PHC VALEO,brake pad,Brake pad front set for Kia Sportage,kia-sportage,1050.00,False,type_model,brake pad|kia-sportage|front|set
 EG-C383A19D,CONTINENTAL,belt,Belt 4PK850 for Hyundai Verna,hyundai-verna,255.00,False,part_number,4PK850|single
-EG-C39C5AC1,ATE,brake pad,Brake pad rear set for Skoda Octavia,skoda-octavia,1462.50,False,type_model,brake pad|skoda-octavia|rear|set
 EG-C3FDB649,AUTO STOP,brake pad,Brake pad front for Chevrolet Spark,chevrolet-spark,550.00,False,type_model,brake pad|chevrolet-spark|front|single
 EG-C401D7C7,BOSCH,spark plug,Spark plug set for Renault Captur,renault-captur,995.00,False,type_model,spark plug|renault-captur|set
-EG-C408BF37,BESER,brake pad,Brake pad front for Nissan Sunny,nissan-sunny,750.00,True,type_model,brake pad|nissan-sunny|front|single
-EG-C42E679C,BESER,brake pad,Brake pad front set for Nissan Sunny,nissan-sunny,750.00,True,type_model,brake pad|nissan-sunny|front|set
+EG-C408BF37,BESER,brake pad,Brake pad front for Nissan Sunny,nissan-sunny,775.00,True,type_model,brake pad|nissan-sunny|front|single
 EG-C4E28794,After-Market,filter,Cabin filter for Mazda 3,mazda-3,663.00,True,type_model,cabin filter|mazda-3|single
 EG-C53A35A6,WIX,filter,Air filter for Skoda Octavia,skoda-octavia,450.00,True,type_model,air filter|skoda-octavia|single
 EG-C546AA3C,MOBIS,spark plug,Spark plug set for Kia Sportage,kia-sportage,1450.00,False,type_model,spark plug|kia-sportage|set
@@ -630,7 +598,7 @@ EG-C58A8F6A,PHC VALEO,brake pad,Brake pad front for Hyundai I30,hyundai-i30,799.
 EG-C58DD6B4,HANON,filter,Cabin filter for Kia Rio,kia-rio,225.00,True,type_model,cabin filter|kia-rio|single
 EG-C5B65810,DAYCO,belt,Belt 5PK1300,,372.50,False,part_number,5PK1300|single
 EG-C5E240EF,After-Market,filter,Oil filter for Suzuki Swift,suzuki-swift,201.50,False,type_model,oil filter|suzuki-swift|single
-EG-C643B5AE,Generic,filter,Cabin filter for Chery Tiggo,chery-tiggo,200.00,True,type_model,cabin filter|chery-tiggo|single
+EG-C643B5AE,Generic,filter,Cabin filter for Chery Tiggo,chery-tiggo,200.00,False,type_model,cabin filter|chery-tiggo|single
 EG-C68CD16C,BOSCH,belt,Belt 4PK856 for Kia Sportage,kia-sportage-2005-2010,265.00,False,part_number,4PK856|single
 EG-C74CDF10,After-Market,filter,Oil filter for Fiat 128,fiat-128,123.50,False,type_model,oil filter|fiat-128|single
 EG-C910F272,Generic,belt,Belt 5PK1030 for Opel Astra,opel-astra,300.00,False,part_number,5PK1030|single
@@ -645,6 +613,7 @@ EG-CC64686B,ماركة بديلة,belt,Belt for Speranza Tiggo,speranza-tiggo-20
 EG-CC69504E,MOBIS,brake pad,Brake pad rear for Kia Soul,kia-soul,800.00,False,type_model,brake pad|kia-soul|rear|single
 EG-CCDE345F,OEM,filter,Air filter for MG MG5,mg-mg5,250.00,True,type_model,air filter|mg-mg5|single
 EG-CD6D7237,AC-DELCO,filter,Cabin filter for Chevrolet Cruze,chevrolet-cruze,255.00,True,type_model,cabin filter|chevrolet-cruze|single
+EG-CD979448,Generic,brake pad,Brake pad rear for Speranza M11,speranza-m11-2008-2015,625.50,False,type_model,brake pad|speranza-m11|rear|single
 EG-CDDB9A1F,Generic,bulb,Wiper for Hyundai Verna,hyundai-verna,221.00,False,type_model,wiper|hyundai-verna|single
 EG-CE0CE6C3,BOSCH,wiper,Wiper for Seat Toledo,seat-toledo-2012-2019,360.00,False,type_model,wiper|seat-toledo|single
 EG-CE0E2950,BOSCH,spark plug,Spark plug for Kia Cerato,kia-cerato,194.00,False,type_model,spark plug|kia-cerato|single
@@ -655,16 +624,18 @@ EG-CF64C454,AUTO STOP,brake pad,Brake pad front for Daewoo Matiz,daewoo-matiz,55
 EG-CFA3A6FB,GATES,belt,Belt 6PK1900,,346.00,False,part_number,6PK1900|single
 EG-CFCD22AF,ASG,belt,Belt for Renault Megane,renault-megane-2009-2017,663.00,True,type_model,belt|renault-megane|single
 EG-CFE2018E,AZAB,filter,Air filter for Toyota Corolla,toyota-corolla,200.00,True,type_model,air filter|toyota-corolla|single
-EG-D007720E,HANJIN,brake pad,Brake pad front for Kia Rio,kia-rio,805.00,False,type_model,brake pad|kia-rio|front|single
+EG-D007720E,HANJIN,brake pad,Brake pad front for Kia Rio,kia-rio,795.00,False,type_model,brake pad|kia-rio|front|single
 EG-D0EAC0C7,PMC,filter,Fuel filter 3191125000 for Hyundai Verna,hyundai-verna,199.50,False,part_number,3191125000|single
 EG-D0F0679B,MOBIS,spark plug,Spark plug set for Hyundai Tucson,hyundai-tucson-2014-2021,1310.00,False,type_model,spark plug|hyundai-tucson|set
 EG-D0F16567,PHC VALEO,brake pad,Brake pad front for Chevrolet Optra,chevrolet-optra,695.00,True,type_model,brake pad|chevrolet-optra|front|single
 EG-D175CB5F,MOBIS,belt,Belt for Kia Picanto,kia-picanto-2004-2011,462.50,False,type_model,belt|kia-picanto|single
+EG-D1A52E13,KOB,brake pad,Brake pad front for Chery Tiggo,chery-tiggo,812.50,False,type_model,brake pad|chery-tiggo|front|single
 EG-D1C7FDBF,WUNDER,filter,Air filter for Renault Megane,renault-megane,282.50,True,type_model,air filter|renault-megane|single
+EG-D1CA38F7,Generic,brake pad,Brake pad front for Speranza M11,speranza-m11-2008-2015,597.50,False,type_model,brake pad|speranza-m11|front|single
+EG-D1D0D435,KOB,brake pad,Brake pad front for Speranza A516,speranza-a516-2008-2012,500.00,False,type_model,brake pad|speranza-a516|front|single
 EG-D2376CD6,DONGIL,belt,Belt 5PK1190 for Mitsubishi Lancer,mitsubishi-lancer,415.00,False,part_number,5PK1190|single
 EG-D281036E,DONGIL,belt,Belt 4PK610 for Chevrolet Optra,chevrolet-optra,220.00,False,part_number,4PK610|single
 EG-D28F61FF,3MO,filter,Oil filter for Daewoo Nubira,daewoo-nubira,162.50,False,type_model,oil filter|daewoo-nubira|single
-EG-D2919B07,AYD,brake pad,Brake pad rear set for Chevrolet Optra,chevrolet-optra,585.00,False,type_model,brake pad|chevrolet-optra|rear|set
 EG-D293C114,NGK,spark plug,Spark plug set for Hyundai Getz,hyundai-getz,500.00,False,type_model,spark plug|hyundai-getz|set
 EG-D2AC475B,DAYCO,belt,Belt 6PK1700 for Volkswagen Golf,volkswagen-golf,700.00,False,part_number,6PK1700|single
 EG-D2F97CA2,GSP,filter,Fuel filter for Hyundai Getz,hyundai-getz,335.00,False,type_model,fuel filter|hyundai-getz|single
@@ -672,6 +643,7 @@ EG-D337392B,PHC VALEO,brake pad,Brake pad rear for Hyundai I30,hyundai-i30,655.0
 EG-D33ED2CC,DOOWON,filter,Cabin filter for Kia Sportage,kia-sportage,350.00,True,type_model,cabin filter|kia-sportage|single
 EG-D3991E12,MOBIS,filter,Fuel filter for Hyundai Tucson,hyundai-tucson,1225.00,False,type_model,fuel filter|hyundai-tucson|single
 EG-D42D6E8B,OEM,brake pad,Brake pad rear for MG Zs,mg-zs,1900.00,False,type_model,brake pad|mg-zs|rear|single
+EG-D44CCCC0,BESER,brake pad,Brake pad rear for Hyundai IX35,hyundai-ix35,750.00,False,type_model,brake pad|hyundai-ix35|rear|single
 EG-D470A7A8,After-Market,filter,Oil filter for BYD L3,byd-l3,266.00,False,type_model,oil filter|byd-l3|single
 EG-D5879BC3,DONGIL,belt,Belt 4PK915 for Mitsubishi Lancer,mitsubishi-lancer,300.00,False,part_number,4PK915|single
 EG-D5B75892,MOBIS,belt,Belt for Hyundai I30,hyundai-i30,775.00,False,type_model,belt|hyundai-i30|single
@@ -680,6 +652,7 @@ EG-D6061FAA,DONGIL,belt,Belt 5PK1240 for Mitsubishi Lancer,mitsubishi-lancer,400
 EG-D684A3F5,PHC VALEO,brake pad,Brake pad front for Hyundai I10,hyundai-i10,750.00,False,type_model,brake pad|hyundai-i10|front|single
 EG-D69C5554,ماركة بديلة,belt,Belt for Speranza A516,speranza-a516-2008-2012,575.00,False,type_model,belt|speranza-a516|single
 EG-D6BFF721,BANDO,belt,Belt 6PK1180 for Mitsubishi Lancer,mitsubishi-lancer,380.00,False,part_number,6PK1180|single
+EG-D72EE823,ROADHOUSE,brake pad,Brake pad rear for Peugeot 5008,peugeot-5008,1525.00,False,type_model,brake pad|peugeot-5008|rear|single
 EG-D73C4BBD,After-Market,filter,Air filter for Hyundai Getz,hyundai-getz,230.00,False,type_model,air filter|hyundai-getz|single
 EG-D75CD419,WUNDER,filter,Oil filter for Hyundai I10,hyundai-i10,250.00,False,type_model,oil filter|hyundai-i10|single
 EG-D779A48B,OEM,filter,Oil filter for Hyundai Matrix,hyundai-matrix,165.00,False,type_model,oil filter|hyundai-matrix|single
@@ -691,50 +664,50 @@ EG-D86523DB,ROADHOUSE,brake pad,Brake pad front for Renault Captur,renault-captu
 EG-D8A99FEE,After-Market,filter,Cabin filter for Hyundai I10,hyundai-i10,880.00,False,type_model,cabin filter|hyundai-i10|single
 EG-D8B15CFA,NGK,spark plug,Spark plug set for Renault Clio,renault-clio-2005-2008,625.00,False,type_model,spark plug|renault-clio|set
 EG-D9B0C28A,NISSAN GROUP,oil,Oil for Nissan Sunny,nissan-sunny,380.00,False,type_model,oil|nissan-sunny|single
-EG-DA3036EF,D-NAO,brake pad,Brake pad front for Chery Envy,chery-envy,747.50,False,type_model,brake pad|chery-envy|front|single
+EG-DA3036EF,D-NAO,brake pad,Brake pad front for Chery Envy,chery-envy,745.00,False,type_model,brake pad|chery-envy|front|single
 EG-DA55E688,N Auto Express,filter,Oil filter 90915YZZE1,,148.00,False,part_number,90915YZZE1|single
 EG-DA63D62D,MOBIS,spark plug,Spark plug set for Hyundai IX35,hyundai-ix35,1600.00,False,type_model,spark plug|hyundai-ix35|set
 EG-DAC7523B,MKF,spark plug,Spark plug set for Speranza A113,speranza-a113,690.00,False,type_model,spark plug|speranza-a113|set
-EG-DAE0066C,Generic,brake pad,Brake pad rear set for Renault Kadjar,renault-kadjar,1350.00,False,type_model,brake pad|renault-kadjar|rear|set
-EG-DAFD6F60,R BRAKE,brake pad,Brake pad front for Chevrolet Cruze,chevrolet-cruze-2014-2017,899.00,True,type_model,brake pad|chevrolet-cruze|front|single
+EG-DAFD6F60,R BRAKE,brake pad,Brake pad front for Chevrolet Cruze,chevrolet-cruze,899.00,True,type_model,brake pad|chevrolet-cruze|front|single
 EG-DB04A26C,SKF,belt,Belt set for Volkswagen Passat,volkswagen-passat,5960.00,False,type_model,belt|volkswagen-passat|set
 EG-DB43A565,EUROREPAR,filter,Oil filter for Peugeot 308,peugeot-308,190.00,False,type_model,oil filter|peugeot-308|single
 EG-DB4504B5,After-Market,filter,Cabin filter for Honda Civic,honda-civic,230.00,False,type_model,cabin filter|honda-civic|single
 EG-DB4E202C,CHERY,belt,Belt 6PK2360 for Chery Arrizo,chery-arrizo,790.00,False,part_number,6PK2360|single
 EG-DB747646,PHC VALEO,brake pad,Brake pad rear for Chevrolet Cruze,chevrolet-cruze,1025.00,False,type_model,brake pad|chevrolet-cruze|rear|single
 EG-DB87BC03,DONGIL,belt,Belt 3PK855 for Nissan Sunny,nissan-sunny,253.50,False,part_number,3PK855|single
-EG-DBCFD5C8,D-NAO,brake pad,Brake pad front for Hyundai Tucson,hyundai-tucson-2014-2021,890.00,False,type_model,brake pad|hyundai-tucson|front|single
+EG-DBCFD5C8,D-NAO,brake pad,Brake pad front for Hyundai Tucson,hyundai-tucson,890.00,True,type_model,brake pad|hyundai-tucson|front|single
 EG-DC251673,ROADHOUSE,brake pad,Brake pad rear for Renault Megane,renault-megane,900.00,False,type_model,brake pad|renault-megane|rear|single
 EG-DC7463EF,NGK,spark plug,Spark plug for Chevrolet Lanos,chevrolet-lanos,546.00,False,type_model,spark plug|chevrolet-lanos|single
 EG-DC9C1FF3,Generic,belt,Belt 5PK1175,,375.00,False,part_number,5PK1175|single
 EG-DCF13959,MOBIS,belt,Belt for Hyundai Elantra,hyundai-elantra,895.00,True,type_model,belt|hyundai-elantra|single
 EG-DD1C3DF2,ماركة بديلة,belt,Belt for Fiat Tipo,fiat-tipo,312.50,False,type_model,belt|fiat-tipo|single
-EG-DE4C4AF9,ماركة بديلة,brake pad,Brake pad rear set for Speranza Tiggo,speranza-tiggo-2009-2012,495.00,False,type_model,brake pad|speranza-tiggo|rear|set
+EG-DE75C0FF,N Auto Express,brake pad,Brake pad SP2596 for MG Zs,mg-zs,821.00,False,part_number,SP2596|single
 EG-DEB69459,RENAULT GROUP,filter,Fuel filter for Renault Clio,renault-clio-2005-2008,450.00,False,type_model,fuel filter|renault-clio|single
 EG-DECF30A9,HSC,belt,Belt for Kia Carens,kia-carens-2006-2013,790.00,False,type_model,belt|kia-carens|single
 EG-DEF88CAE,N Auto Express,bulb,Bulb for Kia Sportage,kia-sportage,1066.00,False,type_model,bulb|kia-sportage|single
 EG-DEFB137E,GSP,filter,Fuel filter for Daewoo Nubira,daewoo-nubira,225.00,False,type_model,fuel filter|daewoo-nubira|single
 EG-DF294A42,N Auto Express,filter,Air filter S121109111,,135.50,False,part_number,S121109111|single
 EG-DF30F5F7,BOSCH,filter,Oil filter for Skoda Superb,skoda-superb,409.50,False,type_model,oil filter|skoda-superb|single
+EG-DF5BC209,HI-Q,brake pad,Brake pad SP1907 for Hyundai Elantra,hyundai-elantra,927.00,False,part_number,SP1907|single
 EG-DFA48DD2,WIX,filter,Cabin filter for Renault Captur,renault-captur,250.00,True,type_model,cabin filter|renault-captur|single
 EG-DFD7B1DE,OEM,spark plug,Spark plug for MG Zs,mg-zs,850.00,False,type_model,spark plug|mg-zs|single
 EG-E00FBE68,BOSCH,wiper,Wiper for Opel Astra,opel-astra,320.00,False,type_model,wiper|opel-astra|single
 EG-E040CC11,DAEWHA,filter,Oil filter for Nissan Sentra,nissan-sentra,200.00,False,type_model,oil filter|nissan-sentra|single
-EG-E0BD18C8,AZAB,filter,Air filter for Chery Tiggo,chery-tiggo,197.00,True,type_model,air filter|chery-tiggo|single
+EG-E0BD18C8,AZAB,filter,Air filter for Chery Tiggo,chery-tiggo,197.00,False,type_model,air filter|chery-tiggo|single
 EG-E1EF3DFD,DAYCO,belt,Belt for Renault Sandero,renault-sandero,780.00,False,type_model,belt|renault-sandero|single
-EG-E2751D12,BEST,brake pad,Brake pad front for Geely Emgrand,geely-emgrand,900.00,False,type_model,brake pad|geely-emgrand|front|single
+EG-E2751D12,BEST,brake pad,Brake pad front for Geely Emgrand,geely-emgrand,750.00,True,type_model,brake pad|geely-emgrand|front|single
 EG-E2D4D868,KOREAN BRANDS,filter,Air filter 281133X000,,239.50,False,part_number,281133X000|single
 EG-E2D6C829,WIX,filter,Air filter for Volkswagen Jetta,volkswagen-jetta,500.00,False,type_model,air filter|volkswagen-jetta|single
 EG-E34E1DB0,DAYCO,belt,Belt 7PK1051 for Renault Duster,renault-duster,900.00,False,part_number,7PK1051|single
 EG-E3D9A38B,BOSCH,filter,Oil filter for Skoda Octavia,skoda-octavia,370.00,True,type_model,oil filter|skoda-octavia|single
-EG-E3DBA47E,FREMAX,brake pad,Brake pad front for Renault Fluence,renault-fluence,1100.00,False,type_model,brake pad|renault-fluence|front|single
+EG-E3DBA47E,FREMAX,brake pad,Brake pad front for Renault Fluence,renault-fluence,1188.00,False,type_model,brake pad|renault-fluence|front|single
 EG-E42AB850,GM,filter,Oil filter for Chevrolet Aveo,chevrolet-aveo,210.00,True,type_model,oil filter|chevrolet-aveo|single
 EG-E48D5B5A,BOSCH,spark plug,Spark plug set for Renault Duster,renault-duster,1875.00,False,type_model,spark plug|renault-duster|set
 EG-E4929747,Generic,filter,Cabin filter for Hyundai Getz,hyundai-getz,160.00,False,type_model,cabin filter|hyundai-getz|single
 EG-E5384D5B,AZAB,filter,Air filter for Speranza A516,speranza-a516,223.50,False,type_model,air filter|speranza-a516|single
 EG-E5C4CE6F,Generic,wiper,Wiper set for Renault Duster,renault-duster,363.50,False,type_model,wiper|renault-duster|set
-EG-E60B3CDC,Generic,brake pad,Brake pad rear set for Speranza M11,speranza-m11-2008-2015,625.50,False,type_model,brake pad|speranza-m11|rear|set
 EG-E60F5DAB,BOSCH,filter,Oil filter for Renault Logan,renault-logan,290.00,True,type_model,oil filter|renault-logan|single
+EG-E63BAF9C,BESER,brake pad,Brake pad rear for BYD F3,byd-f3,600.00,False,type_model,brake pad|byd-f3|rear|single
 EG-E66CC645,POWER MAX,filter,Air filter for Seat Ibiza,seat-ibiza,325.00,False,type_model,air filter|seat-ibiza|single
 EG-E6E10006,MOBIS,spark plug,Spark plug set for Kia Soul,kia-soul-2014-2019,950.00,False,type_model,spark plug|kia-soul|set
 EG-E7EC578C,BOSCH,filter,Cabin filter for Renault Megane,renault-megane,387.50,True,type_model,cabin filter|renault-megane|single
@@ -742,6 +715,7 @@ EG-E813CE29,BANDO,belt,Belt 5PK975 for Chevrolet Lanos,chevrolet-lanos,310.00,Tr
 EG-E826B946,ASG,filter,Air filter for Peugeot 3008,peugeot-3008,561.00,False,type_model,air filter|peugeot-3008|single
 EG-E924911B,PHC VALEO,brake pad,Brake pad rear for Hyundai I10,hyundai-i10,802.50,False,type_model,brake pad|hyundai-i10|rear|single
 EG-E98BABE5,WUNDER,filter,Air filter for Renault Clio,renault-clio,208.00,True,type_model,air filter|renault-clio|single
+EG-E9DEF847,SUPER GOLD,brake pad,Brake pad rear for Speranza A620,speranza-a620-2008-2015,668.50,False,type_model,brake pad|speranza-a620|rear|single
 EG-EA6F11C2,BOSCH,filter,Oil filter for Opel Insignia,opel-insignia,260.00,True,type_model,oil filter|opel-insignia|single
 EG-EAA108E7,ASG,brake pad,Brake pad front for Peugeot 301,peugeot-301,890.00,False,type_model,brake pad|peugeot-301|front|single
 EG-EB4119B0,Generic,belt,Belt 5PK1155,,250.00,False,part_number,5PK1155|single
@@ -750,29 +724,26 @@ EG-EBCA1C47,MECCA,filter,Oil for Opel Astra,opel-astra,650.00,False,type_model,o
 EG-EC32A38F,A-PART,filter,Fuel filter for Chevrolet Aveo,chevrolet-aveo,200.00,True,type_model,fuel filter|chevrolet-aveo|single
 EG-EDA7DE4B,DONGIL,belt,Belt 4PK897 for Mitsubishi Lancer,mitsubishi-lancer,272.00,False,part_number,4PK897|single
 EG-EDE91727,BOSCH,spark plug,Spark plug for Opel Vectra,opel-vectra,273.00,False,type_model,spark plug|opel-vectra|single
-EG-EDEC0ED8,D NAO,brake pad,Brake pad front set for Speranza A113,speranza-a113,537.50,False,type_model,brake pad|speranza-a113|front|set
-EG-EE0024F0,Generic,brake pad,Brake pad front set for Honda Civic,honda-civic,235.00,False,type_model,brake pad|honda-civic|front|set
-EG-EE411E9F,ROADHOUSE,brake pad,Brake pad rear for Skoda Octavia,skoda-octavia,1020.00,False,type_model,brake pad|skoda-octavia|rear|single
+EG-EE411E9F,ROADHOUSE,brake pad,Brake pad rear for Skoda Octavia,skoda-octavia,1040.00,True,type_model,brake pad|skoda-octavia|rear|single
 EG-EEF9B0FF,ماركة بديلة,belt,Belt for Daewoo Matiz,daewoo-matiz,655.00,False,type_model,belt|daewoo-matiz|single
 EG-EF2E771D,After-Market,filter,Cabin filter for Chevrolet Optra,chevrolet-optra,242.50,True,type_model,cabin filter|chevrolet-optra|single
 EG-EFC037E2,GMP,filter,Air filter for Chevrolet Captiva,chevrolet-captiva,950.00,False,type_model,air filter|chevrolet-captiva|single
 EG-EFE9F472,After-Market,filter,Air filter for Honda Civic,honda-civic,599.00,False,type_model,air filter|honda-civic|single
-EG-F0375488,HI-Q,brake pad,Brake pad rear set for Hyundai IX35,hyundai-ix35,790.00,False,type_model,brake pad|hyundai-ix35|rear|set
 EG-F09829B9,DAYCO,belt,Belt for Volkswagen Jetta,volkswagen-jetta,942.50,False,type_model,belt|volkswagen-jetta|single
+EG-F10B32F9,ماركة بديلة,brake pad,Brake pad rear for Speranza Tiggo,speranza-tiggo-2009-2012,495.00,False,type_model,brake pad|speranza-tiggo|rear|single
 EG-F145BC3E,GM,filter,Oil filter for Chevrolet Captiva,chevrolet-captiva,450.00,False,type_model,oil filter|chevrolet-captiva|single
 EG-F14E285B,MANN FILTER,filter,Oil filter for Volkswagen Golf,volkswagen-golf,370.50,True,type_model,oil filter|volkswagen-golf|single
 EG-F1810F3E,BOSCH,spark plug,Spark plug set for Opel Astra,opel-astra,600.00,False,type_model,spark plug|opel-astra|set
 EG-F1E409FD,AZAB,filter,Air filter for Chery Arrizo,chery-arrizo,175.00,False,type_model,air filter|chery-arrizo|single
-EG-F1E43D86,ROADHOUSE,brake pad,Brake pad front for Volkswagen Jetta,volkswagen-jetta,1095.00,False,type_model,brake pad|volkswagen-jetta|front|single
+EG-F1E43D86,ROADHOUSE,brake pad,Brake pad front for Volkswagen Jetta,volkswagen-jetta,1092.50,False,type_model,brake pad|volkswagen-jetta|front|single
 EG-F1FB5692,CHERY,filter,Oil filter for Chery Arrizo,chery-arrizo,135.00,False,type_model,oil filter|chery-arrizo|single
+EG-F2610028,N Auto Express,brake pad,Brake pad SP1399 for Hyundai Accent,hyundai-accent,1026.00,False,part_number,SP1399|single
 EG-F3395514,Generic,belt,Belt 6PK1675,,532.00,False,part_number,6PK1675|single
-EG-F350B908,ماركة بديلة,brake pad,Brake pad front set for Nissan Tiida,nissan-tiida,287.50,False,type_model,brake pad|nissan-tiida|front|set
 EG-F37CC79E,BOSCH,spark plug,Spark plug set for Peugeot 308,peugeot-308,1885.00,False,type_model,spark plug|peugeot-308|set
 EG-F3A8753F,BOSCH,spark plug,Spark plug set for Peugeot 5008,peugeot-5008,2490.00,False,type_model,spark plug|peugeot-5008|set
 EG-F3CDF51E,BLUE PRINT,filter,Fuel filter for Renault Logan,renault-logan,450.00,False,type_model,fuel filter|renault-logan|single
-EG-F459C986,HI-Q,brake pad,Brake pad rear for Chevrolet Optra,chevrolet-optra,750.00,False,type_model,brake pad|chevrolet-optra|rear|single
+EG-F459C986,HI-Q,brake pad,Brake pad rear for Chevrolet Optra,chevrolet-optra,737.50,True,type_model,brake pad|chevrolet-optra|rear|single
 EG-F4B205AD,N Auto Express,filter,Air filter 2811317500 for Hyundai Matrix,hyundai-matrix,171.00,False,part_number,2811317500|single
-EG-F4CF77E0,MK II,brake pad,Brake pad rear set for Mitsubishi Lancer,mitsubishi-lancer,537.50,False,type_model,brake pad|mitsubishi-lancer|rear|set
 EG-F51C5FDB,Generic,belt,Belt 6PK989 for Seat Toledo,seat-toledo,772.50,False,part_number,6PK989|single
 EG-F546387A,NGK,spark plug,Spark plug set for Chevrolet Aveo,chevrolet-aveo,470.00,False,type_model,spark plug|chevrolet-aveo|set
 EG-F56A9B2F,CHERY,belt,Belt for Chery Tiggo,chery-tiggo,1042.50,False,type_model,belt|chery-tiggo|single
@@ -785,12 +756,13 @@ EG-F6A65F9D,OEM,filter,Cabin filter for MG RX5,mg-rx5,200.00,True,type_model,cab
 EG-F6CE1580,BANDO,belt,Belt 5PK1772 for MG RX5,mg-rx5,404.50,False,part_number,5PK1772|single
 EG-F6E19305,Generic,belt,Belt set for Renault Logan,renault-logan,950.00,False,type_model,belt|renault-logan|set
 EG-F723315E,WIX,filter,Cabin filter for Skoda Superb,skoda-superb,360.50,False,type_model,cabin filter|skoda-superb|single
-EG-F7398EDE,FERBE,brake pad,Brake pad rear for Honda Civic,honda-civic,1000.00,False,type_model,brake pad|honda-civic|rear|single
+EG-F7398EDE,FERBE,brake pad,Brake pad rear for Honda Civic,honda-civic,870.00,False,type_model,brake pad|honda-civic|rear|single
 EG-F7663517,CONTINENTAL,belt,Belt set for Chevrolet Optra,chevrolet-optra,3312.00,False,type_model,belt|chevrolet-optra|set
 EG-F80A986A,WIX,filter,Cabin filter for Peugeot 307,peugeot-307,225.00,True,type_model,cabin filter|peugeot-307|single
 EG-F8E19D3F,OPTIBELT,belt,Belt 5PK1060 for BYD F3,byd-f3,380.00,True,part_number,5PK1060|single
 EG-F8F2B9D5,ROADHOUSE,brake pad,Brake pad rear for Opel Insignia,opel-insignia,1290.00,False,type_model,brake pad|opel-insignia|rear|single
 EG-FA72A70B,MOBIS,filter,Air filter for Hyundai IX35,hyundai-ix35,400.00,False,type_model,air filter|hyundai-ix35|single
+EG-FA762CAA,N Auto Express,brake pad,Brake pad SP1102 for Daewoo Nubira,daewoo-nubira,798.00,False,part_number,SP1102|single
 EG-FA7F6AC9,Generic,filter,Cabin filter for Suzuki Swift,suzuki-swift,200.00,False,type_model,cabin filter|suzuki-swift|single
 EG-FADB54D3,WIX,filter,Cabin filter for Opel Insignia,opel-insignia,487.50,False,type_model,cabin filter|opel-insignia|single
 EG-FBD07ACE,N Auto Express,filter,Oil filter 1520865F00,,130.00,False,part_number,1520865F00|single
@@ -799,11 +771,12 @@ EG-FC227807,Generic,belt,Belt 6PK2315,,912.50,False,part_number,6PK2315|single
 EG-FC663E4D,FILMAR,filter,Oil filter SO8264,,285.00,False,part_number,SO8264|single
 EG-FC9DCE19,N Auto Express,filter,Fuel filter for Nissan Qashqai,nissan-qashqai,542.00,False,type_model,fuel filter|nissan-qashqai|single
 EG-FCA2417F,DAEWHA,filter,Oil filter for Toyota Yaris,toyota-yaris,160.00,True,type_model,oil filter|toyota-yaris|single
+EG-FCD87084,HI Q,brake pad,Brake pad rear for Hyundai Getz,hyundai-getz,1025.00,False,type_model,brake pad|hyundai-getz|rear|single
 EG-FD126D2D,SCL GENUINE PARTS,filter,Oil filter for Speranza A113,speranza-a113-2008-2015,190.00,False,type_model,oil filter|speranza-a113|single
-EG-FD206D69,ROADHOUSE,brake pad,Brake pad front for Opel Insignia,opel-insignia-2013-2017,1100.00,False,type_model,brake pad|opel-insignia|front|single
+EG-FD206D69,ROADHOUSE,brake pad,Brake pad front for Opel Insignia,opel-insignia-2013-2017,1190.00,True,type_model,brake pad|opel-insignia|front|single
 EG-FD455335,EUROREPAR,filter,Oil filter for Peugeot 508,peugeot-508,299.00,False,type_model,oil filter|peugeot-508|single
 EG-FD557999,Generic,belt,Belt 7PK1122,,225.00,False,part_number,7PK1122|single
-EG-FE52452B,DON,brake pad,Brake pad rear for MG MG5,mg-mg5,750.00,False,type_model,brake pad|mg-mg5|rear|single
+EG-FE52452B,DON,brake pad,Brake pad rear for MG MG5,mg-mg5,785.00,False,type_model,brake pad|mg-mg5|rear|single
 EG-FEF822CC,AZAB,filter,Air filter for Hyundai Elantra,hyundai-elantra,300.00,True,type_model,air filter|hyundai-elantra|single
 EG-FF5E8976,MOBIS,belt,Belt for Kia Soul,kia-soul,935.00,False,type_model,belt|kia-soul|single
 EG-FFA97E1D,Generic,spark plug,Spark plug for Chevrolet Captiva,chevrolet-captiva,350.00,False,type_model,spark plug|chevrolet-captiva|single

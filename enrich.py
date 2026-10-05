@@ -61,9 +61,9 @@ def part_type(title):
                 if has(text, GEARBOX):
                     return "filter", None, pack
                 return next((kind for kind, w in FILTER_KINDS if has(text, w)), "filter"), None, pack
-            if name == "brake pad":
+            if name == "brake pad":  # an axle set is the normal unit: a pad is never a 'set'
                 front, rear = has(text, ("امامي", "اماميه", "front")), has(text, ("خلفي", "خلفيه", "rear"))
-                return name, "front" if front and not rear else "rear" if rear and not front else None, pack
+                return name, "front" if front and not rear else "rear" if rear and not front else None, "single"
             return name, None, pack
     return None, None, pack
 
