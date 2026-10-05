@@ -1,7 +1,7 @@
 # 6. Checks: the numbers the report must show
 
 Every number below is in `analysis/numbers.json` as written by `analysis/analysis.ipynb` (commit
-5c401f1, the run week of 5 October 2026) under the key named after it, and comes back from the SQL
+7c676d1, the run week of 5 October 2026) under the key named after it, and comes back from the SQL
 under its check. A number marked **SQL only** has no key in `numbers.json` (the notebook does not
 split it that way); the SQL is its source. If a card is off, the usual causes are a missing
 relationship, a wrong column type in Power Query, a staging query left loading, or the Match slicer
@@ -44,9 +44,9 @@ SELECT (SELECT max(run_week) FROM gold.dim_date) AS run_week,
 If `offers` is 0, `build_gold` has not run or is running: wait for the DAG to finish, never build on
 an empty gold.
 
-**C2.** Rows per table after **Close & apply** (Table view, bottom left): Seller 13 · Part 870 ·
-Date = `date` below (1 for one run day) · Match Grade 2 · Offer 28,825 (`offers`) · Price Gap 2,343.
-Part is our 869 parts (`parts`) plus the unmatched member. **SQL only:** Seller, Part, Date, Match
+**C2.** Rows per table after **Close & apply** (Table view, bottom left): Seller 13 · Part 936 ·
+Date = `date` below (1 for one run day) · Match Grade 2 · Offer 28,825 (`offers`) · Price Gap 2,429.
+Part is our 935 parts (`parts`) plus the unmatched member. **SQL only:** Seller, Part, Date, Match
 Grade and Price Gap.
 
 ```sql
@@ -58,8 +58,8 @@ SELECT (SELECT count(*) FROM gold.dim_seller) AS seller, (SELECT count(*) FROM g
        (SELECT count(*) FROM gold.price_gap WHERE in_stock IS NOT FALSE) AS price_gap;
 ```
 
-**C3.** Two cards on a blank page, no slicer yet: Offers 28,825 (`offers`) · Parts Measured 685
-(`groups_measured`). 685 is the measured parts of both grades: Power Query's `Measured` flag and the
+**C3.** Two cards on a blank page, no slicer yet: Offers 28,825 (`offers`) · Parts Measured 737
+(`groups_measured`). 737 is the measured parts of both grades: Power Query's `Measured` flag and the
 `Price Gap` table agree with the notebook.
 
 ## Page 1: Overview
@@ -82,10 +82,10 @@ GROUP BY s.name ORDER BY offers DESC;
 ```
 
 **C6.** Car model bar (#10): 16 bars (the 15th and 16th tie). Hyundai Elantra 776 (`top_model`,
-`top_model_offers`) · Kia Cerato 725 · Skoda Octavia 577 · Mitsubishi Lancer 563 · Nissan Sunny 557 ·
+`top_model_offers`) · Kia Cerato 631 · Skoda Octavia 577 · Mitsubishi Lancer 563 · Nissan Sunny 557 ·
 Toyota Corolla 514 · Hyundai Accent 456 · Renault Megane 412 · Chevrolet Optra 405 · Volkswagen Golf
 391 · Renault Logan 378 · Chevrolet Aveo 361 · Hyundai Verna 354 · Volkswagen Passat 330 · Chevrolet
-Cruze 325 · Opel Astra 325. **SQL only** below Hyundai Elantra. The 89 models in all are
+Cruze 325 · Opel Astra 325. **SQL only** below Hyundai Elantra. The 90 models in all are
 `car_models`.
 
 ```sql
@@ -96,11 +96,11 @@ GROUP BY 1 ORDER BY offers DESC, car_model LIMIT 17;
 ```
 
 **C7.** Match on **Same part type, same car**: Sellers 13 · Offers 28,825 (unchanged) · Our parts
-matched 715 (`parts_type_model`) · Parts 5%+ below 670 (`parts_below_type_model`) · Share 93.7%
-(`parts_below_type_model_pct`, 93.706294).
+matched 781 (`parts_type_model`) · Parts 5%+ below 733 (`parts_below_type_model`) · Share 93.9%
+(`parts_below_type_model_pct`, 93.854033).
 
 **C8.** Match cleared (eraser icon): the label reads "Match: Both match grades". Our parts matched
-869 (`parts`) · Parts 5%+ below 758 (`parts_below`) · Share 87.2% (`parts_below_pct`, 87.226697).
+935 (`parts`) · Parts 5%+ below 821 (`parts_below`) · Share 87.8% (`parts_below_pct`, 87.807487).
 Select **Exact part number** again.
 
 ```sql
@@ -120,27 +120,37 @@ Our price above the cheapest seller, median part 26.40% (`gap_median_pct_part_nu
 Dearest seller above the cheapest, median part 38.30% (`spread_median_pct_part_number`, 38.297872).
 Both family charts have one bar, **belt**: 26.40% and 38.30% (**SQL only** by family; every part
 measured by part number is a belt, so the bar equals the card). The table has 61 rows (one per
-measured part), sorted by "Our price above the cheapest", highest first; check its first rows
-against the third query below.
+measured part), sorted by "Our price above the cheapest", highest first. Its first five rows
+(**SQL only**, the third query below):
 
-**C10.** Match on **Same part type, same car**. Cards: 624 (`spread_groups_type_model`) · 43.00%
-(`gap_median_pct_type_model`) · 111.20% (`spread_median_pct_type_model`, 111.195361). Gap by family
-(#7), top to bottom: spark plug 48.15% · filter 45.00% · belt 42.65% · brake pad 39.10% · wiper
-33.80%. Spread by family (#8): wiper 128.90% · filter 118.09% · brake pad 106.00% · belt 88.72% ·
-spark plug 48.26%. **SQL only** by family for this grade (`numbers.json` splits families over both
+| Part number | Part | Our price | Cheapest seller | Cheapest | Dearest | Gap | Spread |
+|---|---|---|---|---|---|---|---|
+| EG-2470050D | Belt 6PK1070 for Peugeot 307 | 625.00 | Amazon Egypt | 180.10 | 550.00 | 71.2% | 205.4% |
+| EG-C383A19D | Belt 4PK850 for Hyundai Verna | 255.00 | Tawfiqia | 90.00 | 259.92 | 64.7% | 188.8% |
+| EG-4FF857FC | Belt 4PK845 for Hyundai Verna | 350.00 | GE Trading | 144.00 | 335.00 | 58.9% | 132.6% |
+| EG-C9822077 | Belt 3PK740 for Renault Clio | 387.50 | Zait and Filters | 160.00 | 350.00 | 58.7% | 118.8% |
+| EG-B4B10F2D | Belt 6PK1548 for Volkswagen Golf | 460.00 | GE Trading | 223.00 | 460.00 | 51.5% | 106.3% |
+
+Gap is "Our price above the cheapest", Spread is "Dearest above the cheapest".
+
+**C10.** Match on **Same part type, same car**. Cards: 676 (`spread_groups_type_model`) · 40.00%
+(`gap_median_pct_type_model`) · 90.24% (`spread_median_pct_type_model`, 90.240300). Gap by family
+(#7), top to bottom: spark plug 47.65% · filter 42.90% · brake pad 37.50% · wiper 35.15% · belt
+27.40%. Spread by family (#8): wiper 141.40% · filter 109.18% · brake pad 98.68% · belt 58.72% ·
+spark plug 46.31%. **SQL only** by family for this grade (`numbers.json` splits families over both
 grades); brake pad, filter, spark plug and wiper are matched by part type only, so their bars equal
-C11's. Spark plug's 48.15% is the average of the two middle parts of 70: it proves MEDIANX averages
+C11's. Spark plug's 47.65% is the average of the two middle parts of 70: it proves MEDIANX averages
 the middle pair, as the notebook does.
 
-**C11.** Match cleared. Cards: 685 (`groups_measured`, `spread_groups`) · 40.70%
-(`gap_median_pct`) · 100.00% (`spread_median_pct`). Gap by family: spark plug 48.15%
-(`gap_median_pct_spark_plug`) · filter 45.00% (`gap_median_pct_filter`) · brake pad 39.10%
-(`gap_median_pct_brake_pad`) · belt 33.80% (`gap_median_pct_belt`) · wiper 33.80%
-(`gap_median_pct_wiper`). Spread by family: wiper 128.90% (`spread_median_pct_wiper`,
-`spread_top_family`) · filter 118.09% (`spread_median_pct_filter`) · brake pad 106.00%
-(`spread_median_pct_brake_pad`) · belt 55.56% (`spread_median_pct_belt`) · spark plug 48.26%
-(`spread_median_pct_spark_plug`). Hover a bar: Parts Measured belt 117 · brake pad 169 · filter 314
-· spark plug 70 · wiper 15 (**SQL only**). Select **Exact part number** again.
+**C11.** Match cleared. Cards: 737 (`groups_measured`, `spread_groups`) · 38.50%
+(`gap_median_pct`) · 83.33% (`spread_median_pct`, 83.333333). Gap by family: spark plug 47.65%
+(`gap_median_pct_spark_plug`) · filter 42.90% (`gap_median_pct_filter`) · brake pad 37.50%
+(`gap_median_pct_brake_pad`) · wiper 35.15% (`gap_median_pct_wiper`) · belt 27.10%
+(`gap_median_pct_belt`). Spread by family: wiper 141.40% (`spread_median_pct_wiper`,
+`spread_top_family`) · filter 109.18% (`spread_median_pct_filter`) · brake pad 98.68%
+(`spread_median_pct_brake_pad`) · spark plug 46.31% (`spread_median_pct_spark_plug`) · belt 44.25%
+(`spread_median_pct_belt`). Hover a bar: Parts Measured belt 125 · brake pad 185 · filter 343
+· spark plug 70 · wiper 14 (**SQL only**). Select **Exact part number** again.
 
 ```sql
 -- Cards: parts measured, median gap and median spread, per grade and both
@@ -179,23 +189,23 @@ five sellers. Tawfiqia 58.8% (10 / 17), 0.83 · AutoSpare 49.1% (28 / 57), 0.88 
 27.8% (5 / 18), 0.95 · Zait and Filters 22.9% (11 / 48), 0.98 · GE Trading 22.2% (4 / 18), 0.91.
 Amazon Egypt (2 parts) and Pringi (3) are left out by the 5-part filter.
 
-**C13.** Match on **Same part type, same car** (**SQL only**): twelve sellers. Pringi 80.0%
-(44 / 55), 0.66 · AutoSpare 54.7% (309 / 565), 0.70 · Tawfiqia 51.7% (91 / 176), 0.63 · GE Trading
-34.6% (18 / 52), 0.74 · Zait and Filters 28.8% (113 / 392), 0.79 · Amazon Egypt 15.9% (20 / 126),
-1.00 · Spare Zone 12.5% (1 / 8), 1.23 · Jumia Egypt 11.5% (3 / 26), 1.00 · YourParts 8.4% (8 / 95),
-1.02 · N Auto Express 7.1% (5 / 70), 0.93 · Egy Car Parts 6.3% (22 / 350), 1.10 · Fit and Fix 0.0%
-(0 / 6), 1.15. Garageilla (3 parts) is left out.
+**C13.** Match on **Same part type, same car** (**SQL only**): twelve sellers. Pringi 82.1%
+(46 / 56), 0.67 · AutoSpare 55.3% (335 / 606), 0.72 · Tawfiqia 53.1% (94 / 177), 0.67 · GE Trading
+30.9% (17 / 55), 0.79 · Zait and Filters 30.2% (121 / 401), 0.80 · Spare Zone 22.2% (2 / 9), 1.14 ·
+Amazon Egypt 20.0% (25 / 125), 1.00 · Jumia Egypt 15.4% (4 / 26), 1.00 · YourParts 9.7% (9 / 93),
+1.02 · N Auto Express 9.3% (7 / 75), 0.91 · Egy Car Parts 6.8% (24 / 354), 1.10 · Fit and Fix 0.0%
+(0 / 7), 1.16. Garageilla (3 parts) is left out.
 
 **C14.** Match cleared: twelve sellers, every number in `numbers.json` (`lead_share_<seller_id>_pct`,
-`cheapest_parts_<seller_id>`, `compete_parts_<seller_id>`, `price_index_<seller_id>`). Pringi 79.3%
-(46 / 58), 0.67 (`leader`, `leader_share_pct`, `leader_parts`, `leader_price_index`) · AutoSpare
-54.2% (337 / 622), 0.71 · Tawfiqia 52.3% (101 / 193), 0.67 · GE Trading 31.4% (22 / 70), 0.80 ·
-Zait and Filters 28.2% (124 / 440), 0.80 · Amazon Egypt 17.2% (22 / 128), 1.00 · Spare Zone 12.5%
-(1 / 8), 1.23 · Jumia Egypt 11.5% (3 / 26), 1.00 · N Auto Express 11.4% (10 / 88), 0.94 · YourParts
-8.4% (8 / 95), 1.02 · Egy Car Parts 6.3% (22 / 350), 1.10 · Fit and Fix 0.0% (0 / 6), 1.15.
-Garageilla (3 parts: 100.0%, 0.40) is left out. The price index chart, lowest first: Pringi,
-Tawfiqia, AutoSpare, GE Trading, Zait and Filters, N Auto Express, Amazon Egypt, Jumia Egypt,
-YourParts, Egy Car Parts, Fit and Fix, Spare Zone (Amazon Egypt and Jumia Egypt tie at 1.00). Select **Exact part number** again.
+`cheapest_parts_<seller_id>`, `compete_parts_<seller_id>`, `price_index_<seller_id>`). Pringi 81.4%
+(48 / 59), 0.67 (`leader`, `leader_share_pct`, `leader_parts`, `leader_price_index`) · AutoSpare
+54.8% (363 / 663), 0.73 · Tawfiqia 53.6% (104 / 194), 0.68 · Zait and Filters 29.4% (132 / 449),
+0.82 · GE Trading 28.8% (21 / 73), 0.87 · Spare Zone 22.2% (2 / 9), 1.14 · Amazon Egypt 21.3%
+(27 / 127), 1.00 · Jumia Egypt 15.4% (4 / 26), 1.00 · N Auto Express 12.9% (12 / 93), 0.93 ·
+YourParts 9.7% (9 / 93), 1.02 · Egy Car Parts 6.8% (24 / 354), 1.10 · Fit and Fix 0.0% (0 / 7),
+1.16. Garageilla (3 parts: 100.0%, 0.40) is left out. The price index chart, lowest first: Pringi,
+Tawfiqia, AutoSpare, Zait and Filters, GE Trading, N Auto Express, Amazon Egypt, Jumia Egypt,
+YourParts, Egy Car Parts, Spare Zone, Fit and Fix (Amazon Egypt and Jumia Egypt tie at 1.00). Select **Exact part number** again.
 
 ```sql
 SELECT coalesce(m.match_grade, 'both') AS grade, s.name, count(*) AS parts_measured,
@@ -216,8 +226,9 @@ part number; "... Match: Same part type, same car" with the other; "... Match: B
 with the slicer cleared. All three pages change together (the slicer is synced).
 
 **C16.** On Overview, Match on Exact part number, click **AutoSpare** in the seller bar (#9):
-Sellers 1 · Offers 9,981 (`offers_autospare`). Our parts matched, Parts 5%+ below and Share follow
-the seller: their values come from the SQL below (**SQL only**). The car model bar shows AutoSpare's
+Sellers 1 · Offers 9,981 (`offers_autospare`) · Our parts matched 81 · Parts 5%+ below 44 · Share
+54.3% (**SQL only**, the query below: the parts AutoSpare has offers for, and those where it is at
+least 5% below our price). The car model bar shows AutoSpare's
 offers only. Click AutoSpare again to clear.
 
 ```sql
@@ -229,6 +240,6 @@ SELECT (SELECT count(DISTINCT part_key) FROM gold.fact_price_observation f JOIN 
 ```
 
 **C17.** On Price gaps, Match on Same part type, same car, click **filter** in the gap by family
-chart (#7): Parts measured 314 · median gap 45.00% (`gap_median_pct_filter`) · median spread
-118.09% (`spread_median_pct_filter`); the spread chart shows filter only and the table 314 rows.
+chart (#7): Parts measured 343 · median gap 42.90% (`gap_median_pct_filter`) · median spread
+109.18% (`spread_median_pct_filter`); the spread chart shows filter only and the table 343 rows.
 Click it again to clear, then select **Exact part number**.

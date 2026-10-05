@@ -23,7 +23,7 @@ What the run read this week, and how many of our parts have a seller at least 5%
 |---|---|---|---|---|
 | 1 | Text box | 24, 16, 400, 52 | "What the run read this week" | Font 20, bold |
 | 2 | Card | 432, 12, 400, 56 | `[Page Label]` | Category label off. Callout value: font size 12, colour Theme colour 2. Shows "Run week 2026-10-05 · Match: Exact part number" |
-| 3 | Slicer | 840, 12, 416, 56 | Field: `Match Grade[Grade]` | Slicer settings > Style: Tile. Selection: **Single select** on, "Select all" off. Header text "Match". Select **Exact part number** before saving (step 32 of `08-build-checklist.md`) |
+| 3 | Slicer | 840, 12, 416, 56 | Field: `Match Grade[Grade]` | Slicer settings > Style: Tile. Selection: **Single select** on, "Select all" off. Header text "Match". Select **Exact part number** before saving (step 36 of `08-build-checklist.md`) |
 | 4 | Card | 24, 84, 240, 96 | `[Sellers]` | Category label on, renamed on the visual to "Sellers" |
 | 5 | Card | 272, 84, 240, 96 | `[Offers]` | Category label "Offers (every offer, matched or not)" |
 | 6 | Card | 520, 84, 240, 96 | `[Parts Matched]` | Category label "Our parts matched" |
@@ -37,7 +37,7 @@ Cards #4 and #5 and both charts count every offer, so the Match slicer does not 
 
 Chart #10 shows 16 bars in the run of 5 October 2026, not 15: Power BI's Top N keeps ties, and the
 15th and 16th models (Chevrolet Cruze and Opel Astra) both have 325 offers. The notebook's chart
-keeps one of them. Offers whose title names no car (12,028 of 28,825) are left out by the "is not
+keeps one of them. Offers whose title names no car (12,030 of 28,825) are left out by the "is not
 blank" filter.
 
 ## Page 2: Price gaps

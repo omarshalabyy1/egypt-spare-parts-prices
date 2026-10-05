@@ -15,7 +15,7 @@
 // of stock (Price Gap holds no others).
 //
 // MEDIAN and MEDIANX average the two middle values when the count is even, as pandas and
-// percentile_cont(0.5) do; check C10 (spark plug: a median of 70 parts, 48.15%) proves it on your build.
+// percentile_cont(0.5) do; check C10 (spark plug: a median of 70 parts, 47.65%) proves it on your build.
 
 
 // ---------- Page 1: Overview (display folder: Overview) ----------

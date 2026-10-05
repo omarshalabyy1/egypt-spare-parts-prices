@@ -17,10 +17,10 @@ the order of this file: a query can only refer to one created before it.
 | `Seller` | `gold.dim_seller` | 13 | 3 | yes |
 | `Offer` | `gold.fact_price_observation`, the latest run week | 28,825 | 11 (9 + `Usable` + `Car model`) | yes |
 | `Part Market` | `Offer`, the usable offers counted per part | one per part with a usable offer | 3 | no (staging) |
-| `Part` | `gold.dim_part`, with `Measured` from `Part Market` | 870 | 8 (7 + `Measured`) | yes |
+| `Part` | `gold.dim_part`, with `Measured` from `Part Market` | 936 | 8 (7 + `Measured`) | yes |
 | `Match Grade` | the match grades found in `Offer` | 2 | 2 (1 + `Grade`) | yes |
 | `Undercut` | `gold.undercut` | 1,415 | 2 | no (staging) |
-| `Price Gap` | `gold.price_gap`, not shown out of stock, with `Undercut` | 2,343 | 8 (7 + `Undercut`) | yes |
+| `Price Gap` | `gold.price_gap`, not shown out of stock, with `Undercut` | 2,429 | 8 (7 + `Undercut`) | yes |
 | `Date` | `gold.dim_date` | one per day observed | 6 | yes |
 
 The gold columns read, as `information_schema.columns` lists them:
@@ -50,7 +50,7 @@ a price into text.
 Why "not shown out of stock" is a Power Query column and never a DAX filter: `in_stock` is empty
 (null) where the site does not say. In Power Query, `null <> false` is true, so an offer whose stock
 is unknown is kept, as the notebook and the views keep it. In DAX, a blank equals FALSE, so a filter
-`in_stock <> FALSE()` would drop those offers (489 comparable matched offers in the run of 5 October
+`in_stock <> FALSE()` would drop those offers (485 comparable matched offers in the run of 5 October
 2026).
 
 ## The first connection
@@ -97,7 +97,8 @@ let
     Source = PostgreSQL.Database(WarehouseServer, WarehouseDatabase),
     fact = Source{[Schema = "gold", Item = "fact_price_observation"]}[Data],
     LatestWeek = List.Max(fact[date_key]),
-    ThisWeek = Table.SelectRows(fact, each [date_key] = LatestWeek),
+    ThisWeek = if LatestWeek = null then error "gold is empty: run the DAG first"
+        else Table.SelectRows(fact, each [date_key] = LatestWeek),
     Kept = Table.SelectColumns(ThisWeek, {
         "date_key", "seller_key", "part_key", "listing_key", "match_grade", "comparable", "price",
         "in_stock", "car_key"}),
@@ -118,7 +119,10 @@ Applied steps:
 
 - `LatestWeek`, `ThisWeek`: the latest run week only (`date_key` is the run week's Monday). Each
   offer is then counted once, at its price in the latest week, as in the notebook. When more weeks
-  are loaded, the report still shows the latest one.
+  are loaded, the report still shows the latest one. When the fact is empty (`build_gold` has not
+  run, or is rebuilding gold at that moment), `LatestWeek` is null and the query stops with the
+  error "gold is empty: run the DAG first", so **Close & apply** and **Refresh** fail loudly instead
+  of loading empty tables.
 - `Kept`: drops `observed_on`, `is_discounted` and `part_type`, which no page uses.
 - `Usable`: matched to one of our parts, comparable (priced within 3 times of its group's median,
   either way) and not shown out of stock. The offers a part's market and middle price are counted
@@ -234,7 +238,7 @@ Applied steps:
 
 - `Kept`: drops `name`, `family` and `is_key` (they are in `Part`), `run_week`, `observed_on` and
   `gap_egp` (not used).
-- `NotOutOfStock`: drops the sellers that show the part out of stock (267 of 2,610 rows in the run
+- `NotOutOfStock`: drops the sellers that show the part out of stock (279 of 2,708 rows in the run
   of 5 October 2026). Both the notebook's market and `gold.undercut` leave them out.
 - `WithUndercut`, `Flagged`: `Undercut` is true where the seller is in `gold.undercut` for the part.
 - `gap_pct` is our price over the seller's, in percent with one decimal: 26.4 means our price is

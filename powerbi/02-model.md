@@ -9,11 +9,11 @@ Row counts are from the run of 5 October 2026 (see `06-checks.md`, check C2).
 | Table | Grain (one row per) | Surrogate key | Natural key | Rows |
 |---|---|---|---|---|
 | `Seller` | competitor site | `seller_key` | `seller_id` | 13 |
-| `Part` | catalogue part, plus `part_key` 0 = none of ours | `part_key` | `part_no` | 870 |
+| `Part` | catalogue part, plus `part_key` 0 = none of ours | `part_key` | `part_no` | 936 |
 | `Date` | day observed, first to last, no gaps | `date_key` (yyyymmdd) | `date` | `count(*)` of `gold.dim_date` (1 today) |
 | `Match Grade` | way an offer is matched to our part | none | `match_grade` | 2 |
 | `Offer` | seller's listing in the latest run week | none | `seller_key` + `listing_key` + `date_key` | 28,825 |
-| `Price Gap` | our part per seller: the seller's cheapest comparable listing not shown out of stock, in its latest run week | none | `part_no` + `seller_id` | 2,343 |
+| `Price Gap` | our part per seller: the seller's cheapest comparable listing not shown out of stock, in its latest run week | none | `part_no` + `seller_id` | 2,429 |
 | `_Measures` | holds the measures only | none | none | 1 (hidden) |
 
 A small star: two facts that each keep their own grain, sharing the `Seller`, `Part` and
