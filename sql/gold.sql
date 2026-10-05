@@ -65,13 +65,15 @@ WHERE f.part_key <> 0 AND f.comparable
                     JOIN gold.dim_date d2 USING (date_key) WHERE f2.seller_key = f.seller_key)
 ORDER BY p.part_no, s.seller_id, f.in_stock IS FALSE, f.price, f.listing_key;
 
--- Where a seller is at least 5% cheaper than us (UNDERCUT_PCT in tracker.py: change both together)
--- and does not show the part out of stock.
+-- Where a seller is at least client.undercut_pct (5) percent cheaper than us and does not show the
+-- part out of stock. The percent is rules.undercut_pct in config/client.yaml, set on the database by
+-- load_reference.
 CREATE OR REPLACE VIEW gold.undercut AS
-SELECT * FROM gold.price_gap WHERE their_price <= our_price * 0.95 AND in_stock IS NOT FALSE;
+SELECT * FROM gold.price_gap
+WHERE their_price <= our_price * (1 - current_setting('client.undercut_pct')::numeric / 100) AND in_stock IS NOT FALSE;
 
 -- What the alert emails: one row per key part's comparable offer, not shown out of stock, that this
--- run week is at least 5% below our price (UNDERCUT_PCT in tracker.py) and either cut its price from
+-- run week is at least client.undercut_pct percent below our price and either cut its price from
 -- its previous observed week ('price cut') or is new this week at a seller already tracked in an
 -- earlier week ('new offer'). A seller's first tracked week is its baseline: no alert.
 CREATE OR REPLACE VIEW gold.undercut_alert AS
@@ -89,7 +91,8 @@ FROM (
     JOIN gold.dim_seller s USING (seller_key)
     JOIN gold.dim_date d USING (date_key)
 ) t
-WHERE is_key AND comparable AND in_stock IS NOT FALSE AND their_price <= our_price * 0.95
+WHERE is_key AND comparable AND in_stock IS NOT FALSE
+  AND their_price <= our_price * (1 - current_setting('client.undercut_pct')::numeric / 100)
   AND (their_price < old_price OR (old_price IS NULL AND run_week > seller_first_week));
 
 -- Every price change of an offer from one run week to the next. Empty until a second week is loaded.

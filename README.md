@@ -130,13 +130,15 @@ you clear any challenge, login or cookie banner yourself in the window, and the 
 
 | Where | What |
 |---|---|
+| [config/client.yaml](config/client.yaml) | The sellers, the car, the catalogue file and the undercut percent; read only through [config.py](config.py) |
 | [tracker.py](tracker.py) | The weekly steps, one function each |
 | [scrape.py](scrape.py) | Reading the pages, keeping a copy of each, and the row check |
 | [scrapers/](scrapers/) | One module per seller |
 | [dags/spare_parts_prices.py](dags/spare_parts_prices.py) | The weekly Airflow DAG |
 | [sql/bronze.sql](sql/bronze.sql), [silver.sql](sql/silver.sql), [gold.sql](sql/gold.sql) | Tables of each layer, the price history, and the gap, undercut and change views |
 | [docs/layers.svg](docs/layers.svg) | The warehouse layers: raw pages, parsed offers, the star for Power BI |
-| [data/](data/) | The sellers, the catalogue, and the kept pages by seller and week |
+| [data/input/](data/input/) | The catalogue: our parts and our prices |
+| [data/raw/](data/raw/) | The kept pages by seller and week |
 | [analysis/](analysis/) | The notebook behind every number |
 | [powerbi/](powerbi/) | The report, step by step |
 | [tests/](tests/) | Saved pages for each seller, the page reader and the row check |
@@ -148,7 +150,7 @@ you clear any challenge, login or cookie banner yourself in the window, and the 
   the number of products (or pages) the site says a listing holds; a product listed under two of its categories is
   one price here and two in the site's count.
 - **The pace** is one request every 3 seconds per site.
-- **The retailer and its catalogue** ([data/catalogue.csv](data/catalogue.csv)) are made up: our price for a part
+- **The retailer and its catalogue** ([data/input/catalogue.csv](data/input/catalogue.csv)) are made up: our price for a part
   is the median of the sellers' comparable prices.
 
 | Seller | Prices | Rows set aside | The site's own count |

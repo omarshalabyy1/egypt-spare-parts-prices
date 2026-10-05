@@ -41,7 +41,7 @@ because they exist only here.
 
 Why the gold views and not a rule of our own: `gold.price_gap` already keeps each seller's cheapest
 comparable listing of a part in its latest run week, and `gold.undercut` already says which of them
-is at least 5% below our price (`UNDERCUT_PCT` in `tracker.py`). The alert email, the notebook and
+is at least 5% below our price (`rules.undercut_pct` in `config/client.yaml`). The alert email, the notebook and
 this report then read the same rule, written once in SQL.
 
 Why every column gets a type: Power BI then never guesses, so a refresh after a new run cannot turn

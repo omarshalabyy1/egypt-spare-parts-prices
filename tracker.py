@@ -4,6 +4,7 @@ a competitor is cheaper. One function each."""
 
 import csv
 import gzip
+import importlib
 import json
 import os
 import smtplib
@@ -11,27 +12,23 @@ import statistics
 from collections import defaultdict
 from datetime import date, timedelta
 from email.message import EmailMessage
-from pathlib import Path
 
 import psycopg
+from psycopg import sql
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
 import enrich
 import scrape
-from scrapers import (amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress,
-                      pringi, sparezone, tawfiqia, yourparts, zaitandfilters)
+from config import ROOT, load_config
 
-ROOT = Path(__file__).parent
-# One scraper per competitor site, keyed by its seller_id in data/sellers.csv. The longest fetch comes
-# first, so it starts in the first wave of fetch tasks.
-SCRAPERS = {m.__name__.split(".")[-1]: m for m in (
-    zaitandfilters, amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress,
-    pringi, sparezone, tawfiqia, yourparts)}
+CONFIG = load_config()
+# One scraper per competitor site, keyed by its seller_id, in the order of sellers in config/client.yaml
+# (the longest fetch first, so it starts in the first wave of fetch tasks).
+SCRAPERS = {s["seller_id"]: importlib.import_module(f"scrapers.{s['scraper']}") for s in CONFIG["sellers"]}
 MAX_PAGES = 250  # per PAGES entry; a listing longer than this is cut off, with a log line
 COMPARABLE_RATIO = 3  # an offer priced above 3x or below 1/3 of its match group's median is not comparable
-UNDERCUT_PCT = 5  # a competitor at least 5% below our price undercuts us (also in the gold.undercut and
-                  # gold.undercut_alert views: change them together)
+UNDERCUT_PCT = CONFIG["rules"]["undercut_pct"]  # a competitor at least this percent below our price undercuts us
 
 
 def week_of(day):
@@ -62,23 +59,30 @@ LAYERS = ("bronze.sql", "silver.sql", "gold.sql")
 
 
 def load_reference():
-    """Create the schemas, tables and views of each layer, then load the competitor sites and our
-    catalogue from data/."""
+    """Create the schemas, tables and views of each layer, then load the competitor sites from
+    config/client.yaml and our catalogue from data/input/."""
     with connect() as conn:
         load_reference_into(conn)
 
 
 def load_reference_into(conn):
-    """load_reference on an open connection. A part no longer in data/catalogue.csv is deleted (its
-    offer matches first), so a catalogue change never leaves a stale part behind."""
+    """load_reference on an open connection. A part no longer in the catalogue is deleted (its offer
+    matches first), so a catalogue change never leaves a stale part behind. The undercut percent is
+    set on the database, so every later connection (the alert, the notebook, Power BI) reads the
+    same value in the gold views, and on this session too."""
+    conn.execute(sql.SQL("ALTER DATABASE {} SET client.undercut_pct = {}").format(
+        sql.Identifier(conn.info.dbname), sql.Literal(str(UNDERCUT_PCT))))
+    conn.execute("SELECT set_config('client.undercut_pct', %s, false)", (str(UNDERCUT_PCT),))
     for file in LAYERS:
         conn.execute((ROOT / "sql" / file).read_text(encoding="utf-8"))
-    for table, key, file in (("silver.seller", "seller_id", "sellers.csv"),
-                             ("silver.part", "part_no", "catalogue.csv")):
-        with open(ROOT / "data" / file, newline="", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            rows = [[r[c] or None for c in reader.fieldnames] for r in reader]
-        cols = reader.fieldnames
+    seller_cols = ["seller_id", "name", "base_url", "robots_verdict", "crawl_delay_s"]
+    with open(CONFIG["input_dir"] / CONFIG["inputs"]["catalogue"], newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        part_rows = [[r[c] or None for c in reader.fieldnames] for r in reader]
+    for table, key, cols, rows in (
+        ("silver.seller", "seller_id", seller_cols, [[s[c] for c in seller_cols] for s in CONFIG["sellers"]]),
+        ("silver.part", "part_no", reader.fieldnames, part_rows),
+    ):
         updates = ", ".join(f"{c} = EXCLUDED.{c}" for c in cols if c != key)
         conn.cursor().executemany(
             f"INSERT INTO {table} ({', '.join(cols)}) VALUES ({', '.join(['%s'] * len(cols))}) "
@@ -287,7 +291,7 @@ def match():
                              comparable(o["price"], medians.get(group))))
         if not rows:
             raise ValueError(f"{len(groups)} offers in match groups, none maps to a catalogue part:"
-                             " is data/catalogue.csv loaded?")
+                             " is the catalogue in data/input/ loaded?")
         conn.execute("DELETE FROM silver.offer_match")
         conn.cursor().executemany("INSERT INTO silver.offer_match (seller_id, listing_key, part_no, match_grade,"
                                   " match_key, comparable) VALUES (%s, %s, %s, %s, %s, %s)", rows)

@@ -1,7 +1,6 @@
 """Checks for the site parsers, each against one real listing page kept under tests/pages/ (fetched
 2026-10-05), and for walking the kept pages. No network and no warehouse are used."""
 
-import csv
 import gzip
 import json
 from datetime import date, datetime, timezone
@@ -30,8 +29,7 @@ def by_key(offers):
 
 
 def test_every_seller_has_a_scraper_and_known_families():
-    with open(tracker.ROOT / "data" / "sellers.csv", newline="", encoding="utf-8") as f:
-        assert {r["seller_id"] for r in csv.DictReader(f)} == set(tracker.SCRAPERS)
+    assert [s["seller_id"] for s in tracker.CONFIG["sellers"]] == list(tracker.SCRAPERS)
     for scraper in tracker.SCRAPERS.values():
         assert {family for family, url in scraper.PAGES} <= FAMILIES | {None}  # None: the parser sets it
 

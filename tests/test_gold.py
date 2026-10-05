@@ -31,7 +31,7 @@ def test_part_no_longer_in_the_catalogue_is_deleted(conn):
     conn.execute("INSERT INTO silver.offer_match VALUES ('amazon', 'test-stale', 'EG-STALE00', 'part_number',"
                  " 'TEST|single', true)")
     tracker.load_reference_into(conn)
-    with open(tracker.ROOT / "data" / "catalogue.csv", newline="", encoding="utf-8") as f:
+    with open(tracker.CONFIG["input_dir"] / tracker.CONFIG["inputs"]["catalogue"], newline="", encoding="utf-8") as f:
         in_csv = {r["part_no"] for r in csv.DictReader(f)}
     assert {p for p, in conn.execute("SELECT part_no FROM silver.part")} == in_csv
     assert conn.execute("SELECT count(*) FROM silver.offer_match WHERE part_no = 'EG-STALE00'").fetchone()[0] == 0

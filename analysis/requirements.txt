@@ -3,3 +3,4 @@ matplotlib==3.10.8
 pandas==2.3.3
 psycopg[binary]==3.2.3
 python-dotenv==1.2.4
+PyYAML==6.0.3

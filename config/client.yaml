@@ -1,0 +1,27 @@
+# Everything a client changes, except secrets (those go in .env).
+# Read only through config.py (load_config). A key exists here only if something reads it.
+
+car_key: null                        # null = all cars; e.g. hyundai or hyundai-elantra limits the notebook to one car
+                                     # (the environment variable CAR_KEY, when set, wins). The pipeline loads every car.
+
+inputs:                              # file names in data/input/
+  catalogue: catalogue.csv           # our parts and our prices
+
+rules:
+  undercut_pct: 5                    # a competitor at least this percent below our price undercuts us
+
+sellers:                             # one entry per competitor site; the longest fetch first, so it starts first
+  # scraper: the module in scrapers/ that reads the site. crawl_delay_s: seconds between requests.
+  - {seller_id: zaitandfilters, name: Zait and Filters, base_url: "https://zaitandfilters.com", scraper: zaitandfilters, robots_verdict: "allowed; /api/ and account paths blocked", crawl_delay_s: 3}
+  - {seller_id: amazon, name: Amazon Egypt, base_url: "https://www.amazon.eg", scraper: amazon, robots_verdict: "allowed; /s search not disallowed", crawl_delay_s: 3}
+  - {seller_id: autospare, name: AutoSpare, base_url: "https://autospare.com.eg", scraper: autospare, robots_verdict: "allowed; only cart/auth/public paths blocked", crawl_delay_s: 3}
+  - {seller_id: egycarparts, name: Egy Car Parts, base_url: "https://egycarparts.com", scraper: egycarparts, robots_verdict: "allowed; Shopify default rules", crawl_delay_s: 3}
+  - {seller_id: fitandfix, name: Fit and Fix, base_url: "https://www.fitandfix.com", scraper: fitandfix, robots_verdict: "allowed; empty robots.txt on the API host", crawl_delay_s: 3}
+  - {seller_id: garageilla, name: Garageilla, base_url: "https://garageilla.com", scraper: garageilla, robots_verdict: "allowed; Shopify default rules", crawl_delay_s: 3}
+  - {seller_id: getradingeg, name: GE Trading, base_url: "https://www.getradingeg.com", scraper: getradingeg, robots_verdict: "allowed; only cart/checkout/search blocked for named bots", crawl_delay_s: 3}
+  - {seller_id: jumia, name: Jumia Egypt, base_url: "https://www.jumia.com.eg", scraper: jumia, robots_verdict: "allowed; identified bots permitted under 200 requests a minute", crawl_delay_s: 3}
+  - {seller_id: nautoexpress, name: N Auto Express, base_url: "https://nautoexpress.com", scraper: nautoexpress, robots_verdict: "allowed; Shopify default rules", crawl_delay_s: 3}
+  - {seller_id: pringi, name: Pringi, base_url: "https://pringi.com", scraper: pringi, robots_verdict: "allowed; no rule on /wp-json", crawl_delay_s: 3}
+  - {seller_id: sparezone, name: Spare Zone, base_url: "https://sparezone-eg.com", scraper: sparezone, robots_verdict: "allowed; Allow: /", crawl_delay_s: 3}
+  - {seller_id: tawfiqia, name: Tawfiqia, base_url: "https://tawfiqia.com", scraper: tawfiqia, robots_verdict: "allowed; no rules", crawl_delay_s: 3}
+  - {seller_id: yourparts, name: YourParts, base_url: "https://www.yourparts.com", scraper: yourparts, robots_verdict: "allowed; Allow: / (API host has no robots.txt)", crawl_delay_s: 3}

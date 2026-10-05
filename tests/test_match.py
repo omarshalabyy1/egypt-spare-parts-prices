@@ -93,9 +93,10 @@ def test_catalogue_parts():
     assert [k for k, p in parts.items() if p["is_key"]] == ["6PK1460|single"]
 
 
-def test_undercut_view_uses_the_same_percent_as_the_alert():
+def test_undercut_views_read_the_percent_from_the_database_setting():
     sql = (tracker.ROOT / "sql" / "gold.sql").read_text(encoding="utf-8")
-    assert f"their_price <= our_price * {(100 - tracker.UNDERCUT_PCT) / 100}" in sql
+    rule = "their_price <= our_price * (1 - current_setting('client.undercut_pct')::numeric / 100)"
+    assert sql.count(rule) == 2 and "0.95" not in sql  # gold.undercut and gold.undercut_alert
 
 
 def test_generation_splits_type_groups():

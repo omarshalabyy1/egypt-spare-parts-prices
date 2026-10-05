@@ -5,7 +5,7 @@
 
 CREATE SCHEMA IF NOT EXISTS silver;
 
-CREATE TABLE IF NOT EXISTS silver.seller (    -- one row per competitor site (data/sellers.csv)
+CREATE TABLE IF NOT EXISTS silver.seller (    -- one row per competitor site (sellers in config/client.yaml)
     seller_id      text PRIMARY KEY,
     name           text NOT NULL,
     base_url       text NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS silver.seller (    -- one row per competitor site (da
     crawl_delay_s  integer
 );
 
-CREATE TABLE IF NOT EXISTS silver.part (      -- one row per catalogue part of the retailer (data/catalogue.csv)
+CREATE TABLE IF NOT EXISTS silver.part (      -- one row per catalogue part of the retailer (data/input/catalogue.csv)
     part_no     text PRIMARY KEY,             -- text so leading zeros survive
     brand       text NOT NULL,
     family      text NOT NULL CHECK (family IN

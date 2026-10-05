@@ -11,7 +11,7 @@ Grain: one row per competitor site. Key: `seller_key` (surrogate); natural key `
 | Column | Type | Meaning |
 |---|---|---|
 | seller_key | integer | Surrogate key, 1 to n in `seller_id` order |
-| seller_id | text | The site's id in data/sellers.csv (`autospare`) |
+| seller_id | text | The site's id in `sellers` in config/client.yaml (`autospare`) |
 | name | text | The site's name |
 | base_url | text | The site's home page |
 
@@ -87,14 +87,14 @@ are left out.
 ## gold.undercut (view)
 
 Grain and columns as `gold.price_gap`, only the rows where the seller is at least 5% cheaper
-(`their_price <= our_price * 0.95`; `UNDERCUT_PCT` in tracker.py) and does not show the part out
+(`rules.undercut_pct` in config/client.yaml, set on the database as `client.undercut_pct`) and does not show the part out
 of stock. `send_alert` emails the key parts in this view for
 the run week.
 
 ## gold.undercut_alert (view)
 
 Grain: one row per key part's offer per run week that the alert email lists. The offer is
-comparable, not shown out of stock, at least 5% below our price (`UNDERCUT_PCT`), and either cut
+comparable, not shown out of stock, at least 5% below our price (`rules.undercut_pct`), and either cut
 its price from its previous observed week (`price cut`) or is new this week at a seller already
 tracked in an earlier week (`new offer`). A seller's first tracked week is its baseline: no alerts.
 `send_alert` reads this view for the run week.

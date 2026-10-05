@@ -1,4 +1,4 @@
-"""Run once, for the demo only: generate the made-up retailer's catalogue (data/catalogue.csv) from
+"""Run once, for the demo only: generate the made-up retailer's catalogue (data/input/catalogue.csv) from
 the offers in silver. Each match group (tracker.match_groups: a part code two sellers or more sell,
 or a part type and car model they do, split into sets and single pieces) becomes one of our parts,
 priced at the market's median. A real retailer brings its own catalogue instead.
@@ -99,6 +99,6 @@ if __name__ == "__main__":
     with tracker.connect() as conn:
         offers = conn.cursor(row_factory=dict_row).execute(tracker.LATEST_OFFERS).fetchall()
     rows = catalogue(offers)
-    write(rows, tracker.ROOT / "data" / "catalogue.csv")
-    print(f"data/catalogue.csv: {len(rows)} parts from {len(offers)} offers,"
+    write(rows, tracker.CONFIG["input_dir"] / tracker.CONFIG["inputs"]["catalogue"])
+    print(f"data/input/{tracker.CONFIG['inputs']['catalogue']}: {len(rows)} parts from {len(offers)} offers,"
           f" {sum(r['is_key'] for r in rows)} key parts")
