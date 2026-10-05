@@ -1,7 +1,7 @@
 # Everything a client changes, except secrets (those go in .env).
 # Read only through config.py (load_config). A key exists here only if something reads it.
 
-car_key: null                        # null = all cars; e.g. hyundai or hyundai-elantra limits the notebook to one car
+car_key: nissan-sunny                # null = all cars; e.g. hyundai or hyundai-elantra limits the notebook to one car
                                      # (the environment variable CAR_KEY, when set, wins). The pipeline loads every car.
 
 inputs:                              # file names in data/input/
