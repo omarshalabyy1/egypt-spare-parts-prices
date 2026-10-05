@@ -12,12 +12,14 @@ import psycopg
 from psycopg.types.json import Jsonb
 
 import scrape
-from scrapers import autospare, garageilla, nautoexpress, pringi, sparezone
+from scrapers import (amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress,
+                      pringi, sparezone, tawfiqia, yourparts, zaitandfilters)
 
 ROOT = Path(__file__).parent
 # One scraper per competitor site, keyed by its seller_id in data/sellers.csv.
-SCRAPERS = {"autospare": autospare, "garageilla": garageilla, "nautoexpress": nautoexpress,
-            "pringi": pringi, "sparezone": sparezone}
+SCRAPERS = {m.__name__.split(".")[-1]: m for m in (
+    amazon, autospare, egycarparts, fitandfix, garageilla, getradingeg, jumia, nautoexpress, pringi, sparezone,
+    tawfiqia, yourparts, zaitandfilters)}
 MAX_PAGES = 250  # per PAGES entry; a listing longer than this is cut off, with a log line
 
 
@@ -59,21 +61,40 @@ def load_reference():
 
 # --- Step 2: fetch ----------------------------------------------------------------------------
 
+def walk(scraper, first, read):
+    """The pages of one listing, from its first URL, following its next links; a list of links (a
+    sitemap) fans out to each page in it. read(url) gives a page's bytes, or None if not found.
+    Yields (url, body, offers, from_list); stops at the scraper's page cap."""
+    queue, cap = [(first, False)], getattr(scraper, "MAX_PAGES", MAX_PAGES)
+    for _ in range(cap):
+        if not queue:
+            return
+        url, from_list = queue.pop(0)
+        body = read(url)
+        found, following = scraper.parse(body, url) if body is not None else ([], None)
+        yield url, body, found, from_list
+        if isinstance(following, list):
+            queue += [(u, True) for u in following]
+        elif following:
+            queue.append((following, False))
+    if queue:
+        print(f"stopped at the {cap}-page cap of {first}, {len(queue)} pages left")
+
+
 def fetch_pages(seller_id, run_week):
-    """Fetch every listing page of one site for the week, following each listing's next links.
-    The kept pages under data/raw are the output. Fails at the end if any page was not found."""
-    scraper, missing = SCRAPERS[seller_id], []
-    for family, url in scraper.PAGES:
-        for _ in range(MAX_PAGES):
-            body = scrape.fetch(url, seller_id, run_week)
-            if body is None:
+    """Fetch every listing page of one site for the week. The kept pages under data/raw are the
+    output. Fails at the end if a listing page was not found; a page named in a sitemap that is
+    gone (404) is only counted."""
+    scraper = SCRAPERS[seller_id]
+    fetch = getattr(scraper, "fetch", scrape.fetch)  # a site with its own way in (a POST) brings it
+    missing, gone = [], 0
+    for family, first in scraper.PAGES:
+        for url, body, _, from_list in walk(scraper, first, lambda u: fetch(u, seller_id, run_week)):
+            if body is None and from_list:
+                gone += 1
+            elif body is None:
                 missing.append(url)
-                break
-            url = scraper.parse(body, url)[1]
-            if url is None:
-                break
-        else:
-            print(f"{seller_id} {family}: stopped at the {MAX_PAGES}-page cap, next was {url}")
+    print(f"{seller_id}: {gone} sitemap pages gone")
     if missing:
         raise RuntimeError(f"{seller_id}: {len(missing)} listing page(s) not found: {missing}")
 
@@ -82,36 +103,45 @@ def fetch_pages(seller_id, run_week):
 
 def offers(seller_id, run_week):
     """Every offer on the site's kept pages for the week, read from disk only. Walks each listing
-    the way fetch_pages did, so each offer carries its listing's family; observed_on and fetched_at
-    come from the page's index.jsonl line. Fails if a page is missing or nothing parses."""
+    the way fetch_pages did, so each offer carries its listing's family (unless the parser set one);
+    observed_on and fetched_at come from the page's index.jsonl line. Fails if a page is missing or
+    nothing parses."""
     scraper = SCRAPERS[seller_id]
     folder = ROOT / "data" / "raw" / seller_id / str(run_week)
-    index = {}
+    good, gone = {}, set()
     with open(folder / "index.jsonl", encoding="utf-8") as f:  # no index: nothing was fetched, fail
         for line in map(json.loads, f):
             if line["status"] == 200:
-                index[line["url"]] = line  # the last good fetch of a URL wins
-    rows, read = [], set()
-    for family, url in scraper.PAGES:
-        for _ in range(MAX_PAGES):
-            if url not in index:
-                raise RuntimeError(f"{seller_id}: {url} is not among the kept pages of {run_week}")
-            line = index[url]
-            with gzip.open(ROOT / line["path"]) as page:
-                found, next_url = scraper.parse(page.read(), url)
-            read.add(url)
+                good[line["url"]] = line  # the last good fetch of a URL wins
+            else:
+                gone.add(line["url"])
+
+    def read(url):
+        if url in good:
+            with gzip.open(ROOT / good[url]["path"]) as page:
+                return page.read()
+        if url in gone:
+            return None
+        raise RuntimeError(f"{seller_id}: {url} is not among the kept pages of {run_week}")
+
+    rows, read_urls, skipped = [], set(), 0
+    for family, first in scraper.PAGES:
+        for url, body, found, from_list in walk(scraper, first, read):
+            if body is None and not from_list:
+                raise RuntimeError(f"{seller_id}: listing page {url} was not found when fetched")
+            if body is None:
+                skipped += 1
+                continue
+            read_urls.add(url)
+            line = good[url]
             observed_on = date.fromisoformat(line["fetched_at"][:10])  # the UTC day of the fetch
-            rows += [{**o, "seller_id": seller_id, "family": family, "observed_on": observed_on,
-                      "fetched_at": line["fetched_at"]} for o in found]
-            url = next_url
-            if url is None:
-                break
+            rows += [{**o, "seller_id": seller_id, "family": o.get("family") or family,
+                      "observed_on": observed_on, "fetched_at": line["fetched_at"]} for o in found]
     if not rows:
-        raise ValueError(f"{seller_id}: {len(read)} kept pages parsed to no offers: a parser is broken")
-    unread = len(index) - len(read)
+        raise ValueError(f"{seller_id}: {len(read_urls)} kept pages parsed to no offers: a parser is broken")
     repeats = len(rows) - len({r["listing_key"] for r in rows})
-    print(f"{seller_id}: {len(read)} pages, {len(rows)} offers ({repeats} listed twice or more),"
-          f" {unread} kept pages not on any listing")
+    print(f"{seller_id}: {len(read_urls)} pages, {len(rows)} offers ({repeats} listed twice or more),"
+          f" {skipped} sitemap pages gone, {len(good) - len(read_urls)} kept pages not on any listing")
     return rows
 
 

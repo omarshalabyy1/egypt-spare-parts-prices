@@ -13,14 +13,16 @@ import pytest
 
 import scrape
 import tracker
-from scrapers import autospare, garageilla, nautoexpress, pringi, sparezone
+from scrapers import (amazon, autospare, fitandfix, garageilla, getradingeg, jumia, nautoexpress, pringi, sparezone,
+                      tawfiqia, yourparts, zaitandfilters)
 
 PAGES = Path(__file__).parent / "pages"
 FAMILIES = {"filter", "brake pad", "spark plug", "battery", "belt", "bulb", "wiper", "oil"}
 
 
 def page(name):
-    return (PAGES / name).read_bytes()
+    body = (PAGES / name).read_bytes()
+    return gzip.decompress(body) if name.endswith(".gz") else body
 
 
 def by_key(offers):
@@ -31,7 +33,7 @@ def test_every_seller_has_a_scraper_and_known_families():
     with open(tracker.ROOT / "data" / "sellers.csv", newline="", encoding="utf-8") as f:
         assert {r["seller_id"] for r in csv.DictReader(f)} == set(tracker.SCRAPERS)
     for scraper in tracker.SCRAPERS.values():
-        assert {family for family, url in scraper.PAGES} <= FAMILIES
+        assert {family for family, url in scraper.PAGES} <= FAMILIES | {None}  # None: the parser sets it
 
 
 def test_week_of_is_the_monday():
@@ -58,7 +60,7 @@ def test_garageilla_keeps_only_maker_codes():
     first = by_key(offers)["9831703249191"]
     assert (first["price"], first["brand"], first["part_no"]) == (Decimal("810.00"), "التعاون", None)
     assert next_url.endswith("page=2") and garageilla.parse(b'{"products": []}', next_url) == ([], None)
-    assert [garageilla.maker_code(s) for s in ("OC90", "HX515W50", "29934", "1020EG07", "102003012EG007", None)] == [
+    assert [scrape.maker_code(s) for s in ("OC90", "HX515W50", "29934", "1020EG07", "102003012EG007", None)] == [
         True, True, False, False, False, False]
 
 
@@ -94,6 +96,79 @@ def test_autospare():
     assert next_url == autospare.PAGES[1][1] + "?page=60"
     # A last page: the same page without its next link (a modified copy, not a real last page).
     assert autospare.parse(page("autospare.html").replace(b'rel="next"', b""), url)[1] is None
+
+
+def test_jumia():
+    url = jumia.PAGES[0][1]
+    offers, next_url = jumia.parse(page("jumia.html.gz"), url)
+    assert len(offers) == 40 and all(scrape.check(o) is None for o in offers)
+    first = by_key(offers)["GE810VP00V7DLNAFAMZ"]
+    assert (first["title"], first["price"], first["is_discounted"]) == (
+        "7L0919679A Fuel Filter Fuel Pressure Regulat", Decimal("2442.42"), True)  # not data-ga4-price 41.56
+    assert next_url == url + "?page=2"
+    belts, last = jumia.parse(page("jumia_last.html.gz"), jumia.PAGES[3][1])  # a real one-page listing
+    assert len(belts) == 2 and last is None
+
+
+def test_amazon():
+    url = amazon.search("car oil filter")
+    offers, next_url = amazon.parse(page("amazon.html.gz"), url)
+    assert len(offers) == 60 and sum(scrape.check(o) is None for o in offers) == 59
+    assert by_key(offers)["B0G3QF1PRW"]["price"] == Decimal("1099.00")
+    assert next_url == amazon.search("car oil filter", 2)
+    with pytest.raises(RuntimeError, match="bot protection"):
+        amazon.parse(b"<form action='/errors/validateCaptcha'></form>", url)
+
+
+def test_fitandfix():
+    offers, next_url = fitandfix.parse(page("fitandfix.json"), fitandfix.PAGES[0][1])
+    assert len(offers) == 9 and all(scrape.check(o) is None for o in offers)
+    assert by_key(offers)["44261"]["price"] == Decimal("400") and next_url is None  # one page of 9
+
+
+def test_yourparts():
+    offers, next_url = yourparts.parse(page("yourparts.json"), yourparts.PAGES[0][1])
+    assert len(offers) == 48 and all(scrape.check(o) is None for o in offers)
+    first = by_key(offers)["36653"]
+    assert (first["price"], first["brand"]) == (Decimal("320"), "جي ام ")
+    assert next_url.endswith("offset=48")
+    assert yourparts.parse(b'{"results": [], "next": null}', next_url) == ([], None)
+
+
+def test_tawfiqia_page_then_load_more():
+    offers, more = tawfiqia.parse(page("tawfiqia.html.gz"), tawfiqia.PAGES[0][1])
+    assert len(offers) == 15 and by_key(offers)["10909"]["price"] == Decimal("495")
+    assert more == "https://tawfiqia.com/ar/filterProducts?page_number=1&category=filters+&load_products=1"
+    offers, next_url = tawfiqia.parse(page("tawfiqia_more.html"), more)
+    assert len(offers) == 15 and all(scrape.check(o) is None for o in offers)
+    assert by_key(offers)["10685"]["price"] == Decimal("2535")
+    assert next_url == more.replace("page_number=1", "page_number=2")
+    assert tawfiqia.parse(b"0", next_url) == ([], None)  # the site's answer past the end
+
+
+def test_getradingeg_keeps_priceless_cards_for_quarantine():
+    url = getradingeg.PAGES[0][1]
+    offers, next_url = getradingeg.parse(page("getradingeg.html.gz"), url)
+    assert len(offers) == 20
+    assert [scrape.check(o) for o in offers].count("no price shown") == 9
+    first = offers[0]
+    assert (first["price"], first["part_no"]) == (Decimal("98.00"), "7700374177")
+    assert getradingeg.part_no("Oil Filter Nissan [Original] (Made in Japan)") is None
+    assert next_url == url + "/page/2"
+
+
+def test_zaitandfilters():
+    url = ("https://zaitandfilters.com/products/%D8%B7%D9%82%D9%85-%D8%A8%D9%88%D8%AC%D9%8A%D9%87%D8%A7%D8%AA-"
+           "%D8%B3%D9%86-%D9%85%D8%B4%D9%82%D9%88%D9%82-%D8%AA%D9%88%D9%8A%D9%88%D8%AA%D8%A7-corolla%20"
+           "%D8%A7%D9%84%D8%AC%D9%85%D9%84-2000-2001-2002-2003-2004-2005-2006-2007-NGK")
+    [offer], next_url = zaitandfilters.parse(page("zaitandfilters.html"), url)
+    assert scrape.check(offer) is None and next_url is None
+    assert (offer["price"], offer["brand"], offer["family"], offer["part_no"]) == (Decimal("505"), "NGK", "spark plug", None)
+    sitemap = ("<urlset><url><loc>https://zaitandfilters.com/store</loc></url>"
+               f"<url><loc>{url}</loc></url><url><loc>https://zaitandfilters.com/products/gsp-kia-carens-000d6596</loc></url>"
+               "<url><loc>https://zaitandfilters.com/products/%D8%B2%D9%8A%D8%AA-%D9%85%D9%88%D8%AA%D9%88%D8%B1-"
+               "%D9%83%D8%A7%D8%B1%D8%AA%D9%8A%D8%B1</loc></url></urlset>").encode()  # the last: engine-oil sump, not oil
+    assert zaitandfilters.parse(sitemap, zaitandfilters.PAGES[0][1]) == ([], [url])
 
 
 # --- Walking the kept pages ------------------------------------------------------------------------
@@ -156,3 +231,22 @@ def test_fetch_stops_at_the_page_cap(seller, monkeypatch, capsys):
     monkeypatch.setattr(scrape, "fetch", lambda url, s, w: calls.append(url) or b"[]")
     tracker.fetch_pages("test-seller", "2026-10-05")
     assert len(calls) == tracker.MAX_PAGES and "page cap" in capsys.readouterr().out
+
+
+def test_sitemap_fans_out_and_a_gone_product_is_only_counted(seller, monkeypatch):
+    sitemap, a, b = "https://shop.example/sitemap.xml", "https://shop.example/p/a", "https://shop.example/p/b"
+
+    def parse(body, url):
+        if url == sitemap:
+            return [], [a, b]
+        return [{**json.loads(body), "listing_key": url, "family": "oil"}], None
+
+    monkeypatch.setitem(tracker.SCRAPERS, "test-seller", SimpleNamespace(PAGES=[(None, sitemap)], parse=parse))
+    pages = {sitemap: b"<urlset/>", a: b'{"title": "A"}'}  # b is gone (404)
+    monkeypatch.setattr(scrape, "fetch", lambda url, s, w: pages.get(url))
+    tracker.fetch_pages("test-seller", "2026-10-05")  # does not raise for the gone product
+    keep(seller, pages)
+    with open(seller / "data" / "raw" / "test-seller" / "2026-10-05" / "index.jsonl", "a", encoding="utf-8") as index:
+        index.write(json.dumps({"url": b, "path": None, "fetched_at": "2026-10-05T23:59:00+00:00", "status": 404}) + "\n")
+    [row] = tracker.offers("test-seller", "2026-10-05")
+    assert (row["listing_key"], row["family"]) == (a, "oil")

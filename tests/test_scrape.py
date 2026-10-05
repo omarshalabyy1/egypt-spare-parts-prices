@@ -72,7 +72,7 @@ def test_live_page_is_kept_gzipped_then_read_from_disk(offline):
     assert scrape.fetch(URL, "test-seller", WEEK) == b"<html>live</html>"
     assert scrape.fetch(URL, "test-seller", WEEK) == b"<html>live</html>"
     assert len(calls) == 2  # one retry after the 503, then the second fetch came from disk
-    assert sleeps == [3, 2, 3]  # the pace after each live request and the backoff; none for the disk read
+    assert [round(t) for t in sleeps] == [3, 2, 3]  # the pace after each live request and the backoff; none for the disk read
     [line] = (root / "data" / "raw" / "test-seller" / str(WEEK) / "index.jsonl").read_text().splitlines()
     assert json.loads(line)["status"] == 200 and json.loads(line)["path"].endswith(".html.gz")
 

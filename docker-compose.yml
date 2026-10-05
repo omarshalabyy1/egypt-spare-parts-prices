@@ -50,8 +50,9 @@ services:
     restart: unless-stopped
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__CORE__PARALLELISM: "6"  # one fetch task per site at once; small: the laptop shares 7 GB of Docker memory
-      AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: "6"
+      AIRFLOW__CORE__PARALLELISM: "4"  # small: the laptop shares 7 GB of Docker memory
+      AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: "3"  # three sites fetched at once; the 7 GB is shared with another project
+      AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT: "120"  # a worker's import of the DAG once took over the 30 s default under load
       AIRFLOW__API__WORKERS: "1"
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"

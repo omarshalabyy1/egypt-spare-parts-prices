@@ -45,24 +45,36 @@ def allowed(url):
     return robots(url).can_fetch(USER_AGENT, url)
 
 
-def fetch(url, seller_id, run_week):
-    """The page as bytes (HTML or JSON, as the site sent it), or None on a 4xx. Sleeps only after a
-    live request, never after a page read from disk."""
+def kept(url, seller_id, run_week):
+    """The path of the page as kept for that week, or None if it was not kept."""
     folder = ROOT / "data" / "raw" / seller_id / str(run_week)
     name = hashlib.sha1(url.encode()).hexdigest()[:12]
-    for kept in (folder / f"{name}.html.gz", folder / f"{name}.json.gz"):
-        if kept.exists():
-            with gzip.open(kept) as f:
-                return f.read()
+    return next((p for p in (folder / f"{name}.html.gz", folder / f"{name}.json.gz") if p.exists()), None)
+
+
+def fetch(url, seller_id, run_week, form=None, headers=None):
+    """The page as bytes (HTML or JSON, as the site sent it), or None on a 4xx. With form, the page
+    is POSTed (a site's own "load more"); the URL still names it in the cache. Sleeps only after a
+    live request, never after a page read from disk: requests to a site start at least 3 s apart."""
+    path = kept(url, seller_id, run_week)
+    if path:
+        with gzip.open(path) as f:
+            return f.read()
     if not allowed(url):
         raise RuntimeError(f"robots.txt does not allow {url}")
     delay = max(robots(url).crawl_delay(USER_AGENT) or 0, MIN_DELAY_S)
+    folder = ROOT / "data" / "raw" / seller_id / str(run_week)
+    name = hashlib.sha1(url.encode()).hexdigest()[:12]
     for backoff in (*BACKOFF_S, None):
+        started = time.monotonic()
         try:
-            response = http.get(url, timeout=60)
+            if form is None:
+                response = http.get(url, timeout=60)
+            else:
+                response = http.post(url.split("?")[0], data=form, headers=headers, timeout=60)
         except (requests.ConnectionError, requests.Timeout):
             response = None
-        time.sleep(delay)
+        time.sleep(max(0, delay - (time.monotonic() - started)))
         if response is not None and response.status_code != 429 and response.status_code < 500:
             break
         if backoff is None:
@@ -98,6 +110,13 @@ def next_page(url):
     return parts._replace(query=urlencode(query)).geturl()
 
 
+def maker_code(sku):
+    """A SKU that looks like a maker's part code: letters and digits, 4 to 12 long, and not a shop's
+    own digits+EG+digits code (102003012EG007)."""
+    return bool(sku and re.fullmatch(r"(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]{4,12}", sku)
+                and not re.fullmatch(r"\d+EG\d+", sku))
+
+
 def check(row):
     """The schema check for a parsed offer: None if it is good, else the reason it is not."""
     if not isinstance(row.get("title"), str) or not row["title"].strip():
@@ -107,6 +126,8 @@ def check(row):
     if not row.get("listing_key"):
         return "listing_key missing"
     price = row.get("price")
+    if price is None:
+        return "no price shown"
     if not isinstance(price, Decimal) or not 0 < price < 1_000_000:
         return "price not a Decimal between 0 and 1,000,000"
     if row.get("currency") != "EGP":
