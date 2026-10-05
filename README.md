@@ -42,7 +42,7 @@ it ever sees.
 ### 🔁 The mental model: one part, three sellers, one Monday
 
 <p align="center">
-  <img width="100%" src="docs/one-part.svg" alt="One part, three sellers, one Monday: the same serpentine belt, part 6PK2360, at Pringi, Auto Spare and N Auto Express on one price axis in Egyptian pounds, Pringi the cheapest; the dearest is more than double the cheapest. Every Monday our price is compared with the cheapest seller, and below ours is an undercut alert.">
+  <img width="100%" src="docs/one-part.svg" alt="One part, three sellers, one Monday: the same belt, part 6PK2360, at Pringi, Auto Spare and GE Trading on one price axis in Egyptian pounds, Pringi the cheapest and GE Trading shown out of stock. Every Monday our price is compared with the cheapest seller, and below ours is an undercut alert.">
 </p>
 
 The same part is sold by several sellers. It is found at each of them by its part number where they
@@ -52,22 +52,49 @@ competitor below you is an undercut.
 
 ## 📈 The result
 
-**<!--n:offers-->12,613<!--/n--> prices from <!--n:sellers-->5<!--/n--> Egyptian sellers in the
-first weekly run.**
+**<!--n:parts_below_pct-->86.9<!--/n-->% of our <!--n:parts-->781<!--/n--> parts have an Egyptian seller at least 5%
+below the market's middle price:** <!--n:parts_below_part_number-->96<!--/n--> of the
+<!--n:parts_part_number-->154<!--/n--> parts matched by part number, and <!--n:parts_below_type_model-->583<!--/n--> of
+the <!--n:parts_type_model-->627<!--/n--> matched by part type and car. Our price is made up: the median of the sellers'
+comparable prices. Every number below comes from [the notebook](analysis/analysis.ipynb).
 
-- **Prices by seller:** Auto Spare <!--n:offers_autospare-->9,981<!--/n-->, Pringi
-  <!--n:offers_pringi-->1,308<!--/n-->, N Auto Express <!--n:offers_nautoexpress-->1,135<!--/n-->,
-  Spare Zone <!--n:offers_sparezone-->124<!--/n-->, Garage ILLA <!--n:offers_garageilla-->65<!--/n-->.
-- **<!--n:pages-->727<!--/n--> pages read** and kept; every page re-parsed from the kept copy gives
-  identical results.
-- **<!--n:quarantined-->0<!--/n--> rows set aside** by the check.
-- **<!--n:shared_codes-->24<!--/n--> part codes sold by two sellers or more:**
-  <!--n:shared_belt_codes-->23<!--/n--> belt sizes and <!--n:shared_plug_codes-->1<!--/n-->
-  spark-plug code.
-- **The same belt, 6PK2360,** costs <!--n:spread_6pk2360_pct-->115<!--/n-->% more at the dearest
-  seller than at the cheapest (the picture above).
+- **<!--n:key_parts_below-->157<!--/n--> of the <!--n:key_parts-->157<!--/n--> key parts** have such a seller. At the
+  cheapest one, a part costs a median **<!--n:undercut_gap_median_pct-->40.0<!--/n-->% less** than our price
+  (<!--n:undercut_gap_median_pct_part_number-->27.2<!--/n-->% by part number,
+  <!--n:undercut_gap_median_pct_type_model-->42.9<!--/n-->% by part type and car).
+- **Shopping around pays:** in the median part the dearest seller is
+  **<!--n:spread_median_pct-->92.8<!--/n-->% above the cheapest** (<!--n:spread_groups-->624<!--/n--> parts with 3
+  prices or more at 2 sellers or more): <!--n:spread_median_pct_part_number-->42.1<!--/n-->% for the same part number,
+  <!--n:spread_median_pct_type_model-->106.2<!--/n-->% for the same part type and car, where brands mix. The most for
+  <!--n:spread_top_family-->wiper<!--/n-->s (<!--n:spread_top_family_pct-->128.9<!--/n-->%).
+- **<!--n:leader-->Pringi<!--/n--> is the cheapest** in **<!--n:leader_share_pct-->78.0<!--/n-->%** of the
+  <!--n:leader_parts-->59<!--/n--> parts it sells, at a median <!--n:leader_below_median_pct-->32.6<!--/n-->% below
+  the market's middle price. Auto Spare, which sells <!--n:compete_parts_autospare-->572<!--/n--> of them, is the
+  cheapest in <!--n:lead_share_autospare_pct-->50.7<!--/n-->%.
+- **Genuine brands cost more:** a median **<!--n:brand_premium_median_pct-->44.8<!--/n-->%** above aftermarket
+  brands for the same part type and car (<!--n:brand_groups-->224<!--/n--> parts with both); brake pads
+  <!--n:brand_premium_median_pct_brake_pad-->158.4<!--/n-->%.
+- **Which cars:** <!--n:offers_with_car_pct-->58.3<!--/n-->% of the prices name the car,
+  <!--n:car_models-->88<!--/n--> models of <!--n:car_makes-->22<!--/n--> makes; the most listed is the
+  <!--n:top_model-->Hyundai Elantra<!--/n--> (<!--n:top_model_offers-->776<!--/n--> prices).
 
-<!-- charts from analysis/analysis.ipynb land here -->
+**What one weekly run reads:** <!--n:offers-->28,825<!--/n--> prices from <!--n:sellers-->13<!--/n--> Egyptian
+sellers on <!--n:pages-->4,754<!--/n--> pages, each page kept. <!--n:quarantined-->1,094<!--/n--> rows were set aside
+by the check, <!--n:quarantined_getradingeg-->1,052<!--/n--> of them GE Trading listings with no price or a
+placeholder price. <!--n:shared_codes-->154<!--/n--> parts are matched by part number, the same code at two sellers or
+more: <!--n:shared_belt_codes-->113<!--/n--> belts, <!--n:shared_filter_codes-->32<!--/n--> filters,
+<!--n:shared_brake_pad_codes-->7<!--/n--> brake pads and <!--n:shared_wiper_codes-->2<!--/n--> wipers. The same belt,
+6PK2360, costs <!--n:spread_6pk2360_pct-->17.1<!--/n-->% more at the dearest seller with it in stock than at the
+cheapest (the picture above). Price changes week over week start with the second run week.
+
+<p align="center">
+  <img width="100%" src="docs/price-leadership.png" alt="Share of the parts each seller sells where it is the cheapest, with its median price index against the market's middle price">
+</p>
+
+<p align="center">
+  <img width="49%" src="docs/spread-by-family.png" alt="The dearest seller's price over the cheapest in the median part, by part family">
+  <img width="49%" src="docs/brand-premium.png" alt="Genuine brands over aftermarket brands for the same part type and car, median part, by family">
+</p>
 
 ## 🧰 The product
 
@@ -94,7 +121,8 @@ docker compose up -d --build  # Airflow http://127.0.0.1:8100, warehouse localho
 ```
 
 Open Airflow at http://127.0.0.1:8100 and unpause `spare_parts_prices`. It runs once a week from
-then on.
+then on. A full week's run takes about <!--n:run_minutes-->185<!--/n--> minutes; Zait and Filters is the long one
+(about <!--n:fetch_longest_minutes-->180<!--/n--> minutes of it).
 
 Then the numbers and the tests:
 
@@ -114,7 +142,7 @@ you clear any challenge, login or cookie banner yourself in the window, and the 
 | [scrape.py](scrape.py) | Reading the pages, keeping a copy of each, and the row check |
 | [scrapers/](scrapers/) | One module per seller |
 | [dags/spare_parts_prices.py](dags/spare_parts_prices.py) | The weekly Airflow DAG |
-| [sql/schema.sql](sql/schema.sql) | Tables, the price history, and the gap, undercut and change views |
+| [sql/bronze.sql](sql/bronze.sql), [silver.sql](sql/silver.sql), [gold.sql](sql/gold.sql) | Tables of each layer, the price history, and the gap, undercut and change views |
 | [docs/layers.svg](docs/layers.svg) | The warehouse layers: raw pages, parsed offers, the star for Power BI |
 | [data/](data/) | The sellers, the catalogue, and the kept pages by seller and week |
 | [analysis/](analysis/) | The notebook behind every number |
@@ -124,7 +152,25 @@ you clear any challenge, login or cookie banner yourself in the window, and the 
 ## 🗂️ Data
 
 - **Competitor prices are real,** read from the public product pages and APIs of Egyptian
-  spare-parts sellers: Auto Spare, Pringi, N Auto Express, Spare Zone, Garage ILLA, Jumia,
-  egycarparts, Tawfiqia, Fit and Fix, Your Parts, GE Trading, Zait and Filters and Amazon Egypt.
+  spare-parts sellers, in the table below for run week <!--n:run_week-->2026-10-05<!--/n-->. The site's own count is
+  the number of products (or pages) the site says a listing holds; a product listed under two of its categories is
+  one price here and two in the site's count.
 - **The pace** is one request every 3 seconds per site.
-- **The retailer and its catalogue** ([data/catalogue.csv](data/catalogue.csv)) are made up.
+- **The retailer and its catalogue** ([data/catalogue.csv](data/catalogue.csv)) are made up: our price for a part
+  is the median of the sellers' comparable prices.
+
+| Seller | Prices | Rows set aside | The site's own count |
+|---|---:|---:|---|
+| Auto Spare | <!--n:offers_autospare-->9,981<!--/n--> | <!--n:quarantined_autospare-->0<!--/n--> | <!--n:pages_autospare-->669<!--/n--> of <!--n:stated_pages_autospare-->669<!--/n--> pages read |
+| Egy Car Parts | <!--n:offers_egycarparts-->3,832<!--/n--> | <!--n:quarantined_egycarparts-->0<!--/n--> | only in a file the run does not read |
+| Tawfiqia | <!--n:offers_tawfiqia-->3,628<!--/n--> | <!--n:quarantined_tawfiqia-->0<!--/n--> | <!--n:stated_tawfiqia-->3,629<!--/n--> products |
+| Zait and Filters | <!--n:offers_zaitandfilters-->3,488<!--/n--> | <!--n:quarantined_zaitandfilters-->1<!--/n--> | not stated |
+| Amazon Egypt | <!--n:offers_amazon-->1,718<!--/n--> | <!--n:quarantined_amazon-->38<!--/n--> | not stated |
+| Jumia | <!--n:offers_jumia-->1,566<!--/n--> | <!--n:quarantined_jumia-->3<!--/n--> | <!--n:stated_jumia-->1,569<!--/n--> products |
+| GE Trading | <!--n:offers_getradingeg-->1,530<!--/n--> | <!--n:quarantined_getradingeg-->1,052<!--/n--> | not stated |
+| Pringi | <!--n:offers_pringi-->1,308<!--/n--> | <!--n:quarantined_pringi-->0<!--/n--> | not stated |
+| N Auto Express | <!--n:offers_nautoexpress-->1,135<!--/n--> | <!--n:quarantined_nautoexpress-->0<!--/n--> | not stated |
+| Your Parts | <!--n:offers_yourparts-->283<!--/n--> | <!--n:quarantined_yourparts-->0<!--/n--> | not stated |
+| Fit and Fix | <!--n:offers_fitandfix-->167<!--/n--> | <!--n:quarantined_fitandfix-->0<!--/n--> | <!--n:stated_fitandfix-->167<!--/n--> products |
+| Spare Zone | <!--n:offers_sparezone-->124<!--/n--> | <!--n:quarantined_sparezone-->0<!--/n--> | not stated |
+| Garage ILLA | <!--n:offers_garageilla-->65<!--/n--> | <!--n:quarantined_garageilla-->0<!--/n--> | not stated |
