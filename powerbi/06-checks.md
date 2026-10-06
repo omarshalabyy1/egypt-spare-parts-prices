@@ -10,7 +10,7 @@ on the wrong choice.
 **Building after a later run?** The numbers move with each run. Run the notebook once (it rewrites
 `numbers.json`), then read each check's value from its key, or from its SQL, not from this page.
 
-Run the SQL in any SQL tool on `127.0.0.1:5450`, database `parts`, user `parts`, or with
+Run the SQL in any SQL tool on port 5450, database `parts`, user `parts`, or with
 `docker compose exec warehouse psql -U parts -d parts`. Run the market block once per session before
 C9 to C14: it builds the same market the report builds (a temporary table, gone when you
 disconnect). It takes about 20 seconds, the time `gold.price_gap` takes to compute.

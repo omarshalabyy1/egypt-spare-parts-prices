@@ -127,7 +127,7 @@ name, its volumes and the ports 5450 and 8100 are fixed.
 git clone https://github.com/omarshalabyy1/egypt-spare-parts-prices
 cd egypt-spare-parts-prices
 cp .env.example .env          # set WAREHOUSE_PASSWORD; the Gmail lines are optional
-docker compose up -d --build  # Airflow http://127.0.0.1:8100, warehouse localhost:5450
+docker compose up -d --build  # Airflow on port 8100, warehouse on port 5450
 curl http://127.0.0.1:8100/api/v2/monitor/health  # wait until the scheduler shows healthy, about a minute
 docker compose exec airflow airflow dags unpause spare_parts_prices  # or unpause it in Airflow's page
 ```

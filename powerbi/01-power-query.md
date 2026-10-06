@@ -1,6 +1,6 @@
 # 1. Power Query
 
-The report reads the gold star of the local warehouse: PostgreSQL at `127.0.0.1:5450`, database
+The report reads the gold star of the local warehouse: PostgreSQL on port 5450, database
 `parts`, after `docker compose up -d` and a weekly run of the `spare_parts_prices` DAG (steps 1 to 4
 of [`08-build-checklist.md`](08-build-checklist.md)). Nothing is read from files, and nothing from
 bronze or silver.

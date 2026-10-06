@@ -7,7 +7,7 @@ it is off, fix that step first.
 
 1. Start Docker Desktop. In the repo folder, if there is no `.env` yet, copy `.env.example` to `.env`
    and set `WAREHOUSE_PASSWORD` to a password of your choice. Then run `docker compose up -d --build`.
-2. Open Airflow at http://127.0.0.1:8100 and switch `spare_parts_prices` on (the toggle left of its
+2. Open Airflow on port 8100 and switch `spare_parts_prices` on (the toggle left of its
    name). It runs the latest week; a full run takes about three hours (185 minutes on 5 October
    2026), most of it reading Zait and Filters.
 3. **Check:** in Airflow the run of `spare_parts_prices` is green (every task, `build_gold`
