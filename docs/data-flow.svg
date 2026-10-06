@@ -33,8 +33,8 @@
   <text x="104.0" y="138" class="where" text-anchor="middle">sites and files</text>
   <rect x="206" y="96" width="160" height="26" rx="13" fill="#3B82F6"/><text x="286.0" y="114" class="layer" text-anchor="middle">1  Bronze</text>
   <text x="286.0" y="138" class="where" text-anchor="middle">pages on disk, schema bronze</text>
-  <rect x="396" y="96" width="170" height="26" rx="13" fill="#0EA5E9"/><text x="481.0" y="114" class="layer" text-anchor="middle">2  Silver</text>
-  <text x="481.0" y="138" class="where" text-anchor="middle">schema silver, tables</text>
+  <rect x="384" y="96" width="170" height="26" rx="13" fill="#0EA5E9"/><text x="469.0" y="114" class="layer" text-anchor="middle">2  Silver</text>
+  <text x="469.0" y="138" class="where" text-anchor="middle">schema silver, tables</text>
   <rect x="590" y="96" width="202" height="26" rx="13" fill="#14B8A6"/><text x="691.0" y="114" class="layer" text-anchor="middle">3  Gold</text>
   <text x="691.0" y="138" class="where" text-anchor="middle">schema gold, star and views</text>
   <rect x="812" y="96" width="164" height="26" rx="13" fill="#22C55E"/><text x="894.0" y="114" class="layer" text-anchor="middle">4  Outputs</text>
@@ -68,13 +68,13 @@
   <line x1="184" y1="183.0" x2="204" y2="183.0" class="edge" marker-end="url(#arrow)"/>
   <line x1="184" y1="221.0" x2="204" y2="221.0" class="edge" marker-end="url(#arrow)"/>
   <line x1="184" y1="259.0" x2="204" y2="259.0" class="edge" marker-end="url(#arrow)"/>
-  <rect x="396" y="150" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="169" class="name">offer</text>
-  <rect x="396" y="188" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="207" class="name">price_observation</text>
-  <rect x="396" y="226" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="245" class="name">quarantine</text><text x="558" y="245" class="count" text-anchor="end">1,094</text>
-  <rect x="396" y="283.0" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="302.0" class="name">offer_match</text>
-  <rect x="396" y="359.0" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="378.0" class="name">alert_sent</text>
-  <rect x="396" y="454" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="473" class="name">seller</text><text x="558" y="473" class="count" text-anchor="end">13</text>
-  <rect x="396" y="492" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="406" y="511" class="name">part</text><text x="558" y="511" class="count" text-anchor="end">935</text>
+  <rect x="384" y="150" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="169" class="name">offer</text>
+  <rect x="384" y="188" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="207" class="name">price_observation</text>
+  <rect x="384" y="226" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="245" class="name">quarantine</text><text x="546" y="245" class="count" text-anchor="end">1,094</text>
+  <rect x="384" y="283.0" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="302.0" class="name">offer_match</text>
+  <rect x="384" y="359.0" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="378.0" class="name">alert_sent</text>
+  <rect x="384" y="454" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="473" class="name">seller</text><text x="546" y="473" class="count" text-anchor="end">13</text>
+  <rect x="384" y="492" width="170" height="28" rx="7" fill="#13233D" stroke="#0EA5E9" stroke-opacity="0.75"/><text x="394" y="511" class="name">part</text><text x="546" y="511" class="count" text-anchor="end">935</text>
   <rect x="590" y="188" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75"/><text x="600" y="207" class="name">fact_price_observation</text><text x="784" y="207" class="count" text-anchor="end">28,825</text>
   <rect x="590" y="226" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75"/><text x="600" y="245" class="name">dim_date</text><text x="784" y="245" class="count" text-anchor="end">1</text>
   <rect x="590" y="454" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75"/><text x="600" y="473" class="name">dim_seller</text><text x="784" y="473" class="count" text-anchor="end">13</text>
@@ -83,17 +83,17 @@
   <rect x="590" y="313.4" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75" stroke-dasharray="4 3"/><text x="600" y="332.4" class="name">undercut</text><text x="784" y="332.4" class="count" text-anchor="end">1,415</text>
   <rect x="590" y="351.4" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75" stroke-dasharray="4 3"/><text x="600" y="370.4" class="name">undercut_alert</text><text x="784" y="370.4" class="count" text-anchor="end">empty</text>
   <rect x="590" y="389.4" width="202" height="28" rx="7" fill="#13233D" stroke="#14B8A6" stroke-opacity="0.75" stroke-dasharray="4 3"/><text x="600" y="408.4" class="name">price_change</text><text x="784" y="408.4" class="count" text-anchor="end">empty</text>
-  <path d="M366 164.0 C381.0 164.0 381.0 164.0 394 164.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M366 202.0 C381.0 202.0 381.0 202.0 394 202.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M366 240.0 C381.0 240.0 381.0 240.0 394 240.0" class="edge" marker-end="url(#arrow)"/>
-  <line x1="184" y1="468.0" x2="394" y2="468.0" class="edge" marker-end="url(#arrow)"/>
-  <line x1="184" y1="506.0" x2="394" y2="506.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M566 164.0 C578.0 164.0 578.0 202.0 588 202.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M566 202.0 C578.0 202.0 578.0 202.0 588 202.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M566 202.0 C578.0 202.0 578.0 240.0 588 240.0" class="edge" marker-end="url(#arrow)"/>
-  <path d="M566 297.0 C578.0 297.0 578.0 202.0 588 202.0" class="edge" marker-end="url(#arrow)"/>
-  <line x1="566" y1="468.0" x2="588" y2="468.0" class="edge" marker-end="url(#arrow)"/>
-  <line x1="566" y1="506.0" x2="588" y2="506.0" class="edge" marker-end="url(#arrow)"/>
+  <path d="M366 164.0 C375.0 164.0 375.0 164.0 382 164.0" class="edge" marker-end="url(#arrow)"/>
+  <path d="M366 202.0 C375.0 202.0 375.0 202.0 382 202.0" class="edge" marker-end="url(#arrow)"/>
+  <path d="M366 240.0 C375.0 240.0 375.0 240.0 382 240.0" class="edge" marker-end="url(#arrow)"/>
+  <line x1="184" y1="468.0" x2="382" y2="468.0" class="edge" marker-end="url(#arrow)"/>
+  <line x1="184" y1="506.0" x2="382" y2="506.0" class="edge" marker-end="url(#arrow)"/>
+  <path d="M554 164.0 H567 V193.0 H589" class="edge" marker-end="url(#arrow)"/>
+  <path d="M554 202.0 H589" class="edge" marker-end="url(#arrow)"/>
+  <path d="M554 207.0 H561 V240.0 H589" class="edge" marker-end="url(#arrow)"/>
+  <path d="M554 297.0 H573 V211.0 H589" class="edge" marker-end="url(#arrow)"/>
+  <line x1="554" y1="468.0" x2="588" y2="468.0" class="edge" marker-end="url(#arrow)"/>
+  <line x1="554" y1="506.0" x2="588" y2="506.0" class="edge" marker-end="url(#arrow)"/>
   <rect x="812" y="150" width="164" height="130" rx="12" fill="#13233D" stroke="#22C55E" stroke-opacity="0.75"/>
   <text x="894.0" y="171" class="where" text-anchor="middle">Power BI, three pages</text>
   <rect x="820" y="180" width="148" height="27" rx="13.5" fill="#166534"/><text x="894.0" y="198" class="small" style="font-size:12px" text-anchor="middle">Overview</text>
@@ -107,7 +107,7 @@
   <line x1="800" y1="215.0" x2="810" y2="215.0" class="edge" stroke="#22C55E" marker-end="url(#arrow)"/>
   <line x1="800" y1="315.0" x2="810" y2="315.0" class="edge" stroke="#22C55E" marker-end="url(#arrow)"/>
   <line x1="792" y1="365.4" x2="810" y2="365.4" class="edge" stroke="#22C55E" marker-end="url(#arrow)"/>
-  <path d="M842 400 V435.4 H580 V373.0 H568" class="edge" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+  <path d="M842 400 V435.4 H580 V373.0 H556" class="edge" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
   <text x="690" y="429.4" class="where" text-anchor="middle">each email sent is kept in alert_sent</text>
   <text x="40" y="552" class="where" style="font-size:12.5px">Dashed boxes: views over the star. undercut_alert and price_change compare a week with the one</text>
   <text x="40" y="571" class="where" style="font-size:12.5px">before, so they stay empty while one run week is loaded.</text>
