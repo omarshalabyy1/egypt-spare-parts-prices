@@ -178,6 +178,16 @@ you clear any challenge, login or cookie banner yourself in the window, and the 
 | [powerbi/](powerbi/) | The report, step by step |
 | [tests/](tests/) | Saved pages for each seller, the page reader and the row check |
 
+## 🏗️ For engineers
+
+Every table and view in the warehouse, what it is built from, and the row counts saved for run week 2026-10-05:
+
+![Data flow, table by table](docs/data-flow.svg)
+
+The star schema in gold that Power BI reads:
+
+![The star schema](docs/data-model.svg)
+
 ## 🗂️ Data
 
 - **Competitor prices are real,** read from the public product pages and APIs of Egyptian

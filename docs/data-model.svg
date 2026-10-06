@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 606" width="1000" height="606" role="img" aria-label="Star schema in gold: fact_price_observation (28,825 rows, one per offer per run week, key seller_key plus listing_key plus date_key) joins dim_seller (13 rows) on seller_key, dim_date (1 row, one run day loaded) on date_key and dim_part (936 rows: our 935 parts plus part_key 0 for an offer that is none of ours) on part_key, many to one. The views price_gap (2,708 rows) and undercut (1,415) sit on the star. Power BI loads the fact as Offer, price_gap as Price Gap and adds a Match Grade table.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="0.55" stop-color="#10213A"/>
+      <stop offset="1" stop-color="#1E1B4B"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#64748B"/>
+    </marker>
+    <marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#F59E0B"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Segoe UI", -apple-system, Helvetica, Arial, sans-serif; }
+    .title { font-size: 21px; font-weight: 700; fill: #FFFFFF; }
+    .sub { font-size: 13.5px; fill: #CBD5E1; }
+    .layer { font-size: 14px; font-weight: 700; fill: #0B1220; }
+    .where { font-size: 12px; fill: #94A3B8; }
+    .name { font-size: 13px; fill: #F1F5F9; }
+    .small { font-size: 12.5px; fill: #F1F5F9; }
+    .count { font-size: 11.5px; fill: #94A3B8; }
+    .col { font-size: 12.5px; fill: #E2E8F0; }
+    .key { font-size: 11px; font-weight: 700; }
+    .task { font-size: 12px; font-weight: 700; fill: #0B1220; }
+    .edge { fill: none; stroke: #64748B; stroke-width: 1.4; }
+  </style>
+  <rect width="1000" height="606" rx="22" fill="url(#bg)"/>
+  <text x="40" y="50" class="title">The star schema</text>
+  <text x="40" y="74" class="sub">gold, rebuilt from silver every run: one fact row per offer per run week, three dimensions on surrogate keys.</text>
+  <path d="M370 190.5 C320.0 190.5 320.0 167.5 270 167.5" class="edge" stroke="#94A3B8"/>
+  <text x="360" y="185.5" class="key" fill="#CBD5E1" text-anchor="end">*</text><text x="278" y="162.5" class="key" fill="#CBD5E1" text-anchor="start">1</text>
+  <path d="M370 167.5 C320.0 167.5 320.0 357.5 270 357.5" class="edge" stroke="#94A3B8"/>
+  <text x="360" y="162.5" class="key" fill="#CBD5E1" text-anchor="end">*</text><text x="278" y="352.5" class="key" fill="#CBD5E1" text-anchor="start">1</text>
+  <path d="M630 236.5 C680.0 236.5 680.0 167.5 730 167.5" class="edge" stroke="#94A3B8"/>
+  <text x="640" y="231.5" class="key" fill="#CBD5E1" text-anchor="start">*</text><text x="722" y="162.5" class="key" fill="#CBD5E1" text-anchor="end">1</text>
+  <rect x="370" y="110" width="260" height="330" rx="10" fill="#13233D" stroke="#2563EB" stroke-width="1.5"/>
+  <path d="M370 120 a10 10 0 0 1 10 -10 h240 a10 10 0 0 1 10 10 v36 h-260 Z" fill="#2563EB"/>
+  <text x="382" y="130" class="name" font-weight="700" style="fill:#FFFFFF">fact_price_observation</text><text x="382" y="147" class="count" style="fill:#FFFFFF">28,825 rows</text>
+  <text x="382" y="172" class="col">date_key</text><text x="618" y="172" class="key" fill="#FBBF24" text-anchor="end">PK FK</text>
+  <text x="382" y="195" class="col">seller_key</text><text x="618" y="195" class="key" fill="#FBBF24" text-anchor="end">PK FK</text>
+  <text x="382" y="218" class="col">listing_key</text><text x="618" y="218" class="key" fill="#FBBF24" text-anchor="end">PK</text>
+  <text x="382" y="241" class="col">part_key</text><text x="618" y="241" class="key" fill="#93C5FD" text-anchor="end">FK</text>
+  <text x="382" y="264" class="col">observed_on</text>
+  <text x="382" y="287" class="col">match_grade</text>
+  <text x="382" y="310" class="col">comparable</text>
+  <text x="382" y="333" class="col">price</text>
+  <text x="382" y="356" class="col">in_stock</text>
+  <text x="382" y="379" class="col">is_discounted</text>
+  <text x="382" y="402" class="col">part_type</text>
+  <text x="382" y="425" class="col">car_key</text>
+  <rect x="40" y="110" width="230" height="146" rx="10" fill="#13233D" stroke="#14B8A6" stroke-width="1.5"/>
+  <path d="M40 120 a10 10 0 0 1 10 -10 h210 a10 10 0 0 1 10 10 v36 h-230 Z" fill="#14B8A6"/>
+  <text x="52" y="130" class="name" font-weight="700" style="fill:#0B1220">dim_seller</text><text x="52" y="147" class="count" style="fill:#0B1220">13 rows</text>
+  <text x="52" y="172" class="col">seller_key</text><text x="258" y="172" class="key" fill="#FBBF24" text-anchor="end">PK</text>
+  <text x="52" y="195" class="col">seller_id</text><text x="258" y="195" class="key" fill="#93C5FD" text-anchor="end">UK</text>
+  <text x="52" y="218" class="col">name</text>
+  <text x="52" y="241" class="col">base_url</text>
+  <rect x="40" y="300" width="230" height="192" rx="10" fill="#13233D" stroke="#14B8A6" stroke-width="1.5"/>
+  <path d="M40 310 a10 10 0 0 1 10 -10 h210 a10 10 0 0 1 10 10 v36 h-230 Z" fill="#14B8A6"/>
+  <text x="52" y="320" class="name" font-weight="700" style="fill:#0B1220">dim_date</text><text x="52" y="337" class="count" style="fill:#0B1220">1 row</text>
+  <text x="52" y="362" class="col">date_key</text><text x="258" y="362" class="key" fill="#FBBF24" text-anchor="end">PK</text>
+  <text x="52" y="385" class="col">date</text><text x="258" y="385" class="key" fill="#93C5FD" text-anchor="end">UK</text>
+  <text x="52" y="408" class="col">run_week</text>
+  <text x="52" y="431" class="col">iso_year</text>
+  <text x="52" y="454" class="col">iso_week</text>
+  <text x="52" y="477" class="col">month</text>
+  <rect x="730" y="110" width="230" height="238" rx="10" fill="#13233D" stroke="#14B8A6" stroke-width="1.5"/>
+  <path d="M730 120 a10 10 0 0 1 10 -10 h210 a10 10 0 0 1 10 10 v36 h-230 Z" fill="#14B8A6"/>
+  <text x="742" y="130" class="name" font-weight="700" style="fill:#0B1220">dim_part</text><text x="742" y="147" class="count" style="fill:#0B1220">936 rows</text>
+  <text x="742" y="172" class="col">part_key</text><text x="948" y="172" class="key" fill="#FBBF24" text-anchor="end">PK</text>
+  <text x="742" y="195" class="col">part_no</text><text x="948" y="195" class="key" fill="#93C5FD" text-anchor="end">UK</text>
+  <text x="742" y="218" class="col">name</text>
+  <text x="742" y="241" class="col">family</text>
+  <text x="742" y="264" class="col">brand</text>
+  <text x="742" y="287" class="col">car_key</text>
+  <text x="742" y="310" class="col">our_price</text>
+  <text x="742" y="333" class="col">is_key</text>
+  <rect x="730" y="368" width="230" height="146" rx="10" fill="#13233D" stroke="#14B8A6" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="742" y="388" class="name" font-weight="700">gold views</text><text x="742" y="405" class="count">over the star; rows</text>
+  <text x="742" y="430" class="col">price_gap</text><text x="948" y="430" class="count" text-anchor="end">2,708</text>
+  <text x="742" y="453" class="col">undercut</text><text x="948" y="453" class="count" text-anchor="end">1,415</text>
+  <text x="742" y="476" class="col">undercut_alert</text><text x="948" y="476" class="count" text-anchor="end">empty</text>
+  <text x="742" y="499" class="col">price_change</text><text x="948" y="499" class="count" text-anchor="end">empty</text>
+  <text x="40" y="538" class="where">Power BI loads the fact as Offer (latest run week), price_gap as Price Gap (2,429 rows not shown out of stock),</text>
+  <text x="40" y="558" class="where">and adds a Match Grade table (2 rows) so one slicer filters both. part_key 0 is the offers that are none of our parts.</text>
+  <text x="40" y="582" class="where">PK primary key · FK foreign key · UK the natural key, unique · 1 to * one dimension row to many fact rows · empty: needs a second run week</text>
+</svg>
