@@ -14,6 +14,8 @@
   <img src="https://img.shields.io/badge/Power_BI-Report-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" alt="Power BI">
 </p>
 
+> 📖 **New to data?** [The project explained, from zero](docs/explained.md): every word, every number and the interview questions, in plain words.
+
 <h3 align="center">Know every Monday where each of your parts is cheaper at a competitor,<br>and by how much.</h3>
 
 ## The problem
@@ -128,7 +130,7 @@ git clone https://github.com/omarshalabyy1/egypt-spare-parts-prices
 cd egypt-spare-parts-prices
 cp .env.example .env          # set WAREHOUSE_PASSWORD; the Gmail lines are optional
 docker compose up -d --build  # Airflow on port 8100, warehouse on port 5450
-curl http://127.0.0.1:8100/api/v2/monitor/health  # wait until the scheduler shows healthy, about a minute
+curl http://127.0.0.1:8100/api/v2/monitor/health  # wait until the scheduler shows healthy
 docker compose exec airflow airflow dags unpause spare_parts_prices  # or unpause it in Airflow's page
 ```
 
