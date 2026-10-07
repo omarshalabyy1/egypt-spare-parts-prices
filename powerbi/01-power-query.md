@@ -19,7 +19,7 @@ the order of this file: a query can only refer to one created before it.
 | `Part Market` | `Offer`, the usable offers counted per part | one per part with a usable offer | 3 | no (staging) |
 | `Part` | `gold.dim_part`, with `Measured` from `Part Market` | 936 | 8 (7 + `Measured`) | yes |
 | `Match Grade` | the match grades found in `Offer` | 2 | 2 (1 + `Grade`) | yes |
-| `Undercut` | `gold.undercut` | 1,415 | 2 | no (staging) |
+| `Undercut` | `gold.undercut` | 1,449 | 2 | no (staging) |
 | `Price Gap` | `gold.price_gap`, not shown out of stock, with `Undercut` | 2,429 | 8 (7 + `Undercut`) | yes |
 | `Date` | `gold.dim_date` | one per day observed | 6 | yes |
 

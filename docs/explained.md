@@ -197,7 +197,7 @@ All diagram numbers are for run week 2026-10-05. The 28,825 and 13 in [header.sv
 | **10,312 of the 28,825** | data-flow.svg | Offers matched to one of our parts: 977 by part number + 9,335 by part type and car (notebook cell 8). The rest are products the shop does not sell. |
 | **2,708** | data-flow.svg, data-model.svg | Rows in the `gold.price_gap` view: one per part per seller. Counted with SQL in `powerbi/01-power-query.md`, not printed by the notebook. |
 | **2,429** | data-model.svg | Price Gap rows Power BI loads: 2,708 minus the 279 shown out of stock (`powerbi/01-power-query.md`, `06-checks.md` check C2). |
-| **1,415** | data-flow.svg, data-model.svg | Rows in the `gold.undercut` view. Counted with SQL in `powerbi/01-power-query.md`, not printed by the notebook. The 821 parts behind these rows are in notebook cell 25; the row count itself was not re-checked for this page. |
+| **1,449** | data-flow.svg, data-model.svg | Rows in the `gold.undercut` view: one per undercut part per seller, so 821 parts (notebook cell 25) give 1,449 rows. Counted with SQL (`select count(*) from gold.undercut`) on the committed week, not printed by the notebook. |
 | **empty** | data-flow.svg, data-model.svg | `undercut_alert` and `price_change` compare a week with the one before, so they stay empty while one week is loaded (notebook cell 27). |
 | **2 rows** | data-model.svg | The Match Grade table Power BI adds: `part_number` and `type_model`. |
 | **1 and \*** | data-model.svg | One dimension row links to many fact rows. |

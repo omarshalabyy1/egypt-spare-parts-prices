@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 606" width="1000" height="606" role="img" aria-label="Star schema in gold: fact_price_observation (28,825 rows, one per offer per run week, key seller_key plus listing_key plus date_key) joins dim_seller (13 rows) on seller_key, dim_date (1 row, one run day loaded) on date_key and dim_part (936 rows: our 935 parts plus part_key 0 for an offer that is none of ours) on part_key, many to one. The views price_gap (2,708 rows) and undercut (1,415) sit on the star. Power BI loads the fact as Offer, price_gap as Price Gap and adds a Match Grade table.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 606" width="1000" height="606" role="img" aria-label="Star schema in gold: fact_price_observation (28,825 rows, one per offer per run week, key seller_key plus listing_key plus date_key) joins dim_seller (13 rows) on seller_key, dim_date (1 row, one run day loaded) on date_key and dim_part (936 rows: our 935 parts plus part_key 0 for an offer that is none of ours) on part_key, many to one. The views price_gap (2,708 rows) and undercut (1,449) sit on the star. Power BI loads the fact as Offer, price_gap as Price Gap and adds a Match Grade table.">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0B1220"/>
@@ -80,7 +80,7 @@
   <rect x="730" y="368" width="230" height="146" rx="10" fill="#13233D" stroke="#14B8A6" stroke-width="1.5" stroke-dasharray="5 4"/>
   <text x="742" y="388" class="name" font-weight="700">gold views</text><text x="742" y="405" class="count">over the star; rows</text>
   <text x="742" y="430" class="col">price_gap</text><text x="948" y="430" class="count" text-anchor="end">2,708</text>
-  <text x="742" y="453" class="col">undercut</text><text x="948" y="453" class="count" text-anchor="end">1,415</text>
+  <text x="742" y="453" class="col">undercut</text><text x="948" y="453" class="count" text-anchor="end">1,449</text>
   <text x="742" y="476" class="col">undercut_alert</text><text x="948" y="476" class="count" text-anchor="end">empty</text>
   <text x="742" y="499" class="col">price_change</text><text x="948" y="499" class="count" text-anchor="end">empty</text>
   <text x="40" y="538" class="where">Power BI loads the fact as Offer (latest run week), price_gap as Price Gap (2,429 rows not shown out of stock),</text>
