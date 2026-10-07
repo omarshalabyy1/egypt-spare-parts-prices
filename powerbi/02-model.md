@@ -98,7 +98,7 @@ Set in **Column tools > Format** with the column selected.
 | Column | Format | Why |
 |---|---|---|
 | `Part[our_price]`, `Offer[price]`, `Price Gap[our_price]`, `Price Gap[their_price]` | Fixed decimal, 2 decimals, thousands separator on, no currency symbol | Egyptian pounds to the piastre; the page titles say EGP |
-| `Price Gap[gap_pct]` | Decimal number, 1 decimal | Already in percent with one decimal: 26.4 means our price is 26.4% above the seller's |
+| `Price Gap[gap_pct]` | Decimal number, 1 decimal | Already in percent with one decimal: 26.4 means the seller is 26.4% below our price |
 | `Date[date]`, `Date[run_week]`, `Date[month]` | Short date (`yyyy-mm-dd`) | Same as the warehouse and the checks |
 | `Date[iso_year]`, `Date[iso_week]` | Whole number, thousands separator off | A year and a week number, not counts |
 

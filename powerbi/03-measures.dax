@@ -89,7 +89,7 @@ RETURN
         )
     )
 
-// For one part, our price above the cheapest seller's, as a share of ours; above 0, a seller is
+// For one part, how far the cheapest seller is below our price, as a share of ours; above 0, a seller is
 // cheaper than us. gap_pct is stored in percent (26.4), so it is divided by 100 for the % format.
 // Format: 0.0%  Folder: Gaps
 Gap To Cheapest =

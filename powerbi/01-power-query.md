@@ -241,8 +241,8 @@ Applied steps:
 - `NotOutOfStock`: drops the sellers that show the part out of stock (279 of 2,708 rows in the run
   of 5 October 2026). Both the notebook's market and `gold.undercut` leave them out.
 - `WithUndercut`, `Flagged`: `Undercut` is true where the seller is in `gold.undercut` for the part.
-- `gap_pct` is our price over the seller's, in percent with one decimal: 26.4 means our price is
-  26.4% above the seller's. Above 0, the seller is cheaper than us.
+- `gap_pct` is how far the seller's price is below ours, as a percent of our price, with one decimal:
+  26.4 means the seller is 26.4% below our price. Above 0, the seller is cheaper than us.
 
 `gold.price_gap` takes about 19 seconds to compute and `gold.undercut`, built on it, about 23
 (measured on the warehouse of 5 October 2026), so **Close & apply** and each **Refresh** take close

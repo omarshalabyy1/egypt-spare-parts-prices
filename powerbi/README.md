@@ -5,7 +5,7 @@ run:
 
 1. **Overview:** what the run read: how many sellers and offers, how many of our parts are matched,
    and how many of them have a seller at least 5% below our price.
-2. **Price gaps:** for each part, how far our price sits above the cheapest seller, and how far the
+2. **Price gaps:** for each part, how far the cheapest seller sits below our price, and how far the
    dearest seller sits above the cheapest, by family and part by part.
 3. **Sellers:** how often each seller is the cheapest, and where its prices sit against the
    market's middle price.

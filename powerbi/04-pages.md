@@ -42,7 +42,7 @@ blank" filter.
 
 ## Page 2: Price gaps
 
-For the match in the slicer: how far our price sits above the cheapest seller, and how far the
+For the match in the slicer: how far the cheapest seller sits below our price, and how far the
 dearest seller sits above the cheapest, by family and part by part. Only measured parts (3 usable
 offers from 2 sellers or more) and comparable prices not shown out of stock count.
 
@@ -52,11 +52,11 @@ offers from 2 sellers or more) and comparable prices not shown out of stock coun
 | 2 | Card | 432, 12, 400, 56 | `[Page Label]` | Copy page 1 #2 and paste it here |
 | 3 | Slicer | 840, 12, 416, 56 | Field: `Match Grade[Grade]` | Copy page 1 #3 and paste it here; choose **Sync** when Power BI asks |
 | 4 | Card | 24, 84, 405, 96 | `[Parts Measured]` | Category label "Parts measured (3+ offers, 2+ sellers)" |
-| 5 | Card | 437, 84, 405, 96 | `[Median Gap]` | Category label "Our price above the cheapest seller, median part"; callout value colour Theme colour 1 |
+| 5 | Card | 437, 84, 405, 96 | `[Median Gap]` | Category label "Cheapest seller below our price, median part"; callout value colour Theme colour 1 |
 | 6 | Card | 850, 84, 406, 96 | `[Median Spread]` | Category label "Dearest seller above the cheapest, median part" |
-| 7 | Clustered bar chart | 24, 196, 612, 240 | Y-axis: `Part[family]`; X-axis: `[Median Gap]`; Tooltips: `[Parts Measured]` | Title "Our price above the cheapest seller, median part by family". Sort by Median Gap, descending. Data labels on. Bars Theme colour 1. X-axis title off |
+| 7 | Clustered bar chart | 24, 196, 612, 240 | Y-axis: `Part[family]`; X-axis: `[Median Gap]`; Tooltips: `[Parts Measured]` | Title "Cheapest seller below our price, median part by family". Sort by Median Gap, descending. Data labels on. Bars Theme colour 1. X-axis title off |
 | 8 | Clustered bar chart | 644, 196, 612, 240 | Y-axis: `Part[family]`; X-axis: `[Median Spread]`; Tooltips: `[Parts Measured]` | Title "Dearest seller above the cheapest, median part by family". Sort by Median Spread, descending. Data labels on. Bars Theme colour 4. X-axis title off |
-| 9 | Table | 24, 452, 1232, 252 | `Part[part_no]`, `Part[name]`, `[Our Price]`, `[Cheapest Seller]`, `[Cheapest Price]`, `[Dearest Price]`, `[Gap To Cheapest]`, `[Spread]` | Title "Each measured part: our price against the cheapest seller (EGP)". Rename on the visual: part_no "Part number", name "Part", Our Price "Our price", Cheapest Seller "Cheapest seller", Cheapest Price "Cheapest price", Dearest Price "Dearest price", Gap To Cheapest "Our price above the cheapest", Spread "Dearest above the cheapest". Sort by Our price above the cheapest, descending. Conditional formatting > Background color on Gap To Cheapest: Format style Gradient; Minimum: Lowest value, White; Maximum: Highest value, Theme colour 3. Totals off |
+| 9 | Table | 24, 452, 1232, 252 | `Part[part_no]`, `Part[name]`, `[Our Price]`, `[Cheapest Seller]`, `[Cheapest Price]`, `[Dearest Price]`, `[Gap To Cheapest]`, `[Spread]` | Title "Each measured part: our price against the cheapest seller (EGP)". Rename on the visual: part_no "Part number", name "Part", Our Price "Our price", Cheapest Seller "Cheapest seller", Cheapest Price "Cheapest price", Dearest Price "Dearest price", Gap To Cheapest "Cheapest below our price", Spread "Dearest above the cheapest". Sort by Cheapest below our price, descending. Conditional formatting > Background color on Gap To Cheapest: Format style Gradient; Minimum: Lowest value, White; Maximum: Highest value, Theme colour 3. Totals off |
 
 In the table, the darker the cell, the further a seller is below our price. The table lists only the
 measured parts of the match shown (`Our Price` is blank for the others, so their rows drop out). A

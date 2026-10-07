@@ -116,11 +116,11 @@ JOIN (SELECT match_grade, count(DISTINCT part_no) AS parts_undercut FROM gold.un
 ## Page 2: Price gaps
 
 **C9.** Match on **Exact part number**. Cards: Parts measured 61 (`spread_groups_part_number`) ·
-Our price above the cheapest seller, median part 26.40% (`gap_median_pct_part_number`, 26.4) ·
+Cheapest seller below our price, median part 26.40% (`gap_median_pct_part_number`, 26.4) ·
 Dearest seller above the cheapest, median part 38.30% (`spread_median_pct_part_number`, 38.297872).
 Both family charts have one bar, **belt**: 26.40% and 38.30% (**SQL only** by family; every part
 measured by part number is a belt, so the bar equals the card). The table has 61 rows (one per
-measured part), sorted by "Our price above the cheapest", highest first. Its first five rows
+measured part), sorted by "Cheapest below our price", highest first. Its first five rows
 (**SQL only**, the third query below):
 
 | Part number | Part | Our price | Cheapest seller | Cheapest | Dearest | Gap | Spread |
@@ -131,7 +131,7 @@ measured part), sorted by "Our price above the cheapest", highest first. Its fir
 | EG-C9822077 | Belt 3PK740 for Renault Clio | 387.50 | Zait and Filters | 160.00 | 350.00 | 58.7% | 118.8% |
 | EG-B4B10F2D | Belt 6PK1548 for Volkswagen Golf | 460.00 | GE Trading | 223.00 | 460.00 | 51.5% | 106.3% |
 
-Gap is "Our price above the cheapest", Spread is "Dearest above the cheapest".
+Gap is "Cheapest below our price", Spread is "Dearest above the cheapest".
 
 **C10.** Match on **Same part type, same car**. Cards: 676 (`spread_groups_type_model`) · 40.00%
 (`gap_median_pct_type_model`) · 90.24% (`spread_median_pct_type_model`, 90.240300). Gap by family
