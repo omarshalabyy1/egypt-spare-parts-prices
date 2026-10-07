@@ -135,8 +135,8 @@ docker compose exec airflow airflow dags unpause spare_parts_prices  # or unpaus
 ```
 
 Once unpaused, the first run starts at once, for the week ending 2026-10-05, then once a week. The
-committed week ending 2026-10-05 is replayed from the pages under `data/raw/` without a request, in a
-few minutes; any later week is fetched live. A live week is bound by its slowest seller, as the
+committed week ending 2026-10-05 is replayed from the pages under `data/raw/` without a request;
+any later week is fetched live. A live week is bound by its slowest seller, as the
 sellers are fetched side by side: Zait and Filters, about <!--n:fetch_longest_minutes-->180<!--/n--> minutes.
 
 ### How it runs
